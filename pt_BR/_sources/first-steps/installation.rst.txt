@@ -1,0 +1,44 @@
+.. _installation-page:
+
+Installation
+============
+
+.. note::
+    IndieGabo's Handy Tools requires **Unity 2019.4** or later versions.
+
+Download
+--------
+
+1. Download only one package containing everything:
+
+* :download:`Full_1.0.0-alpha <../_static/downloads/Full_1.0.0-alpha.zip>`
+
+2. Download Core + the extensions you need:
+
+.. * :download:`Core_1.0.0-alpha <../_static/downloads/Core_1.0.0-alpha.zip>`
+.. * :download:`Platformer_1.0.0-alpha <../_static/downloads/Platformer_1.0.0-alpha.zip>`
+.. * :download:`Envinronmental1.0.0-alpha <../_static/downloads/Envinronmental_1.0.0-alpha.zip>`
+
+1. If you are only interested in the api:
+
+* You can install it through the Unity's Package Manager using the github strategy:
+
+    .. code-block:: csharp
+
+        // video here
+
+* Or you can download and install the package manually:
+
+    .. code-block:: csharp
+
+            // video here
+
+2. If you want full packages with examples and stuff here are some downloads you can check out :
+
+    * Link 1
+    * Link 2
+    * Link 3
+    * Link 4
+
+.. important::
+    In order to use the scripts remember you will need to include the ``GoodBatchGames.Handy2DTools.`` namespace.

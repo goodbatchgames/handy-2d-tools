@@ -1,0 +1,12 @@
+.. _sprite-animator-welcome-page:
+
+Sprite Animator
+===============
+
+Welcome to our sprite animator. The solution for handling sprite sheets as animations without 
+having to deal with the Unity Animator's hell. 
+
+How to use
+----------
+
+Video...

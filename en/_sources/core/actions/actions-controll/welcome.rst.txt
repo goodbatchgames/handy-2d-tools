@@ -1,0 +1,10 @@
+.. _welcome-actions-controll-page:
+
+Actions Controll
+================
+
+Here we have components that represent actions controll. Anything that may have actions mapped
+can benefit from them.   
+
+.. toctree::
+   :maxdepth: 3

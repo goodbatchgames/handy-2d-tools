@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Abilities &mdash; Handy 2D Tools 1.0.0-alpha documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/styles/indiegabo.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/dark_mode_css/general.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/dark_mode_css/dark.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+        <script src="../../../_static/dark_mode_js/default_dark.js"></script>
+        <script src="../../../_static/dark_mode_js/theme_switcher.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Dynamic Movement" href="dynamic-movement.html" />
+    <link rel="prev" title="Character Controller" href="../welcome.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> Handy 2D Tools
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../crafting-principles.html">Crafting Principles</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Primeiros Passos</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../first-steps/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../first-steps/dependencies.html">Dependencies</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Available Packages</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../welcome.html">Core Package</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../actions/welcome.html">Actions</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../welcome.html">Character Controller</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Abilities</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ability-setup">Ability Setup</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#available-abilities">Available Abilities</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="dynamic-movement.html">Dynamic Movement</a></li>
+<li class="toctree-l5"><a class="reference internal" href="horizontal-flip.html">Horizontal Flip</a></li>
+<li class="toctree-l5"><a class="reference internal" href="dynamic-jump.html">Dynamic Jump</a></li>
+<li class="toctree-l5"><a class="reference internal" href="dynamic-slide.html">Dynamic Slide</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#interfaces">Interfaces</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="interfaces/i-horizontal-flip-performer.html">IHorizontalFlipPerfomer</a></li>
+<li class="toctree-l5"><a class="reference internal" href="interfaces/i-horizontal-facing-direction-provider.html">IHorizontalFacingDirectionProvider</a></li>
+<li class="toctree-l5"><a class="reference internal" href="interfaces/i-movement-direction-provider.html">IMovementDirectionsProvider</a></li>
+<li class="toctree-l5"><a class="reference internal" href="interfaces/i-jump-performer.html">IJumpPerformer</a></li>
+<li class="toctree-l5"><a class="reference internal" href="interfaces/i-jump-extra-performer.html">IJumpExtraPerformer</a></li>
+<li class="toctree-l5"><a class="reference internal" href="interfaces/i-jump-handler.html">IJumpHandler</a></li>
+<li class="toctree-l5"><a class="reference internal" href="interfaces/i-slide-handler.html">ISlideHandler</a></li>
+<li class="toctree-l5"><a class="reference internal" href="interfaces/i-slide-performer.html">ISlidePerformer</a></li>
+<li class="toctree-l5"><a class="reference internal" href="interfaces/i-dash-handler.html">IDashHandler</a></li>
+<li class="toctree-l5"><a class="reference internal" href="interfaces/i-dash-performer.html">IDashPerformer</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../checkers/welcome.html">Checkers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../environmental/welcome.html">Environmental</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../animating/welcome.html">Animations</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Handy 2D Tools</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../welcome.html">Core Package</a> &raquo;</li>
+          <li><a href="../welcome.html">Character Controller</a> &raquo;</li>
+      <li>Abilities</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/core/character-controller/abilities/welcome.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="abilities">
+<span id="welcome-core-abilities-page"></span><h1>Abilities<a class="headerlink" href="#abilities" title="Permalink to this headline"></a></h1>
+<p>Here we have components that represent character Abilities. They can be related to movement, attacks or other
+stuff.</p>
+<section id="ability-setup">
+<h2>Ability Setup<a class="headerlink" href="#ability-setup" title="Permalink to this headline"></a></h2>
+<p>For the sake of organizing and allowing us to have multiple setups for abilities configurations
+we use <a class="reference external" href="https://docs.unity3d.com/Manual/class-ScriptableObject.html">ScriptableObjects</a> . This way
+you can create multiple setups and use them in different situations along your game.</p>
+<p>So, when configuring some ability component, create one or multiple of its setup and associate it
+in order for the component work properly.</p>
+<p>Every ability have 2 main boolean properties wich will allow you to operate them as you wish. They are:</p>
+<table class="colwidths-given docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 35%" />
+<col style="width: 65%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">bool</span> <span class="pre">Learned</span> <span class="pre">{</span> <span class="pre">get;</span> <span class="pre">}</span></code></p></td>
+<td><p>This means your character has already learned that ability therefore can use it if it is active</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">bool</span> <span class="pre">Active</span> <span class="pre">{</span> <span class="pre">get;</span> <span class="pre">}</span></code></p></td>
+<td><p>This means the ability is active and can be used. This consider if ability is learned or not</p></td>
+</tr>
+</tbody>
+</table>
+<p>We also have one <code class="docutils literal notranslate"><span class="pre">UnityEvent&lt;bool&gt;</span></code> for each of the above properties value changes updates:</p>
+<table class="colwidths-given docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 40%" />
+<col style="width: 60%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">UnityEvent&lt;bool&gt;</span> <span class="pre">LearnedStatusUpdate</span></code></p></td>
+<td><p>Invoked every time the <code class="docutils literal notranslate"><span class="pre">learned</span></code> property value changes</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">UnityEvent&lt;bool&gt;</span> <span class="pre">ActivationStatusUpdate</span></code></p></td>
+<td><p>Invoked every time the <code class="docutils literal notranslate"><span class="pre">active</span></code> property value changes</p></td>
+</tr>
+</tbody>
+</table>
+<p>And these available methods:</p>
+<table class="colwidths-given docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 35%" />
+<col style="width: 65%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">virtual</span> <span class="pre">bool</span> <span class="pre">Activate()</span></code></p></td>
+<td><p>If Ability is learned, activates it and invokes <br /> active status update event. Returns false if activation fails</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">virtual</span> <span class="pre">void</span> <span class="pre">Deactivate()</span></code></p></td>
+<td><p>Deactivates the ability and invokes active status update event.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">virtual</span> <span class="pre">void</span> <span class="pre">Learn()</span></code></p></td>
+<td><p>Sets ability learned status as true and invokes learned status update event.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">virtual</span> <span class="pre">void</span> <span class="pre">Unlearn()</span></code></p></td>
+<td><p>Sets ability learned status as false and invokes learned status update event. <br /> This also calls Deactivate() to ensure the ability is not active.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">virtual</span> <span class="pre">void</span> <span class="pre">LearnAndActivate()</span></code></p></td>
+<td><p>Learn and activate the ability. Perfect for when managing abilities <br /> like purchasing o collecting things that grants that ability.</p></td>
+</tr>
+</tbody>
+</table>
+<p>These properties and events can be really handy for the case of building an ability manager. Say you want to handle when a
+specifc ability is considered learned (maybe buy purchasing it on store or picking up a collectable item). Just access the
+ability setup <code class="docutils literal notranslate"><span class="pre">ScriptableObject</span></code> through your script and call its <code class="docutils literal notranslate"><span class="pre">Learn()</span></code> or <code class="docutils literal notranslate"><span class="pre">LearnAndActivate()</span></code> methods.</p>
+<p>Also, considering you may want to disable some ability temporally based on your game’s logic, but still want to display that particular ability
+as learned, use the <code class="docutils literal notranslate"><span class="pre">Activate()</span></code> and <code class="docutils literal notranslate"><span class="pre">Deactivate()</span></code> methods to handle this.</p>
+<p>Have in mind that an ability crafted by us will only perform in case both <code class="docutils literal notranslate"><span class="pre">learned</span></code> and <code class="docutils literal notranslate"><span class="pre">active</span></code> are set as true. All abilities
+listed below will have their setups properly documented.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Abilities setups are crafted to represent an specific character setup of abilities. So, if you have different characters with the same ability,
+this means you would probably want to create different <code class="docutils literal notranslate"><span class="pre">ScriptableObject</span></code> setups for each of them.</p>
+</div>
+</section>
+<section id="available-abilities">
+<h2>Available Abilities<a class="headerlink" href="#available-abilities" title="Permalink to this headline"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="dynamic-movement.html">Dynamic Movement</a></li>
+<li class="toctree-l1"><a class="reference internal" href="horizontal-flip.html">Horizontal Flip</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dynamic-jump.html">Dynamic Jump</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dynamic-slide.html">Dynamic Slide</a></li>
+</ul>
+</div>
+</section>
+<section id="interfaces">
+<h2>Interfaces<a class="headerlink" href="#interfaces" title="Permalink to this headline"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="interfaces/i-horizontal-flip-performer.html">IHorizontalFlipPerfomer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interfaces/i-horizontal-facing-direction-provider.html">IHorizontalFacingDirectionProvider</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interfaces/i-movement-direction-provider.html">IMovementDirectionsProvider</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interfaces/i-jump-performer.html">IJumpPerformer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interfaces/i-jump-extra-performer.html">IJumpExtraPerformer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interfaces/i-jump-handler.html">IJumpHandler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interfaces/i-slide-handler.html">ISlideHandler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interfaces/i-slide-performer.html">ISlidePerformer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interfaces/i-dash-handler.html">IDashHandler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interfaces/i-dash-performer.html">IDashPerformer</a></li>
+</ul>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../welcome.html" class="btn btn-neutral float-left" title="Character Controller" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="dynamic-movement.html" class="btn btn-neutral float-right" title="Dynamic Movement" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Good Batch Games.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

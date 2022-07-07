@@ -1,0 +1,211 @@
+.. _crafting-principles-page:
+
+Crafting Principles
+===================
+
+Here are the 3 principles I use to craft any component in this package:
+
+1. I interface my purpose - So everyone know how to interact with me.
+2. I can seek for information - So you don't need to know me. Just leave an open door and i'll get it.
+3. You can directly ask me - In case you prefer to be specific about me.
+
+Before we dive on our principles, have in mind that our components may have any of these traits: 
+
+* Performer - Meaning it exists to perform some kind of action.
+
+* Handler - Meaning it exists to handle another component.
+
+* Provider - Meaning it exists to provide some kind of information.
+
+A component can have multiple traits and a trait represents a purpose for that component to live by.
+
+Ok. Lets get to the principles already.
+
+The "I interface my purpose" principle
+--------------------------------------
+
+We ensure components communication by setting  `interfaces <https://docs.microsoft.com/pt-br/dotnet/csharp/language-reference/keywords/interface>`_ 
+wich expose the traits. 
+
+For example, take our ``DynamicJump`` component. You can attach it to some object, configure it and you will be able to benefit from it. If at any 
+time you need a reference to our ``DynamicJump`` component, you would do something like the following:
+
+.. code-block:: csharp
+
+  DynamicJump jump = GetComponent<DynamicJump>();
+
+Ok. Now, the ``DynamicJump`` component must have a handler among the other components of its ``GameObject``. Imagine you have a component wich is 
+responsible for handling the actions of the ``GameObject`` it is attached to. And since a jump can be 
+considered an action, this particular component would handle the ``DynamicJump`` component and tell it when to perform and stop jumps. 
+
+So, for example, let's say we have a ``PlayableCharacterActions`` component and there we get the reference to the ``DynamicJump`` component:
+
+.. code-block:: csharp
+
+  public class PlayableCharacterActions : MonoBehaviour
+  {
+    public DynamicJump jump;
+
+    void Start()
+    {
+      jump = GetComponent<DynamicJump>();
+    }
+  }
+
+Awesome! From there on we would be able to perform jump stuff by calling the ``DynamicJump`` correct methods. But I consider **you should be free to write 
+your own component to handle / perform dynamic  jumps** [#f1]_. Actually, any component you want to write in order to perform anything while interacting with my components, 
+i find that you should be able to do it and still benefit from our components wich you see fit as a solution for your game. 
+
+Because of that, ``PlayableCharacterActions`` wouldn't have a reference to the ``DynamicJump`` component. Instead it would declare itself as a "dynamic jump  handler" 
+and then allow the ``DynamicJump`` component to find it and listen to events that state what it should do. So... for the sake of a use case example, I 
+present to you the ``IJumpHandler`` interface.
+
+Take a look: 
+
+.. code-block:: csharp
+
+  namespace HandyTools.CharacterController.Abilities
+  {
+      /// <summary>
+      /// Any component that implements this interface will be able to handle dynamic  jumps
+      /// by invoking its methods..
+      /// </summary>
+      public interface IJumpHandler
+      {
+          UnityEvent SendJumpRequest { get; }
+          UnityEvent SendJumpStop { get; }
+      }
+  }
+
+This ``interface`` forces whatever implements it to give access to 2 Unity Events. One to request a jump to be performed and other to demand a jump to be stoped.
+So as a Handler whenever you want a jump to be performed use the ``SendJumpRequest.Invoke()`` approach. Same goes for when you want to stop a jump with 
+``SendJumpStop.Invoke()``. 
+
+.. code-block:: csharp
+
+  public class PlayableCharacterActions : MonoBehaviour, IJumpHandler
+  {
+
+    public UnityEvent sendJumpRequestEvent; // declare it as field so you can benefit from it on inspector
+    public UnityEvent sendJumpStopEvent;
+
+    public UnityEvent SendJumpRequest => sendJumpRequestEvent; // Dispose as getter to respect IJumpHandler interface
+    public UnityEvent SendJumpStop => sendJumpStopEvent; 
+
+    void Update() {
+
+      if (JumpShouldBePerformed) 
+      {
+        sendJumpRequestEvent.Invoke();
+      }
+
+      if (JumpShouldBeStoped)
+      {
+        sendJumpStopEvent.Invoke();
+      }
+
+    }
+
+  }
+
+
+That allows us to, while crafting a "dynamic jump  performer" component, find any ``IJumpHandler`` among its ``GameObject`` components and listen to its 
+events. Then, every time a ``SendJumpRequest`` is invoked by its handler, the component will receive it on its callback and handle if it should jump or not.
+
+.. code-block:: csharp
+
+  public class MyJumpPerformer : MonoBehaviour
+  {
+
+    IJumpHandler jumpHandler;
+
+    void Start()
+    {
+      jumpHandler = GetComponent<IJumpHandler>();
+      jumpHandler?.SendJumpRequest.AddListener(Request); // Listen to Jump Requests
+      jumpHandler?.SendJumpStop.AddListener(Stop); // Listen to Stop demands  
+    }
+
+    void OnDisable()
+    {
+      jumpHandler?.SendJumpRequest.RemoveListener(Request); // Stop listening to Jump Requests
+      jumpHandler?.SendJumpStop.RemoveListener(Stop); // Stop listening to Stop demands
+    }
+
+    void Perform()
+    {
+      // Performs jump every physics update
+    }
+    
+    void Request()
+    {
+      // Evaluate if jump can be perfomed and start it if so
+    }
+
+    void Stop()
+    {
+      // Stop any jump in progress
+    }
+  }
+
+Well... we can easily see now how to benefit from the `unity's input system <https://docs.unity3d.com/Packages/com.unity.inputsystem@1.0/manual/QuickStartGuide.html>`_ .
+When jump button is pressed: ``SendJumpRequest.Invoke()``. When jump button is released: ``SendJumpStop.Invoke()``.
+
+.. note::
+
+  If you are not familiar with Unity Events you can `click here <https://docs.unity3d.com/ScriptReference/Events.UnityEvent.html>`_ and learn a bit more.
+
+So, if you want to build your own handler for our ``DynamicJump`` component, just implement the ``IJumpHandler`` interface and activate the "Seek For Handler"
+option in the ``DynamicJump`` component inspector window. Make sure to attach both components to the same ``GameObject``.
+
+.. code-block:: csharp
+
+  TODO: "Seeker" video
+
+I use this strategy to all traits presented here. For another example you will find interfaces like ``IGroundingProvider`` so you can listen for updates 
+on the ``GameObject`` being or not considered grounded. Even another example is the  ``IDashPerformer`` wich will allow you to find components that perform 
+dynamic  dashes and listen for when the dash occur.
+
+This is it for this first and most important principle. It is the "i interface my purpose" principle that glue all components together and allow you to 
+grow your components from our work.
+
+The "I can seek for information" principle
+------------------------------------------
+
+As seen in the previous principle, the ``DynamicJump`` can seek for its handler if you mark the inspector's option. Well... it is not the only one. 
+
+All components that need some kind of information will have the option to seek for a component to feed that piece of intel under the "Seekers" section of its 
+inspector window.
+
+.. code-block:: csharp
+
+  Todo: Seeker section image
+
+For example, the ``DynamicDash`` needs to know about the grounding status of the ``GameObject`` it is attached to. In order to receive updates about grounding 
+it can seek for a "grounding provider" wich will be a component that implements the ``IGroundingProvider`` interface. This way you can use our ``GoundingChecker`` 
+component or implement your own component that provides information about its ``GameObject`` grounding status. All you will need to do is to make sure it implements
+the ``IGroundingProvider`` interface and the ``DynamicDash`` will be able to find it and listen to the event that provides grounding information.
+
+The "you can directly ask me" principle
+---------------------------------------
+
+Lastly, althoug I find it better to components be crafted "event drivenly" I like to leave open doors for a direct approach. And that is the reason for 
+the "Seekers" section of our components on the inspector window to be completly optional. They **CAN** seek for information but if you prefer you can
+directly feed the information they need and it will be documented on that component's page what method you can use to achieve that.
+
+For example, the ``DynamicJump`` component have an ``UpdateGrounding(bool newGrounding)`` method wich is exactly the method used as callback when the 
+"seek for grounding provider" option is enabled. So, when creating you own provider, if the "interfancing and eventing" approach is not for you,
+just call the feeding method and pass in the argument your logic came up with.
+
+.. code-block:: csharp
+
+  bool grounded = MyWayToDetectGrounding();
+  jump.UpdateGrounding(grounded);
+
+And with that we end the principles. Now you can start looking at specific components documentation pages and understand how to interact and use them.
+
+.. raw:: html
+
+     <div style="clear: both;"></div>
+
+.. [#f1] Dynamic  components are the ones wich handle a RigidBody set to dynamic.

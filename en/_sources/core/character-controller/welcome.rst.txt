@@ -1,0 +1,17 @@
+.. _welcome-core-character-controller-page:
+
+Character Controller
+====================
+
+We have actions and character controller separate because you may have stuff in your game that
+perform actions but you do not consider it to be a character. A game manager for example can benefit
+from our actions components but won't need to be controlled on the screen.
+
+With that in mind here we have the bundle of components that are destined to... err... 
+control characters.
+
+.. toctree::
+   :maxdepth: 2
+   
+   abilities/welcome
+   checkers/welcome

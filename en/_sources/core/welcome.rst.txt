@@ -1,0 +1,15 @@
+.. _welcome-core-package-page:
+
+Core Package
+============
+
+The core package represents functionalities all of our 2D targeted game styles may benefit from, as well as core scripts and other
+resources we may build. To use our packages the core is always mandatory.
+
+.. toctree::
+   :maxdepth: 2
+
+   actions/welcome
+   character-controller/welcome
+   environmental/welcome
+   animating/welcome

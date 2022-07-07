@@ -1,0 +1,22 @@
+.. _i-slide-performer-page:
+
+ISlidePerformer
+===============
+
+.. code-block:: csharp    
+    
+    namespace Handy2DTools.CharacterController.Abilities
+    {
+        /// <summary>
+        /// Any Component that wants to Perform slides and let other Handy2DTools
+        /// components 
+        /// </summary>
+        public interface ISlidePerformer
+        {
+            void Request();
+            void Stop();
+            void Perform();
+            UnityEvent<GameObject> SlidePerformed { get; }
+        }
+    }
+

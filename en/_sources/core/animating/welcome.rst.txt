@@ -1,0 +1,11 @@
+.. _animations-welcome-page:
+
+Animations
+==========
+
+This section is destined to collect all the features related to animations.  
+
+.. toctree::
+   :maxdepth: 2
+   
+   sprite-animator/welcome

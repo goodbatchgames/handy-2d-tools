@@ -1,0 +1,16 @@
+.. _parallax-welcome-page:
+
+Parallax
+===============
+
+Welcome to our parallax. The solution for handling your parallaxes in a practical way.
+
+How to use
+----------
+
+.. raw:: html
+   
+   <iframe width="800" height="450" src="https://www.youtube.com/embed/qsVp9-ZK1hU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+|
+

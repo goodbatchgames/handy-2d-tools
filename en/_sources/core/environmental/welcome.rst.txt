@@ -1,0 +1,11 @@
+.. _environmental-welcome-page:
+
+Environmental
+=============
+
+This section is destined to collect all the features related to games environment.  
+
+.. toctree::
+   :maxdepth: 2
+   
+   parallax/welcome

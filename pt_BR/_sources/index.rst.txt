@@ -1,0 +1,165 @@
+.. IndieGabo's Handy Tools documentation master file, created by
+   sphinx-quickstart on Mon May 23 10:20:07 2022.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
+.. raw:: html
+
+   <div class="container">
+      <div class="gabo-container">
+         <img class="gabo-picture" src="_static/images/gabo.jpg" alt="Gabo" />
+         <img class="gabo-tag" src="_static/images/gabo-tag.png" alt="Gabo Tag" />
+      </div>
+   </div>
+
+.. raw:: html
+
+   <div style="clear: both;" ></div>
+
+Handy 2D Tools by Good Batch Games!
+===================================
+
+Welcome to our Handy 2D Tools by documentation! Hurray! \\o/
+
+About this project
+------------------
+
+This is a **completely free**  collection of handy tools for 2D driven Unity Game developers.
+
+Our goal is to make easy to use and iterative components so you can either use them as they are 
+or have a starting point to create something awesome for your game.
+
+We are a small group of people dreaming to build 2D games. @hile we learn and grow 
+as game designers / developers we also want to share what we learn and build. 
+
+Current Version
+---------------
+
+   * 1.0.0-alpha
+
+Being this an alpha version we ask you, who got interested enough to be here, to help us 
+test what we've built already and our "philosophy" behind how we compose our tools.
+
+Speaking of wich, check out :ref:`our crafting principles <crafting-principles-page>` and let us know what you think.
+
+We are now working on a full set of platforming tools and we intend to release a beta version after analysing
+the feedback we get from you guys.
+
+Itch Store
+----------
+
+Although this tools are free, we use them to build games and (both free and payed) game assets. 
+
+They are released on itch.io and are a way for us to give something worth of your support in order to
+to keep creating stuff. Feel free to browse my `itch page <https://goodbatchgames.itch.io>`_ and find something usefull to you there.
+
+Our assets are intended to be fully functional at their purpose. Have in mind that :ref:`patreon supporters <patreon-explanation>` have
+access to them.
+
+Contribute
+----------
+
+If you want to contribute to this project, get in touch by any of our socials listed below.
+
+.. raw:: html
+
+   <a class="reference internal image-reference" href="https://patreon.com/goodbatchgames" target="_blank"><img alt="Patreon Image" class="align-left" src="_static/images/patreon.png" style="width: 80px;"></a>
+
+.. _patreon-explanation:
+
+Do not forget to at least consider joining our `patreon <https://patreon.com/goodbatchgames>`_ to own assets we distribute on itch.io.
+We intend to release new assets every month and subscribers have a 15 days window to claim and own them from the realease date.
+
+.. raw:: html
+
+     <div style="clear: both;" ></div>
+
+Nevertheless, if somehow you just want to donate cause you find my work useful, click the button below:
+
+.. raw:: html
+
+   <div id="donate-button-container">
+   <div id="donate-button"></div>
+   <script src="https://www.paypalobjects.com/donate/sdk/donate-sdk.js" charset="UTF-8"></script>
+   <script>
+      PayPal.Donation.Button({
+         env:'production',
+         hosted_button_id:'CPCRZ3KV5RNQ6',
+         image: {
+         src:'https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif',
+         alt:'Donate with PayPal button',
+         title:'PayPal - The safer, easier way to pay online!',
+         }
+      }).render('#donate-button');
+   </script>
+   </div>
+
+|
+
+.. toctree::
+   :maxdepth: 1
+   :caption: About
+
+   crafting-principles  
+
+.. toctree::
+   :maxdepth: 1
+   :caption: First Steps
+
+   first-steps/installation
+   first-steps/dependencies
+
+.. toctree::
+   :maxdepth: 2   
+   :caption: Available Packages
+
+   core/welcome
+
+Where to Find IndieGabo
+-----------------------
+
+.. raw:: html
+
+   <a class="reference internal image-reference" href="https://github.com/goodbatchgames" target="_blank"><img alt="Github Image" class="align-left" src="_static/images/github.png" style="width: 40px;"></a>
+
+Checkout this and other projects on my `Github page <https://github.com/goodbatchgames/>`_ .
+
+.. raw:: html
+
+     <div style="clear: both;" ></div>
+
+.. raw:: html
+
+   <a class="reference internal image-reference" href="https://www.youtube.com/channel/UCI6EqSYCSnY5n1ZX7V1y2NA" target="_blank"><img alt="Youtube Image" class="align-left" src="_static/images/youtube.png" style="width: 40px;"></a>
+
+We use our `Youtube channel <https://www.youtube.com/channel/UCI6EqSYCSnY5n1ZX7V1y2NA>`_ to post tutorials and news.
+
+.. raw:: html
+
+     <div style="clear: both;" ></div>
+
+.. raw:: html
+
+     <div style="clear: both;" ></div>
+
+.. raw:: html
+
+   <a class="reference internal image-reference" href="https://instagram.com/goodbatchgames" target="_blank"><img alt="Instagram Image" class="align-left" src="_static/images/instagram.png" style="width: 40px;"></a>
+
+Follow our `@goodbatchgames <https://instagram.com/goodbatchgames>`_ on Instagram.
+
+.. raw:: html
+
+     <div style="clear: both;" ></div>
+
+|
+
+
+
+|
+
+.. HTML Substiuions
+
+.. |br| raw:: html
+
+     <br />

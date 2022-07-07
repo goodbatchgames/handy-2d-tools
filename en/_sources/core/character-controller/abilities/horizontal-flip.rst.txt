@@ -1,0 +1,171 @@
+.. _horizontal-flip-page:
+
+Horizontal Flip
+===============
+
+This component is used to perform a ``GameObject`` fliping. It can either scale the object negativilly or rotate it 
+180º on the Y axis.
+
+What it Implements
+------------------
+
+.. table:: 
+   :width: 100% 
+   :widths: 100
+
+   +-----------------------------------------------------------------------------------------------------+
+   | **Interface**                                                                                       |
+   +-----------------------------------------------------------------------------------------------------+
+   | :ref:`IHorizontalFlipPerformer <i-horizontal-flip-performer-page>`                                  |
+   +-----------------------------------------------------------------------------------------------------+
+   | :ref:`IHorizontalFacingDirectionProvider <i-horizontal-facing-direction-provider-page>`             |
+   +-----------------------------------------------------------------------------------------------------+
+
+Usage
+-----
+
+Here is how you can use this component:
+
+Direct approach:
+****************
+
+.. code-block:: csharp
+
+    HorizontalFlip flip;
+
+    void Awake() 
+    {
+        flip = GetComponent<HorizontalFlip>();
+    }
+
+    void FixedUpdate()
+    {
+        float movementDirection = MyWayOfDetectingMovementDirection();
+
+        // This will evaluate if character should be flipped 
+        // based on movement direction (-1 left, 1 right). 
+        flip.EvaluateAndFlip(movementDirection); 
+    }
+
+Listening to IHorizontalFacingDirectionProvider events:
+*******************************************************
+
+.. code-block:: csharp    
+
+    // This is an example on how to listen to the DynamicJump events using other components 
+    // you might craft
+
+    IHorizontalFacingDirectionProvider horizontalFacingProvider;
+
+    void Awake()
+    {
+        horizontalFacingProvider = GetComponent<IHorizontalFacingDirectionProvider>();    
+    }
+
+    void Start()
+    {
+        horizontalFacingProvider?.HorizontalFacingDirectionUpdate.AddListener(HorizontalFacingDirectionUpdate);
+        horizontalFacingProvider?.HorizontalFacingDirectionSignUpdate.AddListener(HorizontalDirectionSignUpdate);
+    }
+
+    void OnDisable()
+    {
+        horizontalFacingProvider?.HorizontalFacingDirectionUpdate.RemoveListener(HorizontalFacingDirectionUpdate);
+        horizontalFacingProvider?.HorizontalFacingDirectionSignUpdate.RemoveListener(HorizontalDirectionSignUpdate);
+    }
+
+    void HorizontalFacingDirectionUpdate(HorizontalDirections horizontalDirections)
+    {
+        // Your logic
+    }
+    
+    void HorizontalDirectionSignUpdate(float directionSign)
+    {
+        // Your logic
+        // -1 = left, 1 = right.
+    }
+
+.. note::
+
+    You can also use the direct approach to listen to the events.
+
+Setup
+*****
+
+.. code-block:: csharp
+
+    namespace Handy2DTools.CharacterController.Abilities
+    {
+        [CreateAssetMenu(fileName = "New HorizontalFlipSetup", menuName = "Handy 2D Tools/CharacterController/Setups/HorizontalFlip")]
+        public class HorizontalFlipSetup : AbilitySetup
+        {
+
+            #region Editor
+
+            [Header("Flip Setup")]
+            [Tooltip("If the game object should be flipped scaling negatively on X axis or rotating Y axis 180º")]
+            [SerializeField]
+            [Space]
+            protected HorizontalFlipStrategy strategy = HorizontalFlipStrategy.Rotating;
+
+            [Tooltip("Use this to set wich direction GameObject should start flipped towards.")]
+            [SerializeField]
+            protected HorizontalDirections startingDirection = HorizontalDirections.Right;
+
+            [Foldout("Flip Events:")]
+            [Space]
+            [Tooltip("You can use these to directly set listeners about wich horizontal direction this GameObject is flipped towards.")]
+            [SerializeField]
+            protected UnityEvent<HorizontalDirections> horizontalFacingDirectionUpdate;
+
+            [Foldout("Flip Events:")]
+            [Space]
+            [Tooltip("You can use these to directly set listeners about wich horizontal direction sign (-1 left or 1 right) this GameObject is flipped towards.")]
+            [SerializeField]
+            protected UnityEvent<float> horizontalFacingDirectionSignUpdate;
+
+            #endregion
+
+            #region Getters
+
+            public HorizontalFlipStrategy Strategy => strategy;
+            public HorizontalDirections StartingDirection => startingDirection;
+            public UnityEvent<HorizontalDirections> HorizontalFacingDirectionUpdate => horizontalFacingDirectionUpdate;
+            public UnityEvent<float> HorizontalFacingDirectionSignUpdate => horizontalFacingDirectionSignUpdate;
+
+            #endregion
+
+        }
+    }
+    
+
+Available Methods
+-----------------
+
+.. code-block:: csharp
+    
+    // Call this to make the character stand still.
+    public virtual void Stand();
+
+    // Makes the character stand considering being or not on a slope
+    public virtual void Stand(SlopeData SlopeData) 
+
+    // Call this to make character move horizontally using its 
+    // speed set on inspector. Just inform for wich direction (-1 left and 1 right)
+    // it should move towards.
+    public virtual void MoveHorizontally(float directionSign)
+
+    // Move horizontally considering being grounded
+    public virtual void GroundedMoveHorizontally(float directionSign)
+
+    // Move horizontally considering being grounded and evaluating slopes
+    public virtual void GroundedMoveHorizontally(float directionSign, SlopeData slopeData, bool ignoreSlopes = false)
+
+    // Move horizontally and changes gravity scale of RigidBody2D
+    public virtual void MoveHorizontallyApplyingGravity(float directionSign, float gravityScale)
+
+    // Applies horizontal force into the given direction (-1 left and 1 right)
+    public virtual void PushHorizontally(float force, float directionSign)
+
+    // Aplly vertical speed
+    public virtual void MoveVertically(float speed)

@@ -1,0 +1,20 @@
+.. _i-jump-handler-page:
+
+IJumpHandler
+=============
+
+.. code-block:: csharp    
+    
+    namespace Handy2DTools.CharacterController.Abilities
+    {
+        /// <summary>
+        /// Any component that implements this interface will be able to handle jump
+        /// by invoking its methods..
+        /// </summary>
+        public interface IJumpHandler
+        {
+            UnityEvent SendJumpRequest { get; }
+            UnityEvent SendJumpStop { get; }
+        }
+    }
+

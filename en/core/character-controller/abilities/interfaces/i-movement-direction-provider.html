@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IMovementDirectionsProvider &mdash; Handy 2D Tools 1.0.0-alpha documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/styles/indiegabo.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/dark_mode_css/general.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/dark_mode_css/dark.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../../_static/favicon.png"/>
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/clipboard.min.js"></script>
+        <script src="../../../../_static/copybutton.js"></script>
+        <script src="../../../../_static/dark_mode_js/default_dark.js"></script>
+        <script src="../../../../_static/dark_mode_js/theme_switcher.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="IJumpPerformer" href="i-jump-performer.html" />
+    <link rel="prev" title="IHorizontalFacingDirectionProvider" href="i-horizontal-facing-direction-provider.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../../index.html" class="icon icon-home"> Handy 2D Tools
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../crafting-principles.html">Crafting Principles</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Primeiros Passos</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../first-steps/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../first-steps/dependencies.html">Dependencies</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Available Packages</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../../welcome.html">Core Package</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../actions/welcome.html">Actions</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../welcome.html">Character Controller</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../welcome.html">Abilities</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../welcome.html#ability-setup">Ability Setup</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../welcome.html#available-abilities">Available Abilities</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="../welcome.html#interfaces">Interfaces</a><ul class="current">
+<li class="toctree-l5"><a class="reference internal" href="i-horizontal-flip-performer.html">IHorizontalFlipPerfomer</a></li>
+<li class="toctree-l5"><a class="reference internal" href="i-horizontal-facing-direction-provider.html">IHorizontalFacingDirectionProvider</a></li>
+<li class="toctree-l5 current"><a class="current reference internal" href="#">IMovementDirectionsProvider</a></li>
+<li class="toctree-l5"><a class="reference internal" href="i-jump-performer.html">IJumpPerformer</a></li>
+<li class="toctree-l5"><a class="reference internal" href="i-jump-extra-performer.html">IJumpExtraPerformer</a></li>
+<li class="toctree-l5"><a class="reference internal" href="i-jump-handler.html">IJumpHandler</a></li>
+<li class="toctree-l5"><a class="reference internal" href="i-slide-handler.html">ISlideHandler</a></li>
+<li class="toctree-l5"><a class="reference internal" href="i-slide-performer.html">ISlidePerformer</a></li>
+<li class="toctree-l5"><a class="reference internal" href="i-dash-handler.html">IDashHandler</a></li>
+<li class="toctree-l5"><a class="reference internal" href="i-dash-performer.html">IDashPerformer</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../checkers/welcome.html">Checkers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../environmental/welcome.html">Environmental</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../animating/welcome.html">Animations</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Handy 2D Tools</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../../welcome.html">Core Package</a> &raquo;</li>
+          <li><a href="../../welcome.html">Character Controller</a> &raquo;</li>
+          <li><a href="../welcome.html">Abilities</a> &raquo;</li>
+      <li>IMovementDirectionsProvider</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../_sources/core/character-controller/abilities/interfaces/i-movement-direction-provider.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="imovementdirectionsprovider">
+<span id="i-movement-directions-provider-page"></span><h1>IMovementDirectionsProvider<a class="headerlink" href="#imovementdirectionsprovider" title="Permalink to this headline"></a></h1>
+<div class="highlight-csharp notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span><span class="w"> </span><span class="nn">Handy2DTools.CharacterController.Abilities</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="c1">/// &lt;summary&gt;</span>
+<span class="w">    </span><span class="c1">/// Any component that wants to provide others about directional</span>
+<span class="w">    </span><span class="c1">/// updtade should implement this.</span>
+<span class="w">    </span><span class="c1">/// &lt;/summary&gt;</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">interface</span><span class="w"> </span><span class="n">IMovementDirectionsProvider</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+
+<span class="w">        </span><span class="c1">/// &lt;summary&gt;</span>
+<span class="w">        </span><span class="c1">/// An event wich should be fired to update movements direction</span>
+<span class="w">        </span><span class="c1">/// &lt;/summary&gt;</span>
+<span class="w">        </span><span class="c1">/// &lt;value&gt; A Vector2 representing the direction. This MUST be normalized &lt;/value&gt;</span>
+<span class="w">        </span><span class="n">UnityEvent</span><span class="p">&lt;</span><span class="n">Vector2</span><span class="p">&gt;</span><span class="w"> </span><span class="n">MovementDirections2DUpdate</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="i-horizontal-facing-direction-provider.html" class="btn btn-neutral float-left" title="IHorizontalFacingDirectionProvider" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="i-jump-performer.html" class="btn btn-neutral float-right" title="IJumpPerformer" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Good Batch Games.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

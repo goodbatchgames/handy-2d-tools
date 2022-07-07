@@ -1,0 +1,108 @@
+.. _welcome-core-abilities-page:
+
+Abilities
+=========
+
+Here we have components that represent character Abilities. They can be related to movement, attacks or other 
+stuff.
+
+Ability Setup
+-------------
+
+For the sake of organizing and allowing us to have multiple setups for abilities configurations 
+we use `ScriptableObjects <https://docs.unity3d.com/Manual/class-ScriptableObject.html>`_ . This way
+you can create multiple setups and use them in different situations along your game. 
+
+So, when configuring some ability component, create one or multiple of its setup and associate it 
+in order for the component work properly.
+
+Every ability have 2 main boolean properties wich will allow you to operate them as you wish. They are:
+
+.. table:: 
+   :width: 100% 
+   :widths: 35 65
+
+   +---------------------------------------------+---------------------------------------------------------------------------------------------------------+
+   | ``public bool Learned { get; }``            | This means your character has already learned that ability therefore can use it if it is active         |
+   +---------------------------------------------+---------------------------------------------------------------------------------------------------------+
+   | ``public bool Active { get; }``             | This means the ability is active and can be used. This consider if ability is learned or not            |
+   +---------------------------------------------+---------------------------------------------------------------------------------------------------------+
+
+We also have one ``UnityEvent<bool>`` for each of the above properties value changes updates:
+
+.. table:: 
+   :width: 100% 
+   :widths: 40 60
+
+   +-------------------------------------------------------+-----------------------------------------------------------------------------------------------+
+   | ``public UnityEvent<bool> LearnedStatusUpdate``       | Invoked every time the ``learned`` property value changes                                     |
+   +-------------------------------------------------------+-----------------------------------------------------------------------------------------------+
+   | ``public UnityEvent<bool> ActivationStatusUpdate``    | Invoked every time the ``active`` property value changes                                      |
+   +-------------------------------------------------------+-----------------------------------------------------------------------------------------------+
+
+And these available methods:
+
+.. table:: 
+   :width: 100% 
+   :widths: 35 65
+
+   +---------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | ``public virtual bool Activate()``          | If Ability is learned, activates it and invokes |br| active status update event. Returns false if activation fails                                                 |
+   +---------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | ``public virtual void Deactivate()``        | Deactivates the ability and invokes active status update event.                                                                                                    |
+   +---------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | ``public virtual void Learn()``             | Sets ability learned status as true and invokes learned status update event.                                                                                       |
+   +---------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | ``public virtual void Unlearn()``           | Sets ability learned status as false and invokes learned status update event. |br| This also calls Deactivate() to ensure the ability is not active.               |
+   +---------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | ``public virtual void LearnAndActivate()``  | Learn and activate the ability. Perfect for when managing abilities |br| like purchasing o collecting things that grants that ability.                             |
+   +---------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+These properties and events can be really handy for the case of building an ability manager. Say you want to handle when a
+specifc ability is considered learned (maybe buy purchasing it on store or picking up a collectable item). Just access the 
+ability setup ``ScriptableObject`` through your script and call its ``Learn()`` or ``LearnAndActivate()`` methods. 
+
+Also, considering you may want to disable some ability temporally based on your game's logic, but still want to display that particular ability
+as learned, use the ``Activate()`` and ``Deactivate()`` methods to handle this. 
+
+Have in mind that an ability crafted by us will only perform in case both ``learned`` and ``active`` are set as true. All abilities
+listed below will have their setups properly documented.
+
+.. note::
+   
+   Abilities setups are crafted to represent an specific character setup of abilities. So, if you have different characters with the same ability, 
+   this means you would probably want to create different ``ScriptableObject`` setups for each of them.
+
+Available Abilities
+-------------------
+
+.. toctree::
+   :maxdepth: 1
+   
+   dynamic-movement
+   horizontal-flip
+   dynamic-jump
+   dynamic-slide
+
+Interfaces
+----------
+
+.. toctree::
+   :maxdepth: 1
+   
+   interfaces/i-horizontal-flip-performer
+   interfaces/i-horizontal-facing-direction-provider
+   interfaces/i-movement-direction-provider
+   interfaces/i-jump-performer
+   interfaces/i-jump-extra-performer
+   interfaces/i-jump-handler
+   interfaces/i-slide-handler
+   interfaces/i-slide-performer
+   interfaces/i-dash-handler
+   interfaces/i-dash-performer
+
+.. HTML Substiuions
+
+.. |br| raw:: html
+
+     <br />
