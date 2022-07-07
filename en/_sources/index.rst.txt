@@ -1,4 +1,4 @@
-.. IndieGabo's Handy Tools documentation master file, created by
+.. Handy 2D Tools documentation master file, created by
    sphinx-quickstart on Mon May 23 10:20:07 2022.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
@@ -6,9 +6,8 @@
 .. raw:: html
 
    <div class="container">
-      <div class="gabo-container">
-         <img class="gabo-picture" src="_static/images/gabo.jpg" alt="Gabo" />
-         <img class="gabo-tag" src="_static/images/gabo-tag.png" alt="Gabo Tag" />
+      <div class="logo-container">
+         <img class="logo-picture" src="../_images/logo.png" alt="logo" />
       </div>
    </div>
 
@@ -19,7 +18,7 @@
 Handy 2D Tools by Good Batch Games!
 ===================================
 
-Welcome to our Handy 2D Tools by documentation! Hurray! \\o/
+Welcome to our Handy 2D Tools documentation! Hurray! \\o/
 
 About this project
 ------------------
@@ -29,7 +28,7 @@ This is a **completely free**  collection of handy tools for 2D driven Unity Gam
 Our goal is to make easy to use and iterative components so you can either use them as they are 
 or have a starting point to create something awesome for your game.
 
-We are a small group of people dreaming to build 2D games. @hile we learn and grow 
+We are a small group of people dreaming to build 2D games. While we learn and grow 
 as game designers / developers we also want to share what we learn and build. 
 
 Current Version
@@ -38,7 +37,7 @@ Current Version
    * 1.0.0-alpha
 
 Being this an alpha version we ask you, who got interested enough to be here, to help us 
-test what we've built already and our "philosophy" behind how we compose our tools.
+test both our "philosophy" behind how we compose our tools and the tools we already built.
 
 Speaking of wich, check out :ref:`our crafting principles <crafting-principles-page>` and let us know what you think.
 
@@ -98,16 +97,22 @@ Nevertheless, if somehow you just want to donate cause you find my work useful, 
 
 .. toctree::
    :maxdepth: 1
-   :caption: About
+   :caption: First Steps
 
-   crafting-principles  
+   first-steps/how-to-use
 
 .. toctree::
    :maxdepth: 1
-   :caption: First Steps
+   :caption: Downloads
 
-   first-steps/installation
-   first-steps/dependencies
+   downloads/1.0.0
+   
+.. toctree::
+   :maxdepth: 1
+   :caption: About
+
+   about/crafting-principles
+   about/third-party
 
 .. toctree::
    :maxdepth: 2   
@@ -115,8 +120,8 @@ Nevertheless, if somehow you just want to donate cause you find my work useful, 
 
    core/welcome
 
-Where to Find IndieGabo
------------------------
+Where to find us
+----------------
 
 .. raw:: html
 

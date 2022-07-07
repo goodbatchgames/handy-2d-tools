@@ -1,0 +1,18 @@
+.. _how-to-use-page:
+
+How To use
+==========
+
+Core Package
+------------
+
+We have a core package free from any dependecy other than unity itself. It is bot robust and light so you won't need to 
+worry about it groing big on your project. The core is composed mainly by scripts you can use. 
+
+Any scripting that requires other packages (i.e. the Input System or Cinemachine) will be treated as an add-on and will be available in the add-ons section as another
+package you can download and import separately based on your projects needs. 
+
+You can import the core package by downloading it at the :ref:`downloads page <downloads-page>` and importing it as and asset package.
+or by using the unity's package manager git importing approach as you can see below: 
+
+- Importing from git video -

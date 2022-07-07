@@ -1,0 +1,17 @@
+.. _third-party_page:
+
+Third Party
+===========
+
+Here are the third party packages there are included in and used by our tools:
+
+* NaughtyAttributes by dbrizov:
+ 
+    We use ``NaughtyAttributes`` in order to keep its inspector more pleasant. Huge thanks to ``dbrizov`` for this incredible tool. You can check it out
+    on the `NaughtyAttributes Github page <https://github.com/dbrizov/NaughtyAttributes>`_ .
+
+* Sprite Animator by Gabriel Bigardi
+
+    Although this was only inspirational for us to create our own code on animating sprites, here lies our shoutout to the original author. He is a very good
+    and kind person as well as a great developer. You should checkout his `Github page <https://github.com/GabrielBigardi>`_ and the 
+    `project <https://github.com/GabrielBigardi/Unity-2D-Sprite-Animator>`_  wich inspired our :ref:`sprite animator <sprite-animator-welcome-page>`.

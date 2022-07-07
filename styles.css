@@ -6,12 +6,13 @@
 
 body {
   --top-bar-height: 80px;
-  --purple-bg-color: #260038;
-  --pink-color: #ff309a;
-  --blue-color: #1ee4f9;
+  --bg-color: #1b1715;
+  --highlight-color: #961916;
+  --dark-color: #393533;
+  --neutral-color: #988d8b;
   margin: 0;
   color: white;
-  background: var(--purple-bg-color);
+  background: var(--bg-color);
   --text-highlight-color: #2ab3e7; /* The  first gradient color */
   --text-gradient-color-a: #2ab3e7; /* The  first gradient color */
   --text-gradient-color-b: #ad69f1; /* The  second gradient color */
@@ -45,11 +46,10 @@ a {
 }
 
 
-.gabo-container {
+.logo-container {
   position: relative;
   width: 30vh;
   height: 30vh;
-  border-radius: 50%;
   margin-bottom: 1em;
   margin-bottom: 3rem !important;
 
@@ -59,26 +59,16 @@ a {
   }
 }
 
-.gabo-picture {
+.logo-picture {
   width: 30vh;
   height: 30vh;
   border-radius: 50%;
-  animation: shadow-flow 15s ease-in-out infinite;
 
   @media (min-width: $x-large-desktop) {
     width: 40vh;
     height: 40vh;
   }
 }
-
-.gabo-tag {
-  position: absolute;
-  width: 24vh;
-  bottom: -3vh;
-  left: 50%;
-  margin-left: -12vh;
-}
-
 
 .title-container {
   padding: 1rem;
@@ -105,13 +95,19 @@ a {
   background-image: linear-gradient(
     -60deg,
     var(--text-gradient-color-a),
-    var(--pink-color),
+    var(--highlight-color),
     #fff
   );
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: text-flow 30s ease-in-out infinite;
+  animation: text-flow 30s infinite;
+}
+
+.subtitle {
+  font-size: 5vh;
+  font-weight: 500;
+  color: var(--neutral-color);
 }
 
 .links-container {
@@ -134,9 +130,15 @@ a {
   cursor: pointer;
   position: relative;
   padding: 2rem;
-  background-color: #6d1f93;
+  background-color: #d33030;
   box-shadow: 0 3px 1px -2px #0003, 0 2px 2px #00000024, 0 1px 5px #0000001f;
   border-radius: 10px;
+  color: #c9c2c1;
+  transition: all 400ms;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 
 .link img {
@@ -161,12 +163,11 @@ a {
 }
 
 .link:hover .link-title {
-  color: var(--pink-color);
-  text-shadow: -1px -1px 2px #c72e58;
+  color: var(--dark-color);
 }
 
 ::selection {
-  color: #ff3099;
+  color: var(--highlight-color);
   background-color: white;
 }
 
@@ -174,39 +175,6 @@ a {
   width: 10px;
   height: 10px;
 }
-
-
-@keyframes shadow-flow {
-  0% {
-    box-shadow: 0 0 20px #c57bff, 5px 0 5px var(--text-gradient-color-b),
-      -5px 0 5px var(--text-gradient-color-a);
-  }
-  50% {
-    box-shadow: 0 0 30px #c57bff, -7px 0 7px var(--text-gradient-color-a),
-      7px 0 7px var(--text-gradient-color-b);
-  }
-  100% {
-    box-shadow: 0 0 20px #c57bff, 5px 0 5px var(--text-gradient-color-b),
-      -5px 0 5px var(--text-gradient-color-a);
-  }
-}
-
-@-webkit-keyframes shadow-flow {
-  0% {
-    box-shadow: 0 0 20px #c57bff, 5px 0 5px var(--text-gradient-color-b),
-      -5px 0 5px var(--text-gradient-color-a);
-  }
-  50% {
-    box-shadow: 0 0 30px #c57bff, -7px 0 7px var(--text-gradient-color-a),
-      7px 0 7px var(--text-gradient-color-b);
-  }
-  100% {
-    box-shadow: 0 0 20px #c57bff, 5px 0 5px var(--text-gradient-color-b),
-      -5px 0 5px var(--text-gradient-color-a);
-  }
-}
-
-
 
 @keyframes text-flow {
   0% {

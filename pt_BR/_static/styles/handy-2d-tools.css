@@ -1,0 +1,206 @@
+/*
+* Read the docs customizations
+*/
+
+body {
+  /* --dark-link-color: #e64d4d; */
+}
+
+html[data-theme='dark'] .highlight .nf 
+{
+    color: #e64d4d !important;
+}
+
+html[data-theme='dark'] .highlight .nn
+{
+    color: #e64d4d !important;
+}
+
+html[data-theme='dark']  .highlight .nc
+{
+    color: #e64d4d !important;
+}
+
+html[data-theme='dark']  .k
+{
+    color: #5c9450 !important;
+}
+
+.wy-nav-content {
+    max-width: 960px !important;
+    width: 100% !important;
+}
+
+.wy-menu-vertical header, .wy-menu-vertical p.caption{
+  /* color: var(--dark-link-color) !important; */
+}
+
+/*
+* Handy 2D Tools
+*/
+
+.container {
+  width: 100%;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  box-sizing:border-box;
+}
+
+
+.logo-container {
+  position: relative;
+  width: 30vh;
+  height: 30vh;
+  margin-bottom: 1em;
+  margin-bottom: 3rem !important;
+
+  @media (min-width: $x-large-desktop) {
+    width: 40vh;
+    height: 40vh;
+  }
+}
+
+.logo-picture {
+  width: 30vh;
+  height: 30vh;
+  border-radius: 50%;
+
+  @media (min-width: $x-large-desktop) {
+    width: 30vh;
+    height: 30vh;
+  }
+}
+
+.title-container {
+  padding: 1rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  gap: 1rem;
+}
+
+.title, .subtitle {
+  text-align: center;
+}
+
+.title {
+  font-size: 5vh;
+  font-weight: 700;
+}
+
+.title-gradient {
+  background-size: 300%;
+  background-image: linear-gradient(
+    -60deg,
+    var(--text-gradient-color-a),
+    var(--highlight-color),
+    #fff
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: text-flow 30s infinite;
+}
+
+.subtitle {
+  font-size: 5vh;
+  font-weight: 500;
+  color: var(--neutral-color);
+}
+
+.links-container {
+  padding: 2rem;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;  
+}
+
+@media only screen and (max-width: 600px) {    
+  .links-container {
+    flex-direction: column;
+  }
+}
+
+.link {
+  cursor: pointer;
+  position: relative;
+  padding: 2rem;
+  background-color: #d33030;
+  box-shadow: 0 3px 1px -2px #0003, 0 2px 2px #00000024, 0 1px 5px #0000001f;
+  border-radius: 10px;
+  color: #c9c2c1;
+  transition: all 400ms;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.link img {
+  width: 6vh;
+}
+
+.link-title {
+  font-size: 4vh;
+  line-height: 4.2vh;
+  transition: all 400ms;
+  text-align: center;
+
+  @media (max-width: $tablet) {
+    font-size: 0.9rem;
+    line-height: 1.1rem;
+  }
+
+  @media (min-width: $x-large-desktop) {
+    font-size: 1rem;
+    line-height: 1.3rem;
+  }
+}
+
+.link:hover .link-title {
+  color: var(--dark-color);
+}
+
+::selection {
+  color: var(--highlight-color);
+  background-color: white;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+@keyframes text-flow {
+  0% {
+    background-position: 0 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
+}
+
+@-webkit-keyframes text-flow {
+  0% {
+    background-position: 0 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
+}
