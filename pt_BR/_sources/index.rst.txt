@@ -105,7 +105,7 @@ Nevertheless, if somehow you just want to donate cause you find my work useful, 
    :maxdepth: 1
    :caption: Downloads
 
-   downloads/1.0.0
+   downloads/latest
    
 .. toctree::
    :maxdepth: 1

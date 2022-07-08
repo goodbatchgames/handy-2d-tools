@@ -12,7 +12,7 @@ worry about it groing big on your project. The core is composed mainly by script
 Any scripting that requires other packages (i.e. the Input System or Cinemachine) will be treated as an add-on and will be available in the add-ons section as another
 package you can download and import separately based on your projects needs. 
 
-You can import the core package by downloading it at the :ref:`downloads page <downloads-page>` and importing it as and asset package.
+You can import the core package by downloading it at the :ref:`downloads page <downloads-latest-page>` and importing it as and asset package.
 or by using the unity's package manager git importing approach as you can see below: 
 
 - Importing from git video -
