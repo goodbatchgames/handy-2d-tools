@@ -12,7 +12,11 @@ worry about it growing big on your project. The core is composed mainly by handy
 The core package can be downloaded at the :ref:`downloads page <download-latest-page>` for you to import it as an asset package.
 You can also use the unity's package manager's git importing approach as you can see below: 
 
-- Importing core video -
+.. raw:: html
+   
+   <iframe width="800" height="450" src="https://www.youtube.com/embed/AVC97s0Tf1s" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+|
 
 Any scripting that requires other packages (i.e. the Input System or Cinemachine) will be treated as an add-on and will be available in the add-ons section 
 of our :ref:`download page <download-latest-page>`. You can separately import add ons as assets based on your projects needs. 

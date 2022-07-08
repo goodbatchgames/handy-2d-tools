@@ -13,7 +13,7 @@ Add Ons
 
 Dependent on the Unity's Input System:
 
-* :download:`Input System Package <https://goodbatchgames.github.io/handy-2D-tools/_downloads/1.0.0/H2DT_Add_On_Input_System_1.0.0-alpha.zip>` 
+:download:`Input System Package <https://goodbatchgames.github.io/handy-2D-tools/_downloads/1.0.0/H2DT_Add_On_Input_System_1.0.0-alpha.zip>` 
 
 
 Full Package
@@ -21,7 +21,7 @@ Full Package
 
 Beware that the full package includes all the above packages, therefore, all its dependecies.
 
-* :download:`Full Package <https://goodbatchgames.github.io/handy-2D-tools/_downloads/1.0.0/H2DT_Full_1.0.0-alpha.zip>`
+:download:`Full Package <https://goodbatchgames.github.io/handy-2D-tools/_downloads/1.0.0/H2DT_Full_1.0.0-alpha.zip>`
 
 .. note::
     Handy 2D Tools requires **Unity 2019.4** or later versions.
