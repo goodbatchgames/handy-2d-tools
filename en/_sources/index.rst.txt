@@ -100,12 +100,7 @@ Nevertheless, if somehow you just want to donate cause you find my work useful, 
    :caption: First Steps
 
    first-steps/how-to-use
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Downloads
-
-   downloads/latest
+   first-steps/download
    
 .. toctree::
    :maxdepth: 1

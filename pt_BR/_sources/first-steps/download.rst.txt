@@ -1,7 +1,7 @@
-.. _downloads-latest-page:
+.. _download-latest-page:
 
-1.0.0-alpha (Most Recent)
-=========================
+Download 1.0.0-alpha
+====================
 
 Core
 ----
