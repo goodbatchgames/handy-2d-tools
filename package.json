@@ -1,0 +1,21 @@
+{
+    "name": "com.goodbatchgames.handy-2d-tools",
+    "version": "1.0.0-alpha",
+    "displayName": "Handy 2D Tools",
+    "description": "A batch of helpful 2D tools for Unity.",
+    "author": {
+        "name": "Good Batch Games",
+        "email": "goodbatchgames@gmail.com",
+        "url": "http://githbub.com/goodbatchgames"
+    },
+    "keywords": [
+        "2D",
+        "tools",
+        "character",
+        "controller",
+        "fsm",
+        "state",
+        "machine",
+        "parallax"
+    ]
+}
