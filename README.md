@@ -2,6 +2,10 @@
   Ler em <a href="README.pt-br.md"> Português do Brasil </a>
 </p>
 
+<p align="center">
+  <img style="width: 300px; height:300px;" src="https://goodbatchgames.github.io/handy-2D-tools/_images/logo.png" />
+</p>
+
 # Handy 2D Tools by Good Batch Games
 
 Just a **completly free** batch of Handy 2D Tools crafted for you.
