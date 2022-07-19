@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Handy2DTools.CharacterController.Checkers;
 using UnityEngine;
 using Handy2DTools.NaughtyAttributes;
+<<<<<<< HEAD
 using Handy2DTools.Debugging;
 
 namespace Handy2DTools.CharacterController.Abilities
@@ -113,6 +114,20 @@ namespace Handy2DTools.CharacterController.Abilities
         protected void OnDisable()
         {
             UnsubscribeSeekers();
+=======
+
+namespace Handy2DTools.CharacterController.Abilities
+{
+    [AddComponentMenu("Handy 2D Tools/Character Controller/Abilities/DynamicMovement")]
+    public class DynamicMovement : DynamicMovementPerformer<DynamicMovementSetup>
+    {
+
+        #region Mono
+
+        protected override void Awake()
+        {
+            base.Awake();
+>>>>>>> 4d3f3e0de14d3b96eb66728515a34f4b1632f1cf
         }
 
         #endregion
@@ -124,7 +139,20 @@ namespace Handy2DTools.CharacterController.Abilities
         /// </summary>
         public virtual void Stand()
         {
+<<<<<<< HEAD
             rb.velocity = Vector2.zero;
+=======
+            ApplyHorizontalVelocity(0f, 0f);
+        }
+
+        /// <summary>
+        /// Makes the character stand still considering slopes
+        /// </summary>
+        /// <param name="slopeData"></param>
+        public virtual void Stand(SlopeData slopeData)
+        {
+            ApplyHorizontalVelocity(0f, 0f, slopeData, setup.FullFriction);
+>>>>>>> 4d3f3e0de14d3b96eb66728515a34f4b1632f1cf
         }
 
         /// <summary>
@@ -133,9 +161,73 @@ namespace Handy2DTools.CharacterController.Abilities
         /// <param name="directionSign"></param>
         public virtual void MoveHorizontally(float directionSign)
         {
+<<<<<<< HEAD
             float targetVelocityX = xSpeed * directionSign;
             Vector2 velocity = new Vector2(CalculateVelocityX(targetVelocityX), rb.velocity.y);
             rb.velocity = velocity;
+=======
+            ApplyHorizontalVelocity(setup.XSpeed, directionSign);
+        }
+
+        /// <summary>
+        /// Moves character along X axis based on xSpeed
+        /// </summary>
+        /// <param name="directionSign"></param>
+        public virtual void GroundedMoveHorizontally(float directionSign)
+        {
+            if (setup.HasStartingtImpulse)
+            {
+                if (Mathf.Abs(rb.velocity.x) < setup.XSpeed)
+                {
+                    ApplyHorizontalForce(setup.AccelerationRate, directionSign);
+                }
+                else
+                {
+                    ApplyHorizontalVelocity(setup.XSpeed, directionSign);
+                }
+            }
+            else
+            {
+                ApplyHorizontalVelocity(setup.XSpeed, directionSign);
+            }
+            EvaluateAndApplyLinearDrag(directionSign);
+        }
+
+        /// <summary>
+        /// Moves character along X axis based on xSpeed considering slopes
+        /// </summary>
+        /// <param name="directionSign"></param>
+        /// <param name="slopeData"></param>
+        /// <param name="ignoreSlopes"></param>
+        public virtual void GroundedMoveHorizontally(float directionSign, SlopeData slopeData, bool ignoreSlopes = false)
+        {
+            if (setup.HasStartingtImpulse && !slopeData.onSlope)
+            {
+                if (Mathf.Abs(rb.velocity.x) < setup.XSpeed)
+                {
+                    ApplyHorizontalForce(setup.AccelerationRate, directionSign);
+                }
+                else
+                {
+                    ApplyHorizontalVelocity(setup.XSpeed, directionSign, slopeData, setup.FullFriction, ignoreSlopes);
+                }
+            }
+            else
+            {
+                ApplyHorizontalVelocity(setup.XSpeed, directionSign, slopeData, setup.FullFriction, ignoreSlopes);
+            }
+
+            EvaluateAndApplyLinearDrag(directionSign, slopeData);
+        }
+
+        /// <summary>
+        /// Set a Rigidbody.velocity.x based on a given speed
+        /// </summary>
+        /// <param name="speed"> The desired speed </param>
+        public virtual void MoveHorizontallyApplyingGravity(float directionSign, float gravityScale)
+        {
+            ApplyHorizontalVelocityWithGravity(setup.XSpeed, directionSign, gravityScale);
+>>>>>>> 4d3f3e0de14d3b96eb66728515a34f4b1632f1cf
         }
 
         /// <summary>
@@ -145,7 +237,11 @@ namespace Handy2DTools.CharacterController.Abilities
         /// <param name="directionSign"></param>
         public virtual void PushHorizontally(float force, float directionSign)
         {
+<<<<<<< HEAD
             rb.AddForce(new Vector2(force * directionSign, rb.velocity.y));
+=======
+            ApplyHorizontalForce(force, directionSign);
+>>>>>>> 4d3f3e0de14d3b96eb66728515a34f4b1632f1cf
         }
 
         /// <summary>
@@ -154,6 +250,7 @@ namespace Handy2DTools.CharacterController.Abilities
         /// <param name="speed"></param>
         public virtual void MoveVertically(float speed)
         {
+<<<<<<< HEAD
             Vector2 velocity = new Vector2(rb.velocity.x, speed);
             rb.velocity = velocity;
         }
@@ -283,6 +380,43 @@ namespace Handy2DTools.CharacterController.Abilities
         protected override void UnsubscribeSeekers()
         {
             groundingProvider?.GroundingUpdate.RemoveListener(UpdateGrounding);
+=======
+            ApplyVerticalVelocity(speed);
+        }
+
+        /// <summary>
+        /// Evaluates if linear drag of rigidbody should be changed. Applies the new drag value
+        /// case it should.
+        /// </summary>
+        /// <param name="directionSign"></param>
+        /// <param name="slopeData"></param>
+        protected virtual void EvaluateAndApplyLinearDrag(float directionSign, SlopeData slopeData = null)
+        {
+            if ((slopeData != null && slopeData.onSlope) || !setup.HasStartingtImpulse)
+            {
+                rb.drag = 0f;
+                return;
+            }
+
+            if ((Mathf.Abs(directionSign) <= 0.4f && rb.velocity.x != 0) || IsChangingDirection(directionSign))
+            {
+                rb.drag = setup.StartingImpulseDrag;
+            }
+            else
+            {
+                rb.drag = 0f;
+            }
+        }
+
+        /// <summary>
+        /// Simple evaluation of if the character is changing direction
+        /// </summary>
+        /// <param name="directionSign"></param>
+        /// <returns></returns>
+        protected virtual bool IsChangingDirection(float directionSign)
+        {
+            return (rb.velocity.x > 0f && directionSign < 0f) || (rb.velocity.x < 0f && directionSign > 0f);
+>>>>>>> 4d3f3e0de14d3b96eb66728515a34f4b1632f1cf
         }
 
         #endregion

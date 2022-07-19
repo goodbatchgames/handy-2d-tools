@@ -13,6 +13,7 @@ namespace Handy2DTools.CharacterController.Abilities
     public interface IHorizontalFlipPerformer
     {
         /// <summary>
+<<<<<<< HEAD
         /// Flips character horizontally
         /// </summary>
         void FlipHorizontally();
@@ -22,5 +23,11 @@ namespace Handy2DTools.CharacterController.Abilities
         /// and perform accordingly.
         /// </summary>
         void EvaluateAndFlipHorizontally(float directionSign);
+=======
+        /// This method must evaluate if character should be flipped
+        /// and perform accordingly.
+        /// </summary>
+        void EvaluateAndFlip(float directionSign);
+>>>>>>> 4d3f3e0de14d3b96eb66728515a34f4b1632f1cf
     }
 }

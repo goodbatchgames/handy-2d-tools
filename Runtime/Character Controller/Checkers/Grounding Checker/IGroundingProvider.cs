@@ -11,7 +11,10 @@ namespace Handy2DTools.CharacterController.Checkers
     /// </summary>
     public interface IGroundingProvider
     {
+<<<<<<< HEAD
         bool Grounded { get; }
+=======
+>>>>>>> 4d3f3e0de14d3b96eb66728515a34f4b1632f1cf
         UnityEvent<bool> GroundingUpdate { get; }
     }
 }

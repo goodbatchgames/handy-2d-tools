@@ -35,11 +35,14 @@ namespace Handy2DTools.CharacterController.Checkers
         [SerializeField]
         protected LayerMask whatIsWall;
 
+<<<<<<< HEAD
         [Tooltip("Inform what layers should be considered wall")]
         [SerializeField]
         [Tag]
         protected string tagToIgnore;
 
+=======
+>>>>>>> 4d3f3e0de14d3b96eb66728515a34f4b1632f1cf
         // Right stuff
         [Header("Upper Right Detection")]
         [Space]
@@ -234,7 +237,11 @@ namespace Handy2DTools.CharacterController.Checkers
                 RaycastHit2D hit = Physics2D.Raycast(positions.upperRight, Vector2.right, UpperRightLengthConverted, whatIsWall);
                 DebugCast(positions.upperRight, Vector2.right * UpperRightLengthConverted, hit);
 
+<<<<<<< HEAD
                 if (hit && hit.collider && !hit.collider.CompareTag(tagToIgnore))
+=======
+                if (hit && hit.collider)
+>>>>>>> 4d3f3e0de14d3b96eb66728515a34f4b1632f1cf
                 {
                     data.upperRight = true;
                     data.upperRightHitAngle = Vector2.Angle(positions.upperRight, hit.point);
@@ -246,7 +253,11 @@ namespace Handy2DTools.CharacterController.Checkers
                 RaycastHit2D hit = Physics2D.Raycast(positions.lowerRight, Vector2.right, LowerRightLengthConverted, whatIsWall);
                 DebugCast(positions.lowerRight, Vector2.right * LowerRightLengthConverted, hit);
 
+<<<<<<< HEAD
                 if (hit && hit.collider && !hit.collider.CompareTag(tagToIgnore))
+=======
+                if (hit && hit.collider)
+>>>>>>> 4d3f3e0de14d3b96eb66728515a34f4b1632f1cf
                 {
                     data.lowerRight = true;
                     data.lowerRightHitAngle = Vector2.Angle(positions.lowerRight, hit.point);
@@ -258,7 +269,11 @@ namespace Handy2DTools.CharacterController.Checkers
                 RaycastHit2D hit = Physics2D.Raycast(positions.centerRight, Vector2.right, CenterRightLengthConverted, whatIsWall);
                 DebugCast(positions.centerRight, Vector2.right * CenterRightLengthConverted, hit);
 
+<<<<<<< HEAD
                 if (hit && hit.collider && !hit.collider.CompareTag(tagToIgnore))
+=======
+                if (hit && hit.collider)
+>>>>>>> 4d3f3e0de14d3b96eb66728515a34f4b1632f1cf
                 {
                     data.centerRight = true;
                     data.centerRightHitAngle = Vector2.Angle(positions.centerRight, hit.point);
@@ -270,7 +285,11 @@ namespace Handy2DTools.CharacterController.Checkers
                 RaycastHit2D hit = Physics2D.Raycast(positions.upperLeft, Vector2.left, UpperLeftLengthConverted, whatIsWall);
                 DebugCast(positions.upperLeft, Vector2.left * UpperLeftLengthConverted, hit);
 
+<<<<<<< HEAD
                 if (hit && hit.collider && !hit.collider.CompareTag(tagToIgnore))
+=======
+                if (hit && hit.collider)
+>>>>>>> 4d3f3e0de14d3b96eb66728515a34f4b1632f1cf
                 {
                     data.upperLeft = true;
                     data.upperLeftHitAngle = Vector2.Angle(positions.upperLeft, hit.point);
@@ -282,7 +301,11 @@ namespace Handy2DTools.CharacterController.Checkers
                 RaycastHit2D hit = Physics2D.Raycast(positions.lowerLeft, Vector2.left, LowerLeftLengthConverted, whatIsWall);
                 DebugCast(positions.lowerLeft, Vector2.left * LowerLeftLengthConverted, hit);
 
+<<<<<<< HEAD
                 if (hit && hit.collider && !hit.collider.CompareTag(tagToIgnore))
+=======
+                if (hit && hit.collider)
+>>>>>>> 4d3f3e0de14d3b96eb66728515a34f4b1632f1cf
                 {
                     data.lowerLeft = true;
                     data.lowerLeftHitAngle = Vector2.Angle(positions.lowerLeft, hit.point);
@@ -294,7 +317,11 @@ namespace Handy2DTools.CharacterController.Checkers
                 RaycastHit2D hit = Physics2D.Raycast(positions.centerLeft, Vector2.left, CenterLeftLengthConverted, whatIsWall);
                 DebugCast(positions.centerLeft, Vector2.left * CenterLeftLengthConverted, hit);
 
+<<<<<<< HEAD
                 if (hit && hit.collider && !hit.collider.CompareTag(tagToIgnore))
+=======
+                if (hit && hit.collider)
+>>>>>>> 4d3f3e0de14d3b96eb66728515a34f4b1632f1cf
                 {
                     data.centerLeft = true;
                     data.centerLeftHitAngle = Vector2.Angle(positions.centerLeft, hit.point);

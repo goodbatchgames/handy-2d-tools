@@ -7,7 +7,11 @@ using UnityEngine.Events;
 namespace Handy2DTools.CharacterController.Abilities
 {
     [CreateAssetMenu(fileName = "New DynamicJumpSetup", menuName = "Handy 2D Tools/CharacterController/Setups/DynamicJump")]
+<<<<<<< HEAD
     public class DynamicJumpSetup : LearnableAbilitySetup
+=======
+    public class DynamicJumpSetup : AbilitySetup
+>>>>>>> 4d3f3e0de14d3b96eb66728515a34f4b1632f1cf
     {
         #region Inspector
 
@@ -17,7 +21,15 @@ namespace Handy2DTools.CharacterController.Abilities
         [Space]
         protected float force = 100f;
 
+<<<<<<< HEAD
         [Label("Duration")]
+=======
+        [Tooltip("The top speed character can reach while ascending.")]
+        [SerializeField]
+        protected float maxYSpeed = 10f;
+
+        [Label("Impulse Duration")]
+>>>>>>> 4d3f3e0de14d3b96eb66728515a34f4b1632f1cf
         [Tooltip("Period of time in seconds during which force will be applyed positively to Y axis.")]
         [SerializeField]
         protected float duration = 0.35f;
@@ -45,6 +57,7 @@ namespace Handy2DTools.CharacterController.Abilities
         [SerializeField]
         protected bool canWallJump = false;
 
+<<<<<<< HEAD
         [Tooltip("Mark this if you want coyote time to be applyed for wall jumps.")]
         [SerializeField]
         protected bool hasWallCoyoteTime = false;
@@ -55,6 +68,8 @@ namespace Handy2DTools.CharacterController.Abilities
         [SerializeField]
         protected float wallCoyoteTime = 0.15f;
 
+=======
+>>>>>>> 4d3f3e0de14d3b96eb66728515a34f4b1632f1cf
         [Header("Extra Jumps")]
         [Label("Has Extra Jumps")]
         [SerializeField]
@@ -76,6 +91,7 @@ namespace Handy2DTools.CharacterController.Abilities
         protected float extraJumpDuration = 0.35f;
 
         [Foldout("Jump Events")]
+<<<<<<< HEAD
         [Label("Jump Started")]
         [Space]
         [SerializeField]
@@ -96,23 +112,42 @@ namespace Handy2DTools.CharacterController.Abilities
         [Label("Extra Jump Finished")]
         [SerializeField]
         protected UnityEvent<GameObject> extraJumpFinished;
+=======
+        [Label("Jump Performed")]
+        [Space]
+        [SerializeField]
+        protected UnityEvent<GameObject> jumpPerformed;
+
+        [Foldout("Jump Events")]
+        [Label("Extra Jump Performed")]
+        [SerializeField]
+        protected UnityEvent<GameObject> extraJumpPerformed;
+>>>>>>> 4d3f3e0de14d3b96eb66728515a34f4b1632f1cf
 
         #endregion
 
         #region Getters
 
         public float Force => force;
+<<<<<<< HEAD
+=======
+        public float MaxYSpeed => maxYSpeed;
+>>>>>>> 4d3f3e0de14d3b96eb66728515a34f4b1632f1cf
         public float Duration => duration;
         public bool HasCoyoteTime => hasCoyoteTime;
         public float CoyoteTime => coyoteTime;
         public float JumpBufferTime => jumpBufferTime;
         public bool CanWallJump => canWallJump;
+<<<<<<< HEAD
         public bool HasWallCoyoteTime => hasWallCoyoteTime;
         public float WallCoyoteTime => wallCoyoteTime;
+=======
+>>>>>>> 4d3f3e0de14d3b96eb66728515a34f4b1632f1cf
         public bool HasExtraJumps => hasExtraJumps;
         public int ExtraJumps => extraJumps;
         public float ExtraJumpForce => extraJumpForce;
         public float ExtraJumpDuration => extraJumpDuration;
+<<<<<<< HEAD
 
         public UnityEvent<GameObject> JumpStarted => jumpStarted;
         public UnityEvent<GameObject> JumpFinished => jumpFinished;
@@ -143,6 +178,10 @@ namespace Handy2DTools.CharacterController.Abilities
         {
             canWallJump = shouldWallJump;
         }
+=======
+        public UnityEvent<GameObject> JumpPerformed => jumpPerformed;
+        public UnityEvent<GameObject> ExtraJumpPerformed => extraJumpPerformed;
+>>>>>>> 4d3f3e0de14d3b96eb66728515a34f4b1632f1cf
 
         #endregion
     }

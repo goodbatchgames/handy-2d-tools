@@ -14,7 +14,11 @@ namespace Handy2DTools.CharacterController.Abilities
         void Request();
         void Stop();
         void PerformExtraJump();
+<<<<<<< HEAD
         UnityEvent<GameObject> ExtraJumpStarted { get; }
         UnityEvent<GameObject> ExtraJumpFinished { get; }
+=======
+        UnityEvent<GameObject> ExtraJumpPerformed { get; }
+>>>>>>> 4d3f3e0de14d3b96eb66728515a34f4b1632f1cf
     }
 }

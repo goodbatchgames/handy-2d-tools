@@ -11,7 +11,11 @@ namespace Handy2DTools.CharacterController.Abilities
 {
     [AddComponentMenu("Handy 2D Tools/Character Controller/Abilities/DynamicSlide")]
     [RequireComponent(typeof(Rigidbody2D))]
+<<<<<<< HEAD
     public class DynamicSlide : LearnableAbility<DynamicSlideSetup>, ISlidePerformer
+=======
+    public class DynamicSlide : DynamicMovementPerformer<DynamicSlideSetup>, ISlidePerformer
+>>>>>>> 4d3f3e0de14d3b96eb66728515a34f4b1632f1cf
     {
 
         #region Editor
@@ -44,6 +48,14 @@ namespace Handy2DTools.CharacterController.Abilities
         protected bool seekGroundingProvider = false;
 
         [Foldout("Seekers")]
+<<<<<<< HEAD
+=======
+        [Tooltip("If you guarantee your GameObject has a component wich implements an ISlopeDataProvider you can mark this and it will subscribe to its events. SlopeChecker2D, for example, implements it.")]
+        [SerializeField]
+        protected bool seekSlopeDataProvider = false;
+
+        [Foldout("Seekers")]
+>>>>>>> 4d3f3e0de14d3b96eb66728515a34f4b1632f1cf
         [Tooltip("If you guarantee your GameObject has a component wich implements an IHorizontalFacingDirectionProvider you can mark this and it will subscribe to its events. HorizontalFlip, for example, implements it.")]
         [SerializeField]
         protected bool seekHorizontalFacingDirectionProvider = false;
@@ -58,17 +70,25 @@ namespace Handy2DTools.CharacterController.Abilities
         #region Updaters
 
         protected IGroundingProvider groundingProvider;
+<<<<<<< HEAD
         protected IHorizontalDirectionProvider horizontalFacingDirectionProvider;
+=======
+        protected ISlopeDataProvider slopeDataProvider;
+        protected IHorizontalFacingDirectionProvider horizontalFacingDirectionProvider;
+>>>>>>> 4d3f3e0de14d3b96eb66728515a34f4b1632f1cf
         protected ISlideHandler slideHandler;
 
         #endregion
 
+<<<<<<< HEAD
         #region Components
 
         protected Rigidbody2D rb;
 
         #endregion
 
+=======
+>>>>>>> 4d3f3e0de14d3b96eb66728515a34f4b1632f1cf
         #region Properties
 
         public bool sliding { get; protected set; } = false;
@@ -79,7 +99,10 @@ namespace Handy2DTools.CharacterController.Abilities
         protected bool slideLocked = false;
         protected float currentSlideTimer = 0;
         protected float currentDirectionSign = 0;
+<<<<<<< HEAD
         protected bool stopingDueToLostGround = false;
+=======
+>>>>>>> 4d3f3e0de14d3b96eb66728515a34f4b1632f1cf
 
         protected float lengthConvertionRate = 100f;
 
@@ -87,12 +110,20 @@ namespace Handy2DTools.CharacterController.Abilities
 
         #region Getters
 
+<<<<<<< HEAD
         protected bool CanStartSliding => !sliding && grounded && !slideLocked && Time.fixedTime >= canSlideAt;
         protected float LengthConverted => ceilingDetectionLength / lengthConvertionRate;
 
         // Events
         public UnityEvent<GameObject> SlideStarted => setup.SlideStarted;
         public UnityEvent<GameObject> SlideFinished => setup.SlideFinished;
+=======
+        protected bool CanStartSlideing => !sliding && grounded && !slideLocked && Time.fixedTime >= canSlideAt;
+        protected float LengthConverted => ceilingDetectionLength / lengthConvertionRate;
+
+        // Events
+        public UnityEvent<GameObject> SlidePerformed => setup.SlidePerformed;
+>>>>>>> 4d3f3e0de14d3b96eb66728515a34f4b1632f1cf
 
         #endregion
 
@@ -102,10 +133,13 @@ namespace Handy2DTools.CharacterController.Abilities
         {
             base.Awake();
 
+<<<<<<< HEAD
             rb = GetComponent<Rigidbody2D>();
 
             FindComponents();
 
+=======
+>>>>>>> 4d3f3e0de14d3b96eb66728515a34f4b1632f1cf
             if (slidingCollider == null)
                 slidingCollider = GetComponent<Collider2D>();
 
@@ -113,12 +147,33 @@ namespace Handy2DTools.CharacterController.Abilities
                 Log.Danger($"No ceiling defined for {GetType().Name}");
         }
 
+<<<<<<< HEAD
         protected virtual void FixedUpdate()
         {
             if (!autoPerform || !sliding) return;
             Perform();
         }
 
+=======
+        protected virtual void Start()
+        {
+            SubscribeSeekers();
+        }
+
+        protected virtual void FixedUpdate()
+        {
+            if (!autoPerform || !sliding) return;
+
+            if (slopeData != null && slopeData.onSlope)
+            {
+                Perform(slopeData);
+            }
+            else
+            {
+                Perform();
+            }
+        }
+>>>>>>> 4d3f3e0de14d3b96eb66728515a34f4b1632f1cf
         protected virtual void OnEnable()
         {
             SubscribeSeekers();
@@ -134,6 +189,7 @@ namespace Handy2DTools.CharacterController.Abilities
         #region  Logic
 
         /// <summary>
+<<<<<<< HEAD
         /// Call this to request a Jump.
         /// Should only be used if not seeking for horizontal direction provider.
         /// </summary>
@@ -146,17 +202,36 @@ namespace Handy2DTools.CharacterController.Abilities
         }
 
         /// <summary>
+=======
+>>>>>>> 4d3f3e0de14d3b96eb66728515a34f4b1632f1cf
         /// Starts the jump process so Ascend can be called each physics frame
         /// </summary>
         protected void StartSlide()
         {
             ToggleColliders(false);
+<<<<<<< HEAD
             currentSlideTimer = 0;
             slideStartedAt = Time.fixedTime;
             rb.velocity = Vector2.zero;
             sliding = true;
             stopingDueToLostGround = false;
             SlideStarted.Invoke(gameObject);
+=======
+            SetUpSlide(currentDirectionSign);
+            sliding = true;
+            SlidePerformed.Invoke(gameObject);
+        }
+
+        /// <summary>
+        /// Sets up how the slide will be performed
+        /// </summary>
+        protected void SetUpSlide(float directionSign)
+        {
+            currentDirectionSign = directionSign;
+            currentSlideTimer = 0;
+            slideStartedAt = Time.fixedTime;
+            rb.velocity = Vector2.zero;
+>>>>>>> 4d3f3e0de14d3b96eb66728515a34f4b1632f1cf
         }
 
         /// <summary>
@@ -164,6 +239,7 @@ namespace Handy2DTools.CharacterController.Abilities
         /// </summary>
         public void Perform()
         {
+<<<<<<< HEAD
             if (!sliding) return;
 
             if (!stopingDueToLostGround && setup.StopWhenNotGrounded && !grounded)
@@ -176,6 +252,21 @@ namespace Handy2DTools.CharacterController.Abilities
 
             rb.velocity = new Vector2(setup.XSpeed * currentDirectionSign, 0);
 
+=======
+            if (setup.StopWhenNotGrounded && !grounded) { Stop(); return; }
+            if (currentSlideTimer > setup.Duration && !IsUnderCeiling()) { Stop(); return; }
+
+            ApplyHorizontalVelocityWithGravity(setup.XSpeed, currentDirectionSign, setup.GravityScale);
+            currentSlideTimer += Time.fixedDeltaTime;
+        }
+
+        public void Perform(SlopeData slopeData)
+        {
+            if (setup.StopWhenNotGrounded && !grounded) { Stop(); return; }
+            if (currentSlideTimer > setup.Duration && !IsUnderCeiling()) { Stop(); return; }
+
+            ApplyHorizontalVelocity(setup.XSpeed, currentDirectionSign, slopeData);
+>>>>>>> 4d3f3e0de14d3b96eb66728515a34f4b1632f1cf
             currentSlideTimer += Time.fixedDeltaTime;
         }
 
@@ -184,13 +275,20 @@ namespace Handy2DTools.CharacterController.Abilities
         /// </summary>
         public void Stop()
         {
+<<<<<<< HEAD
             if (!sliding) return;
 
+=======
+>>>>>>> 4d3f3e0de14d3b96eb66728515a34f4b1632f1cf
             ToggleColliders(true);
             sliding = false;
             canSlideAt = Time.fixedTime + setup.Delay;
             rb.velocity = Vector2.zero;
+<<<<<<< HEAD
             SlideFinished.Invoke(gameObject);
+=======
+            ApplyGravityScale(defaultGravityScale);
+>>>>>>> 4d3f3e0de14d3b96eb66728515a34f4b1632f1cf
         }
 
         protected virtual void ToggleColliders(bool enable)
@@ -243,17 +341,33 @@ namespace Handy2DTools.CharacterController.Abilities
             Debug.DrawRay(pos, Vector2.up * ceilingDetectionLength, hit.collider ? Color.red : Color.green);
         }
 
+<<<<<<< HEAD
         protected IEnumerator StopAfterTime(float time)
         {
             yield return new WaitForSeconds(time);
             Stop();
         }
 
+=======
+>>>>>>> 4d3f3e0de14d3b96eb66728515a34f4b1632f1cf
         #endregion
 
         #region Callbacks
 
         /// <summary>
+<<<<<<< HEAD
+=======
+        /// Call this to request a Jump
+        /// </summary>
+        public void Request()
+        {
+            if (!setup.Active) return;
+            if (!CanStartSlideing) return;
+            StartSlide();
+        }
+
+        /// <summary>
+>>>>>>> 4d3f3e0de14d3b96eb66728515a34f4b1632f1cf
         /// Call this in order to Lock jump and
         /// prevent new jumps to occur based on
         /// shouldLock boolean.
@@ -284,22 +398,51 @@ namespace Handy2DTools.CharacterController.Abilities
         #region Update Seeking
 
         /// <summary>
+<<<<<<< HEAD
         /// Find important components
         /// </summary>
         protected virtual void FindComponents()
         {
+=======
+        /// Subscribes to events based on components wich implements
+        /// the correct interfaces
+        /// </summary>
+        protected override void SubscribeSeekers()
+        {
+            UnsubscribeSeekers();
+
+>>>>>>> 4d3f3e0de14d3b96eb66728515a34f4b1632f1cf
             if (seekGroundingProvider)
             {
                 groundingProvider = GetComponent<IGroundingProvider>();
                 if (groundingProvider == null)
                     Log.Warning("Component DynamicSlide might not work properly. It is marked to seek for an IGroundingProvider but it could not find any.");
+<<<<<<< HEAD
+=======
+                groundingProvider?.GroundingUpdate.AddListener(UpdateGronding);
+            }
+
+            if (seekGroundingProvider)
+            {
+                slopeDataProvider = GetComponent<ISlopeDataProvider>();
+                if (slopeDataProvider == null)
+                    Log.Warning("Component DynamicSlide might not work properly. It is marked to seek for an ISlopeDataProvider but it could not find any.");
+                slopeDataProvider?.SlopeDataUpdate.AddListener(UpdateSlopeData);
+>>>>>>> 4d3f3e0de14d3b96eb66728515a34f4b1632f1cf
             }
 
             if (seekHorizontalFacingDirectionProvider)
             {
+<<<<<<< HEAD
                 horizontalFacingDirectionProvider = GetComponent<IHorizontalDirectionProvider>();
                 if (horizontalFacingDirectionProvider == null)
                     Log.Warning("Component DynamicSlide might not work properly. It is marked to seek for an IHorizontalFacingDirectionProvider but it could not find any.");
+=======
+                horizontalFacingDirectionProvider = GetComponent<IHorizontalFacingDirectionProvider>();
+                if (horizontalFacingDirectionProvider == null)
+                    Log.Warning("Component DynamicSlide might not work properly. It is marked to seek for an IHorizontalFacingDirectionProvider but it could not find any.");
+                horizontalFacingDirectionProvider?.HorizontalFacingDirectionSignUpdate.AddListener(UpdateDirectionSign);
+>>>>>>> 4d3f3e0de14d3b96eb66728515a34f4b1632f1cf
             }
 
             if (seekSlideHandler)
@@ -307,6 +450,7 @@ namespace Handy2DTools.CharacterController.Abilities
                 slideHandler = GetComponent<ISlideHandler>();
                 if (slideHandler == null)
                     Log.Warning("Component DynamicSlide might not work properly. It is marked to seek for an ISlideHandler but it could not find any.");
+<<<<<<< HEAD
             }
 
         }
@@ -320,6 +464,10 @@ namespace Handy2DTools.CharacterController.Abilities
             groundingProvider?.GroundingUpdate.AddListener(UpdateGronding);
             horizontalFacingDirectionProvider?.HorizontalDirectionSignUpdate.AddListener(UpdateDirectionSign);
             slideHandler?.SendSlideRequest.AddListener(Request);
+=======
+                slideHandler?.SendSlideRequest.AddListener(Request);
+            }
+>>>>>>> 4d3f3e0de14d3b96eb66728515a34f4b1632f1cf
         }
 
         /// <summary>
@@ -328,7 +476,12 @@ namespace Handy2DTools.CharacterController.Abilities
         protected override void UnsubscribeSeekers()
         {
             groundingProvider?.GroundingUpdate.RemoveListener(UpdateGronding);
+<<<<<<< HEAD
             horizontalFacingDirectionProvider?.HorizontalDirectionSignUpdate.RemoveListener(UpdateDirectionSign);
+=======
+            slopeDataProvider?.SlopeDataUpdate.RemoveListener(UpdateSlopeData);
+            horizontalFacingDirectionProvider?.HorizontalFacingDirectionSignUpdate.RemoveListener(UpdateDirectionSign);
+>>>>>>> 4d3f3e0de14d3b96eb66728515a34f4b1632f1cf
             slideHandler?.SendSlideRequest.RemoveListener(Request);
         }
 

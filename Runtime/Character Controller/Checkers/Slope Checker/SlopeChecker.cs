@@ -69,7 +69,11 @@ namespace Handy2DTools.CharacterController.Checkers
         #region Components
 
         protected IGroundingProvider groundingProvider; // Receives info about GameObject's being grounded.
+<<<<<<< HEAD
         protected IHorizontalDirectionProvider facingDirectionProvider; // Receives info about GameObject's movement direction.
+=======
+        protected IHorizontalFacingDirectionProvider facingDirectionProvider; // Receives info about GameObject's movement direction.
+>>>>>>> 4d3f3e0de14d3b96eb66728515a34f4b1632f1cf
 
         #endregion
 
@@ -106,7 +110,11 @@ namespace Handy2DTools.CharacterController.Checkers
             if (slopeCollider == null) slopeCollider = GetComponent<Collider2D>();
 
             if (whatIsGround == 0)
+<<<<<<< HEAD
                 Log.Danger($"No ground layer defined for {GetType().Name} on {gameObject.name}");
+=======
+                Log.Danger($"No ground layer defined for {GetType().Name}");
+>>>>>>> 4d3f3e0de14d3b96eb66728515a34f4b1632f1cf
         }
 
         protected virtual void Start()
@@ -144,19 +152,34 @@ namespace Handy2DTools.CharacterController.Checkers
             CastPositions positions = CalculatePositions(slopeCollider.bounds.center, slopeCollider.bounds.extents, FacingDirectionSign);
 
             RaycastHit2D centerHit = Physics2D.Raycast(positions.center, Vector2.down, length, whatIsGround);
+<<<<<<< HEAD
             RaycastHit2D frontHit = Physics2D.Raycast(positions.front, Vector2.down, length, whatIsGround);
             RaycastHit2D backHit = Physics2D.Raycast(positions.back, Vector2.down, length, whatIsGround);
 
+=======
+            RaycastHit2D frontHit = Physics2D.Raycast(positions.front, Vector2.down, length * 2, whatIsGround);
+            RaycastHit2D backHit = Physics2D.Raycast(positions.back, Vector2.down, length * 2, whatIsGround);
+>>>>>>> 4d3f3e0de14d3b96eb66728515a34f4b1632f1cf
             data.normalPerpendicular = Vector2.Perpendicular(centerHit.normal).normalized;
 
             DebugSlopeData(positions, length, centerHit, data);
 
+<<<<<<< HEAD
             // if (!grounded) // can't be on a slope if not grounded
             // {
             //     data.onSlope = false;
             //     UpdateSlopeData(data);
             //     return;
             // }
+=======
+
+            if (!grounded) // can't be on a slope if not grounded
+            {
+                data.onSlope = false;
+                UpdateSlopeData(data);
+                return;
+            }
+>>>>>>> 4d3f3e0de14d3b96eb66728515a34f4b1632f1cf
 
             if (!centerHit.collider && !frontHit.collider && !backHit.collider) // No hit means not on slope
             {
@@ -255,10 +278,17 @@ namespace Handy2DTools.CharacterController.Checkers
             UnsubscribeSeekers();
             if (seekFacingDirectionProvider)
             {
+<<<<<<< HEAD
                 facingDirectionProvider = GetComponent<IHorizontalDirectionProvider>();
                 if (facingDirectionProvider == null)
                     Debug.LogWarning("Component SlopeChecker2D might not work properly. It is marked to seek for an IMovementDirectionUpdater but it could not find any.");
                 facingDirectionProvider?.HorizontalDirectionUpdate.AddListener(UpdateFacingDirection);
+=======
+                facingDirectionProvider = GetComponent<IHorizontalFacingDirectionProvider>();
+                if (facingDirectionProvider == null)
+                    Debug.LogWarning("Component SlopeChecker2D might not work properly. It is marked to seek for an IMovementDirectionUpdater but it could not find any.");
+                facingDirectionProvider?.HorizontalFacingDirectionUpdate.AddListener(UpdateFacingDirection);
+>>>>>>> 4d3f3e0de14d3b96eb66728515a34f4b1632f1cf
             }
 
             if (seekGroundingProvider)
@@ -276,7 +306,11 @@ namespace Handy2DTools.CharacterController.Checkers
         protected override void UnsubscribeSeekers()
         {
             groundingProvider?.GroundingUpdate.RemoveListener(UpdateGrounding);
+<<<<<<< HEAD
             facingDirectionProvider?.HorizontalDirectionUpdate.RemoveListener(UpdateFacingDirection);
+=======
+            facingDirectionProvider?.HorizontalFacingDirectionUpdate.RemoveListener(UpdateFacingDirection);
+>>>>>>> 4d3f3e0de14d3b96eb66728515a34f4b1632f1cf
         }
 
         #endregion
@@ -303,8 +337,13 @@ namespace Handy2DTools.CharacterController.Checkers
             if (!debugOn) return;
 
             Debug.DrawRay(positions.center, Vector2.down * length, centerHit ? Color.red : Color.green);
+<<<<<<< HEAD
             Debug.DrawRay(positions.front, Vector2.down * length, Color.yellow);
             Debug.DrawRay(positions.back, Vector2.down * length, Color.cyan);
+=======
+            Debug.DrawRay(positions.front, Vector2.down * length * 2, Color.yellow);
+            Debug.DrawRay(positions.back, Vector2.down * length * 2, Color.cyan);
+>>>>>>> 4d3f3e0de14d3b96eb66728515a34f4b1632f1cf
             Debug.DrawRay(centerHit.point, data.normalPerpendicular, Color.blue);
             Debug.DrawRay(centerHit.point, centerHit.normal, Color.black);
         }
