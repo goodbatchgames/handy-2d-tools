@@ -7,7 +7,7 @@ using Handy2DTools.Debugging;
 namespace Handy2DTools.CharacterController.Abilities
 {
     [DefaultExecutionOrder(300)]
-    public abstract class Ability<T> : HandyComponent where T : AbilitySetup
+    public abstract class LearnableAbility<T> : HandyComponent where T : LearnableAbilitySetup
     {
         #region Editor
 

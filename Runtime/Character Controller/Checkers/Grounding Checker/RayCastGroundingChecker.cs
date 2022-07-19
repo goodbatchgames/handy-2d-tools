@@ -1,15 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using Handy2DTools.CharacterController.Abilities;
 using Handy2DTools.Debugging;
+using Handy2DTools.Enums;
 using Handy2DTools.NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace Handy2DTools.CharacterController.Checkers
 {
-    [AddComponentMenu("Handy 2D Tools/Character Controller/Checkers/GroundingChecker")]
+    [AddComponentMenu("Handy 2D Tools/Character Controller/Checkers/RayCastGroundingChecker")]
     [RequireComponent(typeof(Collider2D))]
-    public class GroundingChecker : Checker, IGroundingProvider
+    public class RayCastGroundingChecker : Checker, IGroundingProvider
     {
         #region Inspector
 
@@ -32,7 +34,6 @@ namespace Handy2DTools.CharacterController.Checkers
 
         // Right stuff
         [Header("Right Detection")]
-
         [Tooltip("If right check should be enabled")]
         [SerializeField]
         protected bool checkRight = true;
@@ -95,10 +96,35 @@ namespace Handy2DTools.CharacterController.Checkers
         [Space]
         protected LayerMask whatIsGround;
 
+        [Header("Directions")]
+        [Tooltip("The checking direction")]
+        [SerializeField]
+        protected VerticalDirections verticalDirection = VerticalDirections.Down;
+
         [Foldout("Available Events:")]
         [Space]
         [InfoBox("You can use these to directly set listeners about this GameObject's grounding")]
         public UnityEvent<bool> GroundingUpdateEvent;
+
+        [Foldout("Seekers")]
+        [Tooltip("If you guarantee your GameObject has a component wich implements an IVerticalDirectionProvider you can mark this and it will subscribe to its events. GroundingChecker2D implements it.")]
+        [SerializeField] protected bool seekVerticalDirectionProvider = false;
+
+        #endregion
+
+        #region Interfaces
+
+        IVerticalDirectionProvider verticalDirectionProvider;
+
+        #endregion
+
+        #region Components
+
+        protected Rigidbody2D rb;
+
+        #endregion
+
+        #region Properties
 
         #endregion
 
@@ -132,6 +158,10 @@ namespace Handy2DTools.CharacterController.Checkers
 
         protected virtual void Awake()
         {
+            rb = GetComponent<Rigidbody2D>();
+
+            FindComponents();
+
             if (groundingCollider == null) groundingCollider = GetComponent<Collider2D>();
 
             if (whatIsGround == 0)
@@ -140,7 +170,17 @@ namespace Handy2DTools.CharacterController.Checkers
 
         protected virtual void FixedUpdate()
         {
-            CheckGrounding();
+            EvaluateGroundingConsideringVerticalDirection();
+        }
+
+        protected virtual void OnEnable()
+        {
+            SubscribeSeekers();
+        }
+
+        protected virtual void OnDisable()
+        {
+            UnsubscribeSeekers();
         }
 
         #endregion
@@ -149,18 +189,39 @@ namespace Handy2DTools.CharacterController.Checkers
         /// Casts rays to determine if character is grounded.
         /// </summary>
         /// <returns> true if grounded </returns>
-        protected virtual void CheckGrounding()
+        public virtual bool EvaluateGroundingConsideringVerticalDirection()
         {
+            // If going going to oposite direction of current vertical direction, consider not grounded
+            if (rb != null && (verticalDirection == VerticalDirections.Down && rb.velocity.y > 0) || (verticalDirection == VerticalDirections.Up && rb.velocity.y < 0))
+            {
+                UpdateGroundedStatus(false); // Update grounded property and fire events 
+                return false;
+            }
+
+            return EvaluateGrounding();
+        }
+
+        /// <summary>
+        /// Casts rays to determine if character is grounded.
+        /// </summary>
+        /// <returns> true if grounded </returns>
+        public virtual bool EvaluateGrounding()
+        {
+
             CastPositions positions = CalculatePositions(groundingCollider.bounds.center, groundingCollider.bounds.extents);
 
-            RaycastHit2D rightHit = Physics2D.Raycast(positions.right, Vector2.down, RightLengthConverted, whatIsGround);
-            RaycastHit2D leftHit = Physics2D.Raycast(positions.left, Vector2.down, LeftLengthConverted, whatIsGround);
-            RaycastHit2D centerHit = Physics2D.Raycast(positions.center, Vector2.down, CenterLengthConverted, whatIsGround);
+            Vector2 castDirection = verticalDirection == VerticalDirections.Down ? Vector2.down : Vector2.up;
+
+            RaycastHit2D rightHit = Physics2D.Raycast(positions.right, castDirection, RightLengthConverted, whatIsGround);
+            RaycastHit2D leftHit = Physics2D.Raycast(positions.left, castDirection, LeftLengthConverted, whatIsGround);
+            RaycastHit2D centerHit = Physics2D.Raycast(positions.center, castDirection, CenterLengthConverted, whatIsGround);
 
             bool check = (checkRight && rightHit.collider != null) || (checkCenter && centerHit.collider != null) || (checkLeft && leftHit.collider != null);
 
-            UpdateGroundedStatus(check);
-            DebugGroundCheck(positions, rightHit, leftHit, centerHit);
+            UpdateGroundedStatus(check); // Update grounded property and fire events
+            DebugGroundCheck(castDirection, positions, rightHit, leftHit, centerHit);
+
+            return check;
         }
 
         /// <summary>
@@ -168,11 +229,11 @@ namespace Handy2DTools.CharacterController.Checkers
         /// This will send an UnityEvent<bool> case grounding status 
         /// has changed.
         /// </summary>
-        /// <param name="GroundingUpdate"></param>
-        protected virtual void UpdateGroundedStatus(bool GroundingUpdate)
+        /// <param name="groundingUpdate"></param>
+        protected virtual void UpdateGroundedStatus(bool groundingUpdate)
         {
-            if (grounded == GroundingUpdate) return;
-            grounded = GroundingUpdate;
+            if (grounded == groundingUpdate) return;
+            grounded = groundingUpdate;
             GroundingUpdateEvent.Invoke(grounded);
         }
 
@@ -184,29 +245,40 @@ namespace Handy2DTools.CharacterController.Checkers
         /// <returns></returns>
         protected CastPositions CalculatePositions(Vector2 center, Vector2 extents)
         {
-            Vector2 rightPos = center + new Vector2(extents.x + RightPositionXOffset, -extents.y + RightPositionYOffset);
-            Vector2 leftPos = center + new Vector2(-extents.x - LeftPositionXOffset, -extents.y + LeftPositionYOffset);
-            Vector2 centerPos = center + new Vector2(0, -extents.y + CenterPositionYOffset);
+            if (verticalDirection == VerticalDirections.Down)
+            {
+                Vector2 rightPos = center + new Vector2(extents.x + RightPositionXOffset, -extents.y + RightPositionYOffset);
+                Vector2 leftPos = center + new Vector2(-extents.x - LeftPositionXOffset, -extents.y + LeftPositionYOffset);
+                Vector2 centerPos = center + new Vector2(0, -extents.y + CenterPositionYOffset);
 
-            return new CastPositions(rightPos, centerPos, leftPos);
+                return new CastPositions(rightPos, centerPos, leftPos);
+            }
+            else
+            {
+                Vector2 rightPos = center + new Vector2(extents.x + RightPositionXOffset, extents.y + RightPositionYOffset);
+                Vector2 leftPos = center + new Vector2(-extents.x - LeftPositionXOffset, extents.y + LeftPositionYOffset);
+                Vector2 centerPos = center + new Vector2(0, extents.y + CenterPositionYOffset);
+
+                return new CastPositions(rightPos, centerPos, leftPos);
+            }
         }
 
 
         /// <summary>
         /// Debugs the ground check.
         /// </summary>
-        protected void DebugGroundCheck(CastPositions positions, RaycastHit2D rightHit, RaycastHit2D leftHit, RaycastHit2D centerHit)
+        protected void DebugGroundCheck(Vector2 castDirection, CastPositions positions, RaycastHit2D rightHit, RaycastHit2D leftHit, RaycastHit2D centerHit)
         {
             if (!debugOn) return;
 
             if (checkRight)
-                Debug.DrawRay(positions.right, Vector2.down * RightLengthConverted, rightHit.collider ? Color.red : Color.green);
+                Debug.DrawRay(positions.right, castDirection * RightLengthConverted, rightHit.collider ? Color.red : Color.green);
 
             if (checkLeft)
-                Debug.DrawRay(positions.left, Vector2.down * LeftLengthConverted, leftHit.collider ? Color.red : Color.green);
+                Debug.DrawRay(positions.left, castDirection * LeftLengthConverted, leftHit.collider ? Color.red : Color.green);
 
             if (checkCenter)
-                Debug.DrawRay(positions.center, Vector2.down * CenterLengthConverted, centerHit.collider ? Color.red : Color.green);
+                Debug.DrawRay(positions.center, castDirection * CenterLengthConverted, centerHit.collider ? Color.red : Color.green);
         }
 
         /// <summary>
@@ -226,11 +298,55 @@ namespace Handy2DTools.CharacterController.Checkers
             }
         }
 
+        protected void UpdateVerticalDirection(VerticalDirections newVerticaldirection)
+        {
+            verticalDirection = newVerticaldirection;
+        }
+
+        #region Update Seeking
+
+        protected virtual void FindComponents()
+        {
+
+            if (seekVerticalDirectionProvider)
+            {
+                verticalDirectionProvider = GetComponent<IVerticalDirectionProvider>();
+                if (verticalDirectionProvider == null)
+                    Debug.LogWarning("Component SlopeChecker2D might not work properly. It is marked to seek for an IVerticalDirectionProvider but it could not find any.");
+            }
+
+        }
+
+        /// <summary>
+        /// Subscribes to events based on components wich implements
+        /// the correct interfaces
+        /// </summary>
+        protected override void SubscribeSeekers()
+        {
+            verticalDirectionProvider?.VerticalDirectionUpdate.AddListener(UpdateVerticalDirection);
+        }
+
+        /// <summary>
+        /// Unsubscribes from events
+        /// </summary>
+        protected override void UnsubscribeSeekers()
+        {
+            verticalDirectionProvider?.VerticalDirectionUpdate.RemoveListener(UpdateVerticalDirection);
+        }
+
+        #endregion
+
         #region Handy Component
 
         protected override string DocPath => "en/core/character-controller/checkers/grounding-checker.html";
         protected override string DocPathPtBr => "pt_BR/core/character-controller/checkers/grounding-checker.html";
 
         #endregion
+    }
+
+    public enum GroundingCheckStrategy
+    {
+        RayCasts,
+        BoxCast,
     }
 }

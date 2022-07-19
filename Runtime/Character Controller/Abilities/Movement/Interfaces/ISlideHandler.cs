@@ -11,6 +11,10 @@ namespace Handy2DTools.CharacterController.Abilities
     /// </summary>
     public interface ISlideHandler
     {
-        UnityEvent SendSlideRequest { get; }
+        /// <summary>
+        /// Send a request to start a slide.
+        /// </summary>
+        /// <value> The direction sign </value>
+        UnityEvent<float> SendSlideRequest { get; }
     }
 }

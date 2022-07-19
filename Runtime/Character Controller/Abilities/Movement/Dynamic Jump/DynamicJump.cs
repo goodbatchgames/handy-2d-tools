@@ -10,7 +10,7 @@ namespace Handy2DTools.CharacterController.Abilities
 {
     [AddComponentMenu("Handy 2D Tools/Character Controller/Abilities/DynamicJump")]
     [RequireComponent(typeof(Rigidbody2D))]
-    public class DynamicJump : DynamicMovementPerformer<DynamicJumpSetup>, IJumpPerformer, IJumpExtraPerformer
+    public class DynamicJump : LearnableAbility<DynamicJumpSetup>, IJumpPerformer, IJumpExtraPerformer
     {
         #region Editor
 
@@ -63,7 +63,9 @@ namespace Handy2DTools.CharacterController.Abilities
 
         #endregion
 
-        #region Fields
+        #region Components
+
+        protected Rigidbody2D rb;
 
         #endregion
 
@@ -80,23 +82,32 @@ namespace Handy2DTools.CharacterController.Abilities
         protected float resetRequestedAt; // last time something requested a reset on extra jumps.
         protected bool jumpRequestPersists = false; // If true This means whatever is requesting jump did not call StopJump() yet. Usually jump button still pressed.
         protected float currentJumpTimer = 0; // Used to calculate how long character has been jumping
+        protected float currentForceApplianceTimer = 0; // Used to calculate how long character has been jumping
         protected float coyoteTimeCounter = 0; // Used to calculate how long character can still jump in case of not being grounded anymore
+        protected float wallCoyoteTimeCounter = 0; // Used to calculate how long character can still jump in case of not being grounded anymore
         protected float resetGhostingTime = 0.15f; // The amount of time in seconds before allowing jump count to be reset
 
         #endregion
 
         #region Getters
 
-        protected bool CanStartJump => (CoyoteCheck || OnWall) && !jumpLocked;
+        protected bool CanStartJump => !jumping && (CoyoteCheck || OnWall) && !jumpLocked;
         protected bool CanStartExtraJump => setup.HasExtraJumps && extraJumpsLeft > 0 && !jumpLocked;
 
-        protected bool CoyoteCheck => setup.HasCoyoteTime ? coyoteTimeCounter > 0f : grounded;
-        protected bool OnWall => setup.CanWallJump && SlidingOnWall;
-        protected bool SlidingOnWall => wallHitData != null && (movementDirection.x < 0 && wallHitData.leftHitting || movementDirection.x > 0 && wallHitData.rightHitting);
+        protected bool CoyoteCheck => HasCoyoteTime ? coyoteTimeCounter > 0f : grounded;
+        protected bool HasCoyoteTime => setup.HasCoyoteTime && setup.CoyoteTime != 0;
+
+        protected bool OnWall => setup.CanWallJump && WallCoyoteCheck;
+        protected bool WallCoyoteCheck => HasWallCoyoteTime ? wallCoyoteTimeCounter > 0f : HittingWall;
+        protected bool HasWallCoyoteTime => setup.HasWallCoyoteTime && setup.WallCoyoteTime != 0;
+
+        protected bool HittingWall => wallHitData != null && (wallHitData.leftHitting || wallHitData.rightHitting);
 
         // Events
-        public UnityEvent<GameObject> JumpPerformed => setup.JumpPerformed;
-        public UnityEvent<GameObject> ExtraJumpPerformed => setup.ExtraJumpPerformed;
+        public UnityEvent<GameObject> JumpStarted => setup.JumpStarted;
+        public UnityEvent<GameObject> JumpFinished => setup.JumpFinished;
+        public UnityEvent<GameObject> ExtraJumpStarted => setup.ExtraJumpStarted;
+        public UnityEvent<GameObject> ExtraJumpFinished => setup.ExtraJumpFinished;
 
         #endregion
 
@@ -105,23 +116,29 @@ namespace Handy2DTools.CharacterController.Abilities
         protected override void Awake()
         {
             base.Awake();
+            rb = GetComponent<Rigidbody2D>();
+            FindComponents();
             ResetJumpCount();
-        }
-
-        protected virtual void Start()
-        {
-            SubscribeSeekers();
         }
 
         protected virtual void Update()
         {
-            if (setup.HasCoyoteTime && grounded)
+            if (HasCoyoteTime && grounded)
             {
                 coyoteTimeCounter = setup.CoyoteTime;
             }
             else
             {
                 coyoteTimeCounter -= Time.deltaTime;
+            }
+
+            if (HasWallCoyoteTime && HittingWall)
+            {
+                wallCoyoteTimeCounter = setup.WallCoyoteTime;
+            }
+            else
+            {
+                wallCoyoteTimeCounter -= Time.deltaTime;
             }
         }
 
@@ -158,6 +175,7 @@ namespace Handy2DTools.CharacterController.Abilities
         protected void PrepareJump()
         {
             currentJumpTimer = 0;
+            currentForceApplianceTimer = 0;
             jumpStartedAt = Time.fixedTime;
             canResetAt = jumpStartedAt + resetGhostingTime;
             rb.drag = 0;
@@ -171,7 +189,7 @@ namespace Handy2DTools.CharacterController.Abilities
         {
             PrepareJump();
             jumping = true;
-            JumpPerformed.Invoke(gameObject);
+            JumpStarted.Invoke(gameObject);
         }
 
         protected void StartExtraJump()
@@ -179,7 +197,7 @@ namespace Handy2DTools.CharacterController.Abilities
             PrepareJump();
             extraJumping = true;
             extraJumpsLeft--;
-            ExtraJumpPerformed.Invoke(gameObject);
+            ExtraJumpStarted.Invoke(gameObject);
         }
 
         /// <summary>
@@ -190,6 +208,7 @@ namespace Handy2DTools.CharacterController.Abilities
             if (!jumpRequestPersists || currentJumpTimer > setup.Duration) { Stop(); return; }
 
             ApplyAscension(setup.Force, setup.Duration);
+            currentJumpTimer += Time.fixedDeltaTime;
         }
 
         /// <summary>
@@ -200,15 +219,25 @@ namespace Handy2DTools.CharacterController.Abilities
             if (!jumpRequestPersists || currentJumpTimer > setup.ExtraJumpDuration) { Stop(); return; }
 
             ApplyAscension(setup.ExtraJumpForce, setup.ExtraJumpDuration);
+            currentJumpTimer += Time.fixedDeltaTime;
         }
 
+        /// <summary>
+        /// Applies the force to the Rigidbody2D making 
+        /// the character ascend
+        /// </summary>
+        /// <param name="force"></param>
+        /// <param name="duration"></param>
         protected void ApplyAscension(float force, float duration)
         {
-            float proportionCompleted = currentJumpTimer / duration;
+            float forceApplianceTime = ((duration / 3) * 2);
+
+            if (currentForceApplianceTimer > forceApplianceTime) { return; }
+
+            float proportionCompleted = currentForceApplianceTimer / forceApplianceTime;
             float thisFrameForce = Mathf.Lerp(force, 0f, proportionCompleted);
-            ApplyVerticalForce(thisFrameForce);
-            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y > setup.MaxYSpeed ? setup.MaxYSpeed : rb.velocity.y); // Clamp Y speed
-            currentJumpTimer += Time.fixedDeltaTime;
+            rb.AddForce(new Vector2(rb.velocity.x, thisFrameForce));
+            currentForceApplianceTimer += Time.fixedDeltaTime;
         }
 
         /// <summary>
@@ -275,8 +304,19 @@ namespace Handy2DTools.CharacterController.Abilities
         public void Stop()
         {
             jumpRequestPersists = false;
-            jumping = false;
-            extraJumping = false;
+
+            if (jumping)
+            {
+                jumping = false;
+                JumpFinished.Invoke(gameObject);
+            }
+
+            if (extraJumping)
+            {
+                extraJumping = false;
+                ExtraJumpFinished.Invoke(gameObject);
+            }
+
             coyoteTimeCounter = 0f;
         }
 
@@ -335,20 +375,14 @@ namespace Handy2DTools.CharacterController.Abilities
 
         #region Update Seeking
 
-        /// <summary>
-        /// Subscribes to events based on components wich implements
-        /// the correct interfaces
-        /// </summary>
-        protected override void SubscribeSeekers()
+        protected virtual void FindComponents()
         {
-            UnsubscribeSeekers();
 
             if (seekGroundingProvider)
             {
                 groundingProvider = GetComponent<IGroundingProvider>();
                 if (groundingProvider == null)
                     Log.Warning("Component Jump might not work properly. It is marked to seek for an IGroundingProvider but it could not find any.");
-                groundingProvider?.GroundingUpdate.AddListener(UpdateGrounding);
             }
 
             if (seekWallHitDataProvider)
@@ -356,7 +390,6 @@ namespace Handy2DTools.CharacterController.Abilities
                 wallHitDataProvider = GetComponent<IWallHitDataProvider>();
                 if (wallHitDataProvider == null)
                     Log.Warning("Component Jump might not work properly. It is marked to seek for an IWallHitDataProvider but it could not find any.");
-                wallHitDataProvider?.WallHitDataUpdate.AddListener(UpdateWallHitData);
             }
 
             if (seekMovementDirectionProvider)
@@ -364,7 +397,6 @@ namespace Handy2DTools.CharacterController.Abilities
                 movementDirectionProvider = GetComponent<IMovementDirectionsProvider>();
                 if (movementDirectionProvider == null)
                     Log.Warning("Component Jump might not work properly. It is marked to seek for an IMovementDirectionUpdater but it could not find any.");
-                movementDirectionProvider?.MovementDirectionsUpdate.AddListener(UpdateMovementDirection);
             }
 
             if (seekJumpHandler)
@@ -372,9 +404,20 @@ namespace Handy2DTools.CharacterController.Abilities
                 jumpHandler = GetComponent<IJumpHandler>();
                 if (jumpHandler == null)
                     Log.Warning("Component Jump might not work properly. It is marked to seek for an IJumpHandler but it could not find any.");
-                jumpHandler?.SendJumpRequest.AddListener(Request);
-                jumpHandler?.SendJumpStop.AddListener(Stop);
             }
+        }
+
+        /// <summary>
+        /// Subscribes to events based on components wich implements
+        /// the correct interfaces
+        /// </summary>
+        protected override void SubscribeSeekers()
+        {
+            groundingProvider?.GroundingUpdate.AddListener(UpdateGrounding);
+            wallHitDataProvider?.WallHitDataUpdate.AddListener(UpdateWallHitData);
+            movementDirectionProvider?.MovementDirectionsUpdate.AddListener(UpdateMovementDirection);
+            jumpHandler?.SendJumpRequest.AddListener(Request);
+            jumpHandler?.SendJumpStop.AddListener(Stop);
         }
 
         /// <summary>

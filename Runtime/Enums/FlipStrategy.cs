@@ -1,7 +1,7 @@
 
 namespace Handy2DTools.Enums
 {
-    public enum HorizontalFlipStrategy
+    public enum FlipStrategy
     {
         Scaling,
         Rotating,

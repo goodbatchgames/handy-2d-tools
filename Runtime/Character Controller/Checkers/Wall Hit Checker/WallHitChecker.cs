@@ -35,6 +35,11 @@ namespace Handy2DTools.CharacterController.Checkers
         [SerializeField]
         protected LayerMask whatIsWall;
 
+        [Tooltip("Inform what layers should be considered wall")]
+        [SerializeField]
+        [Tag]
+        protected string tagToIgnore;
+
         // Right stuff
         [Header("Upper Right Detection")]
         [Space]
@@ -229,7 +234,7 @@ namespace Handy2DTools.CharacterController.Checkers
                 RaycastHit2D hit = Physics2D.Raycast(positions.upperRight, Vector2.right, UpperRightLengthConverted, whatIsWall);
                 DebugCast(positions.upperRight, Vector2.right * UpperRightLengthConverted, hit);
 
-                if (hit && hit.collider)
+                if (hit && hit.collider && !hit.collider.CompareTag(tagToIgnore))
                 {
                     data.upperRight = true;
                     data.upperRightHitAngle = Vector2.Angle(positions.upperRight, hit.point);
@@ -241,7 +246,7 @@ namespace Handy2DTools.CharacterController.Checkers
                 RaycastHit2D hit = Physics2D.Raycast(positions.lowerRight, Vector2.right, LowerRightLengthConverted, whatIsWall);
                 DebugCast(positions.lowerRight, Vector2.right * LowerRightLengthConverted, hit);
 
-                if (hit && hit.collider)
+                if (hit && hit.collider && !hit.collider.CompareTag(tagToIgnore))
                 {
                     data.lowerRight = true;
                     data.lowerRightHitAngle = Vector2.Angle(positions.lowerRight, hit.point);
@@ -253,7 +258,7 @@ namespace Handy2DTools.CharacterController.Checkers
                 RaycastHit2D hit = Physics2D.Raycast(positions.centerRight, Vector2.right, CenterRightLengthConverted, whatIsWall);
                 DebugCast(positions.centerRight, Vector2.right * CenterRightLengthConverted, hit);
 
-                if (hit && hit.collider)
+                if (hit && hit.collider && !hit.collider.CompareTag(tagToIgnore))
                 {
                     data.centerRight = true;
                     data.centerRightHitAngle = Vector2.Angle(positions.centerRight, hit.point);
@@ -265,7 +270,7 @@ namespace Handy2DTools.CharacterController.Checkers
                 RaycastHit2D hit = Physics2D.Raycast(positions.upperLeft, Vector2.left, UpperLeftLengthConverted, whatIsWall);
                 DebugCast(positions.upperLeft, Vector2.left * UpperLeftLengthConverted, hit);
 
-                if (hit && hit.collider)
+                if (hit && hit.collider && !hit.collider.CompareTag(tagToIgnore))
                 {
                     data.upperLeft = true;
                     data.upperLeftHitAngle = Vector2.Angle(positions.upperLeft, hit.point);
@@ -277,7 +282,7 @@ namespace Handy2DTools.CharacterController.Checkers
                 RaycastHit2D hit = Physics2D.Raycast(positions.lowerLeft, Vector2.left, LowerLeftLengthConverted, whatIsWall);
                 DebugCast(positions.lowerLeft, Vector2.left * LowerLeftLengthConverted, hit);
 
-                if (hit && hit.collider)
+                if (hit && hit.collider && !hit.collider.CompareTag(tagToIgnore))
                 {
                     data.lowerLeft = true;
                     data.lowerLeftHitAngle = Vector2.Angle(positions.lowerLeft, hit.point);
@@ -289,7 +294,7 @@ namespace Handy2DTools.CharacterController.Checkers
                 RaycastHit2D hit = Physics2D.Raycast(positions.centerLeft, Vector2.left, CenterLeftLengthConverted, whatIsWall);
                 DebugCast(positions.centerLeft, Vector2.left * CenterLeftLengthConverted, hit);
 
-                if (hit && hit.collider)
+                if (hit && hit.collider && !hit.collider.CompareTag(tagToIgnore))
                 {
                     data.centerLeft = true;
                     data.centerLeftHitAngle = Vector2.Angle(positions.centerLeft, hit.point);

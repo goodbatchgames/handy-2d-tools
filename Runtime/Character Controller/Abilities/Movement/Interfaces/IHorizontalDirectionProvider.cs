@@ -10,18 +10,18 @@ namespace Handy2DTools.CharacterController.Abilities
     /// Any GameOject that wants to controll facing direction can use an
     /// event through implementing this Interface.
     /// </summary>
-    public interface IHorizontalFacingDirectionProvider
+    public interface IHorizontalDirectionProvider
     {
         /// <summary>
         /// An event wich should be fired to update facing direction
         /// </summary>
         /// <value> A HorizontalDirections representing the direction. </value>
-        UnityEvent<HorizontalDirections> HorizontalFacingDirectionUpdate { get; }
+        UnityEvent<HorizontalDirections> HorizontalDirectionUpdate { get; }
 
         /// <summary>
         /// An event wich should be fired to update facing direction sign
         /// </summary>
         /// <value> A float representing the the facing direction. -1 for left and 1 for right. </value>
-        UnityEvent<float> HorizontalFacingDirectionSignUpdate { get; }
+        UnityEvent<float> HorizontalDirectionSignUpdate { get; }
     }
 }

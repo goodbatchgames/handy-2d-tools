@@ -7,7 +7,7 @@ using UnityEngine.Events;
 namespace Handy2DTools.CharacterController.Abilities
 {
     [CreateAssetMenu(fileName = "New DynamicJumpSetup", menuName = "Handy 2D Tools/CharacterController/Setups/DynamicJump")]
-    public class DynamicJumpSetup : AbilitySetup
+    public class DynamicJumpSetup : LearnableAbilitySetup
     {
         #region Inspector
 
@@ -17,11 +17,7 @@ namespace Handy2DTools.CharacterController.Abilities
         [Space]
         protected float force = 100f;
 
-        [Tooltip("The top speed character can reach while ascending.")]
-        [SerializeField]
-        protected float maxYSpeed = 10f;
-
-        [Label("Impulse Duration")]
+        [Label("Duration")]
         [Tooltip("Period of time in seconds during which force will be applyed positively to Y axis.")]
         [SerializeField]
         protected float duration = 0.35f;
@@ -49,6 +45,16 @@ namespace Handy2DTools.CharacterController.Abilities
         [SerializeField]
         protected bool canWallJump = false;
 
+        [Tooltip("Mark this if you want coyote time to be applyed for wall jumps.")]
+        [SerializeField]
+        protected bool hasWallCoyoteTime = false;
+
+        [Label("Coyote Time Rate")]
+        [Tooltip("Used to calculate for how long character can still jump in case of not on wall anymore.")]
+        [ShowIf("hasWallCoyoteTime")]
+        [SerializeField]
+        protected float wallCoyoteTime = 0.15f;
+
         [Header("Extra Jumps")]
         [Label("Has Extra Jumps")]
         [SerializeField]
@@ -70,33 +76,73 @@ namespace Handy2DTools.CharacterController.Abilities
         protected float extraJumpDuration = 0.35f;
 
         [Foldout("Jump Events")]
-        [Label("Jump Performed")]
+        [Label("Jump Started")]
         [Space]
         [SerializeField]
-        protected UnityEvent<GameObject> jumpPerformed;
+        protected UnityEvent<GameObject> jumpStarted;
 
         [Foldout("Jump Events")]
-        [Label("Extra Jump Performed")]
+        [Label("Jump Finished")]
+        [Space]
         [SerializeField]
-        protected UnityEvent<GameObject> extraJumpPerformed;
+        protected UnityEvent<GameObject> jumpFinished;
+
+        [Foldout("Jump Events")]
+        [Label("Extra Jump Started")]
+        [SerializeField]
+        protected UnityEvent<GameObject> extraJumpStarted;
+
+        [Foldout("Jump Events")]
+        [Label("Extra Jump Finished")]
+        [SerializeField]
+        protected UnityEvent<GameObject> extraJumpFinished;
 
         #endregion
 
         #region Getters
 
         public float Force => force;
-        public float MaxYSpeed => maxYSpeed;
         public float Duration => duration;
         public bool HasCoyoteTime => hasCoyoteTime;
         public float CoyoteTime => coyoteTime;
         public float JumpBufferTime => jumpBufferTime;
         public bool CanWallJump => canWallJump;
+        public bool HasWallCoyoteTime => hasWallCoyoteTime;
+        public float WallCoyoteTime => wallCoyoteTime;
         public bool HasExtraJumps => hasExtraJumps;
         public int ExtraJumps => extraJumps;
         public float ExtraJumpForce => extraJumpForce;
         public float ExtraJumpDuration => extraJumpDuration;
-        public UnityEvent<GameObject> JumpPerformed => jumpPerformed;
-        public UnityEvent<GameObject> ExtraJumpPerformed => extraJumpPerformed;
+
+        public UnityEvent<GameObject> JumpStarted => jumpStarted;
+        public UnityEvent<GameObject> JumpFinished => jumpFinished;
+        public UnityEvent<GameObject> ExtraJumpStarted => extraJumpStarted;
+        public UnityEvent<GameObject> ExtraJumpFinished => extraJumpFinished;
+
+        #endregion
+
+        #region Logic
+
+        public virtual void ActivateExtraJumps(bool active)
+        {
+            hasExtraJumps = active;
+        }
+
+        public virtual void SetExtraJumpsAmout(int amount)
+        {
+            if (amount < 0)
+            {
+                extraJumps = 0;
+                return;
+            }
+
+            extraJumps = amount;
+        }
+
+        public virtual void SetWallJump(bool shouldWallJump)
+        {
+            canWallJump = shouldWallJump;
+        }
 
         #endregion
     }

@@ -11,9 +11,10 @@ namespace Handy2DTools.CharacterController.Abilities
     /// </summary>
     public interface ISlidePerformer
     {
-        void Request();
+        void Request(float directionSign);
         void Stop();
         void Perform();
-        UnityEvent<GameObject> SlidePerformed { get; }
+        UnityEvent<GameObject> SlideStarted { get; }
+        UnityEvent<GameObject> SlideFinished { get; }
     }
 }

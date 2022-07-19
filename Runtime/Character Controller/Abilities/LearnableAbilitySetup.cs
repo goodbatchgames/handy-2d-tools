@@ -7,12 +7,12 @@ using UnityEngine.Events;
 
 namespace Handy2DTools.CharacterController.Abilities
 {
-    public abstract class AbilitySetup : ScriptableObject
+    public abstract class LearnableAbilitySetup : ScriptableObject
     {
 
         #region Editor
 
-        [Header("Ability Setup")]
+        [Header("Learnable Ability Setup")]
         [SerializeField]
         [Tooltip("If the ability is learned (installed)")]
         [Space]
@@ -39,7 +39,7 @@ namespace Handy2DTools.CharacterController.Abilities
         #region Getters
 
         public bool Learned => learned;
-        public bool Active => active && learned;
+        public bool Active => active;
 
         public UnityEvent<bool> LearnedStatusUpdate => learnedStatusUpdate;
         public UnityEvent<bool> ActivationStatusUpdate => activationStatusUpdate;
@@ -74,15 +74,13 @@ namespace Handy2DTools.CharacterController.Abilities
         /// If Ability is learned, activates it and invokes active status update event.
         /// </summary>
         /// <returns></returns>
-        public virtual bool Activate()
+        public virtual void Activate()
         {
-            if (!learned) return false;
+            if (!learned) return;
 
             active = true;
             activationStatusUpdate.Invoke(active);
             Debug($"{GetType().Name} active status update to {active}");
-
-            return true;
         }
 
         /// <summary>

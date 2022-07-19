@@ -14,6 +14,7 @@ namespace Handy2DTools.CharacterController.Abilities
         void Request();
         void Stop();
         void Perform();
-        UnityEvent<GameObject> JumpPerformed { get; }
+        UnityEvent<GameObject> JumpStarted { get; }
+        UnityEvent<GameObject> JumpFinished { get; }
     }
 }
