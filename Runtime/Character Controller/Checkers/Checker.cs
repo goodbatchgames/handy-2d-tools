@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Handy2DTools.CharacterController.Checkers
 {
     [DefaultExecutionOrder(-500)]
-    public abstract class Checker : HandyComponent
+    public abstract class Checker : DocumentedComponent
     {
     }
 }

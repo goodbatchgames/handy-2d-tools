@@ -7,11 +7,13 @@ using Handy2DTools.Enums;
 namespace Handy2DTools.CharacterController.Abilities
 {
     /// <summary>
-    /// Any GameOject that wants to flip characters
+    /// Any GameObject that wants to flip characters
     /// should implement this interface
     /// </summary>
     public interface IHorizontalFlipPerformer
     {
+        GameObject gameObject { get; }
+
         /// <summary>
         /// Flips character horizontally
         /// </summary>
@@ -22,5 +24,7 @@ namespace Handy2DTools.CharacterController.Abilities
         /// and perform accordingly.
         /// </summary>
         void EvaluateAndFlipHorizontally(float directionSign);
+
+        void Lock(bool shouldLock);
     }
 }

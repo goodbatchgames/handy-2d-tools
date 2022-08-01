@@ -11,6 +11,7 @@ namespace Handy2DTools.CharacterController.Abilities
     /// </summary>
     public interface IDashPerformer
     {
+        GameObject gameObject { get; }
         void Request();
         void Stop();
         void Perform();

@@ -250,7 +250,7 @@ namespace Handy2DTools.CharacterController.Checkers
         /// Subscribes to events based on components wich implements
         /// the correct interfaces
         /// </summary>
-        protected override void SubscribeSeekers()
+        protected virtual void SubscribeSeekers()
         {
             UnsubscribeSeekers();
             if (seekFacingDirectionProvider)
@@ -273,7 +273,7 @@ namespace Handy2DTools.CharacterController.Checkers
         /// <summary>
         /// Unsubscribes from events
         /// </summary>
-        protected override void UnsubscribeSeekers()
+        protected virtual void UnsubscribeSeekers()
         {
             groundingProvider?.GroundingUpdate.RemoveListener(UpdateGrounding);
             facingDirectionProvider?.HorizontalDirectionUpdate.RemoveListener(UpdateFacingDirection);

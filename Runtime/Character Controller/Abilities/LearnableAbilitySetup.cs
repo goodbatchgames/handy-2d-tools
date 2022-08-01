@@ -26,11 +26,11 @@ namespace Handy2DTools.CharacterController.Abilities
         [Space]
         protected bool debug = false;
 
-        [Foldout("Ability Setup Events")]
+        [Foldout("Learnable Ability Events")]
         [SerializeField]
         protected UnityEvent<bool> learnedStatusUpdate;
 
-        [Foldout("Ability Setup Events")]
+        [Foldout("Learnable Ability Events")]
         [SerializeField]
         protected UnityEvent<bool> activationStatusUpdate;
 
