@@ -11,6 +11,7 @@ namespace Handy2DTools.CharacterController.Abilities
     /// </summary>
     public interface IJumpHandler
     {
+        GameObject gameObject { get; }
         UnityEvent SendJumpRequest { get; }
         UnityEvent SendJumpStop { get; }
     }

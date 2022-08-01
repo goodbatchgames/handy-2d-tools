@@ -6,11 +6,12 @@ using UnityEngine.Events;
 namespace Handy2DTools.CharacterController.Abilities
 {
     /// <summary>
-    /// Any GameOject that wants to request slide starting 
+    /// Any GameObject that wants to request slide starting 
     /// through an event must implement this Interface.
     /// </summary>
     public interface ISlideHandler
     {
+        GameObject gameObject { get; }
         /// <summary>
         /// Send a request to start a slide.
         /// </summary>

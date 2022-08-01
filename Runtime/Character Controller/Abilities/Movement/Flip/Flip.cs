@@ -9,7 +9,7 @@ namespace Handy2DTools.CharacterController.Abilities
 {
     [AddComponentMenu("Handy 2D Tools/Character Controller/Abilities/Flip")]
     [RequireComponent(typeof(Rigidbody2D))]
-    public class Flip : HandyComponent, IHorizontalFlipPerformer, IHorizontalDirectionProvider, IVerticalFlipPerformer, IVerticalDirectionProvider
+    public class Flip : DocumentedComponent, IHorizontalFlipPerformer, IHorizontalDirectionProvider, IVerticalFlipPerformer, IVerticalDirectionProvider
     {
         [Header("Horizontal")]
         [Tooltip("If the game object should be flipped scaling negatively on X axis or rotating Y axis 180º")]
@@ -57,6 +57,12 @@ namespace Handy2DTools.CharacterController.Abilities
         [SerializeField]
         protected UnityEvent<float> verticalDirectionSignUpdate;
 
+        #region Fields
+
+        protected bool locked = false;
+
+        #endregion
+
         #region Properties
 
         public HorizontalDirections currentHorizontalDirection { get; protected set; }
@@ -74,6 +80,8 @@ namespace Handy2DTools.CharacterController.Abilities
 
         public UnityEvent<VerticalDirections> VerticalDirectionUpdate => verticalDirectionUpdate;
         public UnityEvent<float> VerticalDirectionSignUpdate => verticalDirectionSignUpdate;
+
+        public bool Locked => locked;
 
         #endregion
 
@@ -281,6 +289,11 @@ namespace Handy2DTools.CharacterController.Abilities
         protected virtual bool ShouldFlipVertically(float subjectDirection)
         {
             return subjectDirection > 0 && currentVerticalDirectionSign < 0 || subjectDirection < 0 && currentVerticalDirectionSign > 0;
+        }
+
+        public void Lock(bool shouldLock)
+        {
+            locked = shouldLock;
         }
 
         #endregion

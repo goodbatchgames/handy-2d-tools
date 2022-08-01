@@ -14,7 +14,7 @@ namespace Handy2DTools.Utils
             return directionSign != 0 ? Mathf.Sign(directionSign) : 0;
         }
 
-        public static Vector2 Binary(Vector2 vector)
+        public static Vector2 Sign(Vector2 vector)
         {
             float x = vector.x != 0 ? MathF.Sign(vector.x) : 0;
             float y = vector.y != 0 ? Mathf.Sign(vector.y) : 0;

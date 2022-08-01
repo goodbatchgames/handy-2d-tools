@@ -35,7 +35,11 @@ You can find more about how to install and use each of our features on [Our docs
 
 ## Unity Version
 
-Tested on [2019.4.40 LTS](https://unity3d.com/pt/unity/whats-new/2019.4.40)
+[2019.4.40 LTS](https://unity3d.com/pt/unity/whats-new/2019.4.40)
+
+to
+
+[2021.3.6 LTS](https://unity3d.com/pt/unity/whats-new/2021.3.6)
 
 ## About Good Batch Games
 
@@ -48,4 +52,4 @@ Please, consider supporting our job.
 While crafting and documenting this batch of Handy 2D Tools for you guys, we also craft handy ready to use assets
 and distribute them on our [itch page](https://goodbatchgames.itch.io). Some of them are free, and some are payed.
 
-Do not forget to at least consider joining our [patreon](https://patreon.com/goodbatchgames) to own assets we distribute on itch.io. We intend to release new assets every month and subscribers have a 15 days window to claim and own (forever) them from the realease date.
+Do not forget to at least consider joining our [patreon](https://patreon.com/goodbatchgames) to own assets we distribute on itch.io. We intend to release new assets every month and subscribers can claim and own (forever) them from the realease date.

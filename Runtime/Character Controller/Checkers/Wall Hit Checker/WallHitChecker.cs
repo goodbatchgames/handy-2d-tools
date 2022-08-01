@@ -9,7 +9,7 @@ namespace Handy2DTools.CharacterController.Checkers
 {
     [AddComponentMenu("Handy 2D Tools/Character Controller/Checkers/WallHitChecker")]
     [RequireComponent(typeof(Collider2D))]
-    public class WallHitChecker : Checker, IWallHitDataProvider
+    public class WallHitChecker : Checker, IWallHitDataProvider, IWallHitChecker
     {
         #region Inspector
 
@@ -164,6 +164,22 @@ namespace Handy2DTools.CharacterController.Checkers
 
         #endregion
 
+        #region Properties
+
+        public LayerMask WhatIsWall
+        {
+            get
+            {
+                return whatIsWall;
+            }
+            set
+            {
+                whatIsWall = value;
+            }
+        }
+
+        #endregion
+
         #region Getters
 
         protected float lengthConvertionRate = 100f;
@@ -207,14 +223,17 @@ namespace Handy2DTools.CharacterController.Checkers
         protected virtual void Awake()
         {
             if (wallHitCollider == null) wallHitCollider = GetComponent<Collider2D>();
-
-            if (whatIsWall == 0)
-                Log.Danger($"No wall layer defined for {GetType().Name}");
         }
 
         protected virtual void FixedUpdate()
         {
             CheckWallHitting();
+        }
+
+        protected virtual void OnEnable()
+        {
+            if (whatIsWall == 0)
+                Log.Danger($"No wall layer defined for {GetType().Name}");
         }
 
         #endregion
@@ -231,77 +250,59 @@ namespace Handy2DTools.CharacterController.Checkers
 
             if (checkUpperRight)
             {
-                RaycastHit2D hit = Physics2D.Raycast(positions.upperRight, Vector2.right, UpperRightLengthConverted, whatIsWall);
-                DebugCast(positions.upperRight, Vector2.right * UpperRightLengthConverted, hit);
-
-                if (hit && hit.collider && !hit.collider.CompareTag(tagToIgnore))
-                {
-                    data.upperRight = true;
-                    data.upperRightHitAngle = Vector2.Angle(positions.upperRight, hit.point);
-                }
+                CastFromPosition(positions.upperRight, Vector2.right, UpperRightLengthConverted, ref data.upperRight, ref data.upperRightHitAngle);
             }
 
             if (checkLowerRight)
             {
-                RaycastHit2D hit = Physics2D.Raycast(positions.lowerRight, Vector2.right, LowerRightLengthConverted, whatIsWall);
-                DebugCast(positions.lowerRight, Vector2.right * LowerRightLengthConverted, hit);
-
-                if (hit && hit.collider && !hit.collider.CompareTag(tagToIgnore))
-                {
-                    data.lowerRight = true;
-                    data.lowerRightHitAngle = Vector2.Angle(positions.lowerRight, hit.point);
-                }
+                CastFromPosition(positions.lowerRight, Vector2.right, LowerRightLengthConverted, ref data.lowerRight, ref data.lowerRightHitAngle);
             }
 
             if (checkCenterRight)
             {
-                RaycastHit2D hit = Physics2D.Raycast(positions.centerRight, Vector2.right, CenterRightLengthConverted, whatIsWall);
-                DebugCast(positions.centerRight, Vector2.right * CenterRightLengthConverted, hit);
-
-                if (hit && hit.collider && !hit.collider.CompareTag(tagToIgnore))
-                {
-                    data.centerRight = true;
-                    data.centerRightHitAngle = Vector2.Angle(positions.centerRight, hit.point);
-                }
+                CastFromPosition(positions.centerRight, Vector2.right, CenterRightLengthConverted, ref data.centerRight, ref data.centerRightHitAngle);
             }
 
             if (checkUpperLeft)
             {
-                RaycastHit2D hit = Physics2D.Raycast(positions.upperLeft, Vector2.left, UpperLeftLengthConverted, whatIsWall);
-                DebugCast(positions.upperLeft, Vector2.left * UpperLeftLengthConverted, hit);
-
-                if (hit && hit.collider && !hit.collider.CompareTag(tagToIgnore))
-                {
-                    data.upperLeft = true;
-                    data.upperLeftHitAngle = Vector2.Angle(positions.upperLeft, hit.point);
-                }
+                CastFromPosition(positions.upperLeft, Vector2.left, UpperLeftLengthConverted, ref data.upperLeft, ref data.upperLeftHitAngle);
             }
 
             if (checkLowerLeft)
             {
-                RaycastHit2D hit = Physics2D.Raycast(positions.lowerLeft, Vector2.left, LowerLeftLengthConverted, whatIsWall);
-                DebugCast(positions.lowerLeft, Vector2.left * LowerLeftLengthConverted, hit);
-
-                if (hit && hit.collider && !hit.collider.CompareTag(tagToIgnore))
-                {
-                    data.lowerLeft = true;
-                    data.lowerLeftHitAngle = Vector2.Angle(positions.lowerLeft, hit.point);
-                }
+                CastFromPosition(positions.lowerLeft, Vector2.left, LowerLeftLengthConverted, ref data.lowerLeft, ref data.lowerLeftHitAngle);
             }
 
             if (checkCenterLeft)
             {
-                RaycastHit2D hit = Physics2D.Raycast(positions.centerLeft, Vector2.left, CenterLeftLengthConverted, whatIsWall);
-                DebugCast(positions.centerLeft, Vector2.left * CenterLeftLengthConverted, hit);
-
-                if (hit && hit.collider && !hit.collider.CompareTag(tagToIgnore))
-                {
-                    data.centerLeft = true;
-                    data.centerLeftHitAngle = Vector2.Angle(positions.centerLeft, hit.point);
-                }
+                CastFromPosition(positions.centerLeft, Vector2.left, CenterLeftLengthConverted, ref data.centerLeft, ref data.centerLeftHitAngle);
             }
 
             UpdateWallHittingStatus(data);
+        }
+
+        /// <summary>
+        /// Executes the cast and updates the wall hit status.
+        /// </summary>
+        /// <param name="position"></param>
+        /// <param name="direction"></param>
+        /// <param name="distance"></param>
+        /// <param name="dataBool"></param>
+        /// <param name="dataAngle"></param>
+        protected void CastFromPosition(Vector2 position, Vector2 direction, float distance, ref bool dataBool, ref float dataAngle)
+        {
+            RaycastHit2D hit = Physics2D.Raycast(position, direction, distance, whatIsWall);
+            DebugCast(position, direction * CenterLeftLengthConverted, hit);
+
+            if (hit)
+            {
+                if (!string.IsNullOrEmpty(tagToIgnore) && hit.collider && hit.collider.CompareTag(tagToIgnore))
+                {
+                    return;
+                }
+                dataBool = true;
+                dataAngle = Vector2.Angle(position, hit.point);
+            }
         }
 
         /// <summary>

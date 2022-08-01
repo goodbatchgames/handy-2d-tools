@@ -56,6 +56,4 @@ namespace Handy2DTools.Utils
             }
         }
     }
-
-
 }

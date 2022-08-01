@@ -9,7 +9,7 @@ namespace Handy2DTools.CharacterController.Abilities
 {
     [RequireComponent(typeof(Rigidbody2D))]
     [AddComponentMenu("Handy 2D Tools/Character Controller/Abilities/DynamicMovement")]
-    public class DynamicMovement : HandyComponent
+    public class DynamicMovement : DocumentedComponent, IPlatformerMovementPerformer
     {
         #region Editor
 
@@ -80,6 +80,7 @@ namespace Handy2DTools.CharacterController.Abilities
         protected float defaultGravityScale;
         protected float xDamper = 0;
         protected bool grounded = false;
+        protected bool locked = false;
 
         #endregion
 
@@ -130,12 +131,22 @@ namespace Handy2DTools.CharacterController.Abilities
         /// <summary>
         /// Moves character along X axis based on xSpeed    
         /// </summary>
+        /// <param name="speed"></param>
+        /// <param name="directionSign"></param>
+        public virtual void MoveHorizontally(float speed, float directionSign)
+        {
+            float targetVelocityX = speed * directionSign;
+            Vector2 velocity = new Vector2(CalculateVelocityX(targetVelocityX), rb.velocity.y);
+            rb.velocity = velocity;
+        }
+
+        /// <summary>
+        /// Moves character along X axis based on xSpeed    
+        /// </summary>
         /// <param name="directionSign"></param>
         public virtual void MoveHorizontally(float directionSign)
         {
-            float targetVelocityX = xSpeed * directionSign;
-            Vector2 velocity = new Vector2(CalculateVelocityX(targetVelocityX), rb.velocity.y);
-            rb.velocity = velocity;
+            MoveHorizontally(xSpeed, directionSign);
         }
 
         /// <summary>
@@ -152,9 +163,10 @@ namespace Handy2DTools.CharacterController.Abilities
         /// Applies vertical speed to the character
         /// </summary>
         /// <param name="speed"></param>
-        public virtual void MoveVertically(float speed)
+        /// <param name="directionSign"></param>
+        public virtual void MoveVertically(float speed, float directionSign)
         {
-            Vector2 velocity = new Vector2(rb.velocity.x, speed);
+            Vector2 velocity = new Vector2(rb.velocity.x, speed * directionSign);
             rb.velocity = velocity;
         }
 
@@ -260,19 +272,14 @@ namespace Handy2DTools.CharacterController.Abilities
 
         protected void FindComponents()
         {
-            if (seekGroundingProvider)
-            {
-                groundingProvider = GetComponent<IGroundingProvider>();
-                if (groundingProvider == null)
-                    Log.Warning($"Component {GetType().Name} might not work properly. It is marked to seek for an IGroundingProvider but it could not find any.");
-            }
+            SeekComponent<IGroundingProvider>(seekGroundingProvider, ref groundingProvider);
         }
 
         /// <summary>
         /// Subscribes to events based on components wich implements
         /// the correct interfaces
         /// </summary>
-        protected override void SubscribeSeekers()
+        protected virtual void SubscribeSeekers()
         {
             groundingProvider?.GroundingUpdate.AddListener(UpdateGrounding);
         }
@@ -280,7 +287,7 @@ namespace Handy2DTools.CharacterController.Abilities
         /// <summary>
         /// Unsubscribes from events
         /// </summary>
-        protected override void UnsubscribeSeekers()
+        protected virtual void UnsubscribeSeekers()
         {
             groundingProvider?.GroundingUpdate.RemoveListener(UpdateGrounding);
         }

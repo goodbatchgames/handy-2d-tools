@@ -11,6 +11,7 @@ namespace Handy2DTools.CharacterController.Abilities
     /// </summary>
     public interface IDashHandler
     {
+        GameObject gameObject { get; }
         UnityEvent SendDashRequest { get; }
     }
 }

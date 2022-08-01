@@ -11,6 +11,7 @@ namespace Handy2DTools.CharacterController.Abilities
     /// </summary>
     public interface IMovementDirectionsProvider
     {
+        GameObject gameObject { get; }
 
         /// <summary>
         /// An event wich should be fired to update movements direction

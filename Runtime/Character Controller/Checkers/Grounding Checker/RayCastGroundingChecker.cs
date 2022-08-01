@@ -11,7 +11,7 @@ namespace Handy2DTools.CharacterController.Checkers
 {
     [AddComponentMenu("Handy 2D Tools/Character Controller/Checkers/RayCastGroundingChecker")]
     [RequireComponent(typeof(Collider2D))]
-    public class RayCastGroundingChecker : Checker, IGroundingProvider
+    public class RayCastGroundingChecker : Checker, IGroundingProvider, IGroundingChecker
     {
         #region Inspector
 
@@ -31,6 +31,18 @@ namespace Handy2DTools.CharacterController.Checkers
         [Tooltip("This is optional. You can either specify the collider or leave to this component to find a CapsuleCollider2D. Usefull if you have multiple colliders")]
         [SerializeField]
         protected Collider2D groundingCollider;
+
+        [Header("Layers")]
+        [InfoBox("Without this the component won't work", EInfoBoxType.Warning)]
+        [Tooltip("Inform what layers should be considered ground")]
+        [SerializeField]
+        [Space]
+        protected LayerMask whatIsGround;
+
+        [Header("Directions")]
+        [Tooltip("The checking direction")]
+        [SerializeField]
+        protected VerticalDirections verticalDirection = VerticalDirections.Down;
 
         // Right stuff
         [Header("Right Detection")]
@@ -89,18 +101,6 @@ namespace Handy2DTools.CharacterController.Checkers
         [Range(-100f, 1000f)]
         protected float centerPositionYOffset = 0f;
 
-        [Header("Layers")]
-        [InfoBox("Without this the component won't work", EInfoBoxType.Warning)]
-        [Tooltip("Inform what layers should be considered ground")]
-        [SerializeField]
-        [Space]
-        protected LayerMask whatIsGround;
-
-        [Header("Directions")]
-        [Tooltip("The checking direction")]
-        [SerializeField]
-        protected VerticalDirections verticalDirection = VerticalDirections.Down;
-
         [Foldout("Available Events:")]
         [Space]
         [InfoBox("You can use these to directly set listeners about this GameObject's grounding")]
@@ -125,6 +125,18 @@ namespace Handy2DTools.CharacterController.Checkers
         #endregion
 
         #region Properties
+
+        public LayerMask WhatIsGround
+        {
+            get
+            {
+                return whatIsGround;
+            }
+            set
+            {
+                whatIsGround = value;
+            }
+        }
 
         #endregion
 
@@ -158,14 +170,9 @@ namespace Handy2DTools.CharacterController.Checkers
 
         protected virtual void Awake()
         {
-            rb = GetComponent<Rigidbody2D>();
-
             FindComponents();
 
             if (groundingCollider == null) groundingCollider = GetComponent<Collider2D>();
-
-            if (whatIsGround == 0)
-                Log.Danger($"No ground layer defined for {GetType().Name}");
         }
 
         protected virtual void FixedUpdate()
@@ -175,6 +182,9 @@ namespace Handy2DTools.CharacterController.Checkers
 
         protected virtual void OnEnable()
         {
+            if (whatIsGround == 0)
+                Log.Danger($"No ground layer defined for {GetType().Name}");
+
             SubscribeSeekers();
         }
 
@@ -307,21 +317,15 @@ namespace Handy2DTools.CharacterController.Checkers
 
         protected virtual void FindComponents()
         {
-
-            if (seekVerticalDirectionProvider)
-            {
-                verticalDirectionProvider = GetComponent<IVerticalDirectionProvider>();
-                if (verticalDirectionProvider == null)
-                    Debug.LogWarning("Component SlopeChecker2D might not work properly. It is marked to seek for an IVerticalDirectionProvider but it could not find any.");
-            }
-
+            FindComponent<Rigidbody2D>(ref rb);
+            SeekComponent<IVerticalDirectionProvider>(seekVerticalDirectionProvider, ref verticalDirectionProvider);
         }
 
         /// <summary>
         /// Subscribes to events based on components wich implements
         /// the correct interfaces
         /// </summary>
-        protected override void SubscribeSeekers()
+        protected virtual void SubscribeSeekers()
         {
             verticalDirectionProvider?.VerticalDirectionUpdate.AddListener(UpdateVerticalDirection);
         }
@@ -329,7 +333,7 @@ namespace Handy2DTools.CharacterController.Checkers
         /// <summary>
         /// Unsubscribes from events
         /// </summary>
-        protected override void UnsubscribeSeekers()
+        protected virtual void UnsubscribeSeekers()
         {
             verticalDirectionProvider?.VerticalDirectionUpdate.RemoveListener(UpdateVerticalDirection);
         }
@@ -338,15 +342,9 @@ namespace Handy2DTools.CharacterController.Checkers
 
         #region Handy Component
 
-        protected override string DocPath => "en/core/character-controller/checkers/grounding-checker.html";
-        protected override string DocPathPtBr => "pt_BR/core/character-controller/checkers/grounding-checker.html";
+        protected override string DocPath => "en/core/character-controller/checkers/raycast-grounding-checker.html";
+        protected override string DocPathPtBr => "pt_BR/core/character-controller/checkers/raycast-grounding-checker.html";
 
         #endregion
-    }
-
-    public enum GroundingCheckStrategy
-    {
-        RayCasts,
-        BoxCast,
     }
 }

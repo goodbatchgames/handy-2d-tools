@@ -11,10 +11,17 @@ namespace Handy2DTools.CharacterController.Abilities
     /// </summary>
     public interface IJumpPerformer
     {
+        GameObject gameObject { get; }
+        bool Performing { get; }
+        bool PerformingExtra { get; }
+
         void Request();
-        void Stop();
         void Perform();
-        UnityEvent<GameObject> JumpStarted { get; }
-        UnityEvent<GameObject> JumpFinished { get; }
+        void PerformExtrajump();
+        void Stop();
+        void Lock(bool shouldLock);
+
+        UnityEvent<bool> JumpUpdate { get; }
+        UnityEvent<bool> ExtraJumpUpdate { get; }
     }
 }

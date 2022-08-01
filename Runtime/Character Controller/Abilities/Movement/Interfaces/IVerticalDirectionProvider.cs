@@ -7,11 +7,13 @@ using Handy2DTools.Enums;
 namespace Handy2DTools.CharacterController.Abilities
 {
     /// <summary>
-    /// Any GameOject that wants to controll vertical directions can use an
+    /// Any GameObject that wants to controll vertical directions can use an
     /// event through implementing this Interface.
     /// </summary>
     public interface IVerticalDirectionProvider
     {
+        GameObject gameObject { get; }
+
         /// <summary>
         /// An event wich should be fired to update direction
         /// </summary>

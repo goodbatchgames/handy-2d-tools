@@ -16,7 +16,7 @@ namespace Handy2DTools.Actions
     /// </summary>
     [AddComponentMenu("Handy 2D Tools/FSM/State Machine")]
     [DefaultExecutionOrder(100)]
-    public class StateMachine : HandyComponent
+    public class StateMachine : DocumentedComponent
     {
         #region Fields
 

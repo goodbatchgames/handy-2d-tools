@@ -30,15 +30,10 @@ namespace Handy2DTools.CharacterController.Abilities
         protected bool stopWhenNotGrounded = true;
 
         [Foldout("Slide Events")]
-        [Label("Slide Performed")]
+        [Label("Slide Update")]
         [SerializeField]
         [Space]
-        protected UnityEvent<GameObject> slideStarted;
-
-        [Foldout("Slide Events")]
-        [Label("Slide Performed")]
-        [SerializeField]
-        protected UnityEvent<GameObject> slideFinished;
+        protected UnityEvent<bool> slideUpdate;
 
         // Getters
 
@@ -47,8 +42,7 @@ namespace Handy2DTools.CharacterController.Abilities
         public float Delay => delay;
         public bool StopWhenNotGrounded => stopWhenNotGrounded;
 
-        public UnityEvent<GameObject> SlideStarted => slideStarted;
-        public UnityEvent<GameObject> SlideFinished => slideFinished;
+        public UnityEvent<bool> SlideUpdate => slideUpdate;
     }
 
 }

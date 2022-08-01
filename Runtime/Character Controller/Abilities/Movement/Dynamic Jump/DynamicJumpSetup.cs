@@ -76,26 +76,15 @@ namespace Handy2DTools.CharacterController.Abilities
         protected float extraJumpDuration = 0.35f;
 
         [Foldout("Jump Events")]
-        [Label("Jump Started")]
+        [Label("Jump Update")]
         [Space]
         [SerializeField]
-        protected UnityEvent<GameObject> jumpStarted;
+        protected UnityEvent<bool> jumpUpdate;
 
         [Foldout("Jump Events")]
-        [Label("Jump Finished")]
-        [Space]
+        [Label("Extra Jump Update")]
         [SerializeField]
-        protected UnityEvent<GameObject> jumpFinished;
-
-        [Foldout("Jump Events")]
-        [Label("Extra Jump Started")]
-        [SerializeField]
-        protected UnityEvent<GameObject> extraJumpStarted;
-
-        [Foldout("Jump Events")]
-        [Label("Extra Jump Finished")]
-        [SerializeField]
-        protected UnityEvent<GameObject> extraJumpFinished;
+        protected UnityEvent<bool> extraJumpUpdate;
 
         #endregion
 
@@ -114,11 +103,8 @@ namespace Handy2DTools.CharacterController.Abilities
         public float ExtraJumpForce => extraJumpForce;
         public float ExtraJumpDuration => extraJumpDuration;
 
-        public UnityEvent<GameObject> JumpStarted => jumpStarted;
-        public UnityEvent<GameObject> JumpFinished => jumpFinished;
-        public UnityEvent<GameObject> ExtraJumpStarted => extraJumpStarted;
-        public UnityEvent<GameObject> ExtraJumpFinished => extraJumpFinished;
-
+        public UnityEvent<bool> JumpUpdate => jumpUpdate;
+        public UnityEvent<bool> ExtraJumpUpdate => extraJumpUpdate;
         #endregion
 
         #region Logic

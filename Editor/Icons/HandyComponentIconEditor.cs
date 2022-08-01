@@ -4,10 +4,10 @@ using UnityEngine;
 
 namespace Handy2DTools.Icons.Editor
 {
-    [CustomEditor(typeof(HandyComponent))]
+    [CustomEditor(typeof(DocumentedComponent))]
     public class HandyComponentIconEditor : UnityEditor.Editor
     {
-        HandyComponent handyComponent => target as HandyComponent;
+        DocumentedComponent handyComponent => target as DocumentedComponent;
 
         private void SetIcons()
         {

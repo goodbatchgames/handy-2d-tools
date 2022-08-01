@@ -10,7 +10,7 @@ namespace Handy2DTools.Actions
     /// and wants to benefit from the FSM
     /// </summary>
     [DefaultExecutionOrder(0)]
-    public abstract class Actor : MonoBehaviour
+    public abstract class Actor : HandyComponent
     {
 
         #region Fields
