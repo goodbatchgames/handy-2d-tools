@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <img style="width: 300px; height:300px;" src="https://goodbatchgames.github.io/handy-2D-tools/_images/logo.png" />
+  <img style="width: 300px; height:300px;" src="https://goodbatchgames.github.io/handy-2d-tools/_images/logo.png" />
 </p>
 
 # Handy 2D Tools by Good Batch Games
