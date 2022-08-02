@@ -88,7 +88,25 @@ namespace Handy2DTools.CharacterController.Platformer
 
         #endregion
 
+        #region Fields
+
+        protected bool grounded = false;
+        protected PlatformerSlopeData slopeData;
+        protected float slideStartedAt;
+        protected float canSlideAt;
+        protected bool slideLocked = false;
+        protected float currentSlideTimer = 0;
+        protected float currentFacingDirectionSign = 0;
+        protected bool stopingDueToLostGround = false;
+
+        protected float lengthConvertionRate = 100f;
+
+        #endregion
+
         #region Properties
+
+        protected bool CanStartSliding => !performing && grounded && !slideLocked && Time.fixedTime >= canSlideAt;
+        protected float LengthConverted => ceilingDetectionLength / lengthConvertionRate;
 
         public IPlatformerSlideHandler SlideHandler
         {
@@ -150,25 +168,6 @@ namespace Handy2DTools.CharacterController.Platformer
             }
         }
 
-
-        protected bool grounded = false;
-        protected PlatformerSlopeData slopeData;
-        protected float slideStartedAt;
-        protected float canSlideAt;
-        protected bool slideLocked = false;
-        protected float currentSlideTimer = 0;
-        protected float currentDirectionSign = 0;
-        protected bool stopingDueToLostGround = false;
-
-        protected float lengthConvertionRate = 100f;
-
-        #endregion
-
-        #region Properties
-
-        protected bool CanStartSliding => !performing && grounded && !slideLocked && Time.fixedTime >= canSlideAt;
-        protected float LengthConverted => ceilingDetectionLength / lengthConvertionRate;
-
         #endregion
 
         #region Getters
@@ -217,14 +216,14 @@ namespace Handy2DTools.CharacterController.Platformer
         #region  Logic
 
         /// <summary>
-        /// Call this to request a Jump.
-        /// Should only be used if not seeking for horizontal direction provider.
+        /// Call this to request a Slide.
         /// </summary>
+        /// <param name="directionSign"></param>
         public void Request(float directionSign)
         {
             if (!setup.Active) return;
             if (!CanStartSliding) return;
-            currentDirectionSign = directionSign;
+            currentFacingDirectionSign = directionSign;
             StartSlide();
         }
 
@@ -259,13 +258,13 @@ namespace Handy2DTools.CharacterController.Platformer
 
             if (currentSlideTimer > setup.Duration && !IsUnderCeiling()) { Stop(); return; } // Stop only if duration is reached and not under ceiling
 
-            movementPerformer.MoveHorizontally(setup.XSpeed, currentDirectionSign);
+            movementPerformer.MoveHorizontally(setup.XSpeed, currentFacingDirectionSign);
 
             currentSlideTimer += Time.fixedDeltaTime;
         }
 
         /// <summary>
-        /// Stops jump in progress if any.
+        /// Stops slide in progress if any.
         /// </summary>
         public void Stop()
         {
@@ -343,8 +342,8 @@ namespace Handy2DTools.CharacterController.Platformer
         #region Callbacks
 
         /// <summary>
-        /// Call this in order to Lock jump and
-        /// prevent new jumps to occur based on
+        /// Call this in order to Lock slide and
+        /// prevent new slides to occur based on
         /// shouldLock boolean.
         /// </summary>
         /// <param name="shouldLock"></param>
@@ -353,19 +352,22 @@ namespace Handy2DTools.CharacterController.Platformer
             slideLocked = shouldLock;
         }
 
+        /// <summary>
+        /// Call this to update grouding
+        /// </summary>
+        /// <param name="newGrounding"></param>
         public void UpdateGronding(bool newGrounding)
         {
             grounded = newGrounding;
         }
 
-        public void UpdateSlopeData(PlatformerSlopeData newSlopeData)
+        /// <summary>
+        /// Call this to update facing direction sign. -1 for left, 1 for right.
+        /// </summary>
+        /// <param name="newFacingDirectionSign"></param>
+        public void UpdateFacingDirectionSign(float newFacingDirectionSign)
         {
-            slopeData = newSlopeData;
-        }
-
-        public void UpdateDirectionSign(float newDirectionSign)
-        {
-            currentDirectionSign = newDirectionSign;
+            currentFacingDirectionSign = newFacingDirectionSign;
         }
 
         #endregion
@@ -390,7 +392,7 @@ namespace Handy2DTools.CharacterController.Platformer
         protected virtual void SubscribeSeekers()
         {
             groundingProvider?.GroundingUpdate.AddListener(UpdateGronding);
-            horizontalDirectionProvider?.FacingDirectionSignUpdate.AddListener(UpdateDirectionSign);
+            horizontalDirectionProvider?.FacingDirectionSignUpdate.AddListener(UpdateFacingDirectionSign);
             slideHandler?.SendSlideRequest.AddListener(Request);
         }
 
@@ -400,7 +402,7 @@ namespace Handy2DTools.CharacterController.Platformer
         protected virtual void UnsubscribeSeekers()
         {
             groundingProvider?.GroundingUpdate.RemoveListener(UpdateGronding);
-            horizontalDirectionProvider?.FacingDirectionSignUpdate.RemoveListener(UpdateDirectionSign);
+            horizontalDirectionProvider?.FacingDirectionSignUpdate.RemoveListener(UpdateFacingDirectionSign);
             slideHandler?.SendSlideRequest.RemoveListener(Request);
         }
 

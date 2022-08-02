@@ -23,22 +23,17 @@ namespace Handy2DTools.CharacterController.Platformer
         protected bool seekMovementPerformer = false;
 
         [Tooltip("If you guarantee your GameObject has a component wich implements an IPlatformerWallHitDataProvider you can mark this and it will subscribe to its events. WallHitChecker, for example, implements it.")]
-        [SerializeField] protected bool seekWallHitDataProvider = false;
+        [SerializeField]
+        protected bool seekWallHitDataProvider = false;
 
         [SerializeField]
+        [Space]
         protected bool debugOn;
 
         [ShowIf("debugOn")]
         [ReadOnly]
         [SerializeField]
         protected bool performing = false;
-
-        [Header("Perform Approach")]
-        [InfoBox("If you uncheck this it means you will have to call the Perform() method inside the Physics Update of any component you create to handle this one.")]
-        [Tooltip("In case you want to handle when and how the Perform() method is called, you should turn this off")]
-        [SerializeField]
-        [Space]
-        protected bool autoPerform = false;
 
         #endregion
 
@@ -106,13 +101,6 @@ namespace Handy2DTools.CharacterController.Platformer
             FindComponents();
         }
 
-        protected virtual void FixedUpdate()
-        {
-            if (!autoPerform || !performing) return;
-
-            Perform();
-        }
-
         protected virtual void OnEnable()
         {
             SubscribeSeekers();
@@ -128,9 +116,9 @@ namespace Handy2DTools.CharacterController.Platformer
         #region  Logic
 
         /// <summary>
-        /// Starts the wall slide process so Perform() can be called each physics update.
+        /// Evaluates if can start the wall grab process. If so Perform() should be called each physics update.
         /// </summary>
-        public void EvaluateAndStart(float movementDirectionSign)
+        public void Request(float movementDirectionSign)
         {
             if (!setup.Active || performing) return;
 
@@ -150,7 +138,8 @@ namespace Handy2DTools.CharacterController.Platformer
         }
 
         /// <summary>
-        /// Should be called on Fixed (Physics) Update.
+        /// Should be called on Fixed (Physics) Update. If direction passed as 0 means no movement.
+        /// Note that gravity can still affect the RigidBody2D
         /// </summary>
         /// <param name="directionSign">The direction sign to move. -1 down, 1 up</param>
         public void Perform(float directionSign = 0)

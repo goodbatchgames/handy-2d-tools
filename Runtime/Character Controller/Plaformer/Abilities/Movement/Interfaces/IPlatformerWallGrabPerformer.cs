@@ -14,7 +14,7 @@ namespace Handy2DTools.CharacterController.Platformer
         GameObject gameObject { get; }
         bool Performing { get; }
 
-        void EvaluateAndStart(float movementDirectionSign);
+        void Request(float movementDirectionSign);
         void Perform(float verticalDirectionSign);
         void Stop();
 

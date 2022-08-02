@@ -18,11 +18,11 @@ namespace Handy2DTools
             Application.OpenURL(Url + "/en/" + DocPath);
         }
 
-        [Button, Tooltip("Abrir a página da documentação do componente")]
-        protected virtual void AbrirDocs()
-        {
-            Application.OpenURL(Url + "/pt_BR/" + DocPath);
-        }
+        // [Button, Tooltip("Abrir a página da documentação do componente")]
+        // protected virtual void AbrirDocs()
+        // {
+        //     Application.OpenURL(Url + "/pt_BR/" + DocPath);
+        // }
 
         #endregion
 
