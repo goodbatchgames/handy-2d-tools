@@ -39,7 +39,7 @@ namespace Handy2DTools.Environmental
         protected bool lockX = false;
 
         [Tooltip("The speed factor applied to the parallax effect")]
-        [InfoBox("The parallax effect speed is calculated based on the layer distance from the subject. Change these in orther to tweek the effect")]
+        [InfoBox("The parallax effect speed is calculated based on the layer distance from the subject. Change these in orther to tweak the effect")]
         [SerializeField]
         [Space]
         protected Vector2 speedFactor = new Vector2(1f, 1f);

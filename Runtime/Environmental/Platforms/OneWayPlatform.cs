@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using Handy2DTools.CharacterController.Abilities;
+using Handy2DTools.CharacterController.Platformer;
 using Handy2DTools.Debugging;
 using UnityEngine;
 
@@ -36,7 +36,7 @@ namespace Handy2DTools.Environmental.Platforms
             platformEffector = GetComponent<PlatformEffector2D>();
 
             fallPerformer = subject.GetComponent<IPlatformFallPerformer>();
-            fallPerformerCollider = fallPerformer.PlatformFallPerformerCollider;
+            fallPerformerCollider = fallPerformer?.PlatformFallPerformerCollider;
 
             if (platformCollider == null)
             {
@@ -46,6 +46,8 @@ namespace Handy2DTools.Environmental.Platforms
 
         protected void LateUpdate()
         {
+            if (fallPerformerCollider == null) return;
+
             Vector2 subjectColliderPosition = (Vector2)fallPerformerCollider.bounds.center + new Vector2(0, -fallPerformerCollider.bounds.extents.y);
             Vector2 platformColliderPosition = (Vector2)platformCollider.bounds.center + new Vector2(0, platformCollider.bounds.extents.y);
 
