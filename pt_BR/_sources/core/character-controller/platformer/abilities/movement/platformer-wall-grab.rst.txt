@@ -43,15 +43,6 @@ Feeding Dependencies
 Below you will find what you should feed this component with and how. You can always do it by directly accessing its methods 
 or having components wich provide what they need and mark this component to seek for them through the inspector window.
 
-Grounding
-*********
-
-This component needs to know if its ``GameObject`` can be considered grounded to evaluate if it should start sliding.
-
-You can use the ``UpdateGrounding(bool newGrounding)`` method every update or mark the component to seek for an 
-:ref:`IPlatformerGroundingProvider <i-platformer-grounding-provider-page>` as long as it has some component wich implements 
-it among its ``GameObject`` other components. Our :ref:`Platformer Raycast Grounding Checker <platformer-raycast-grounding-checker-page>` implements it.
-
 Movement Performer
 ******************
 
@@ -76,8 +67,8 @@ Usage
 -----
 
 Requesting a wall grab is different from requesting jumps, slides or other abilities that are requested through
-user input. So, instead of realling on handlers it will be your responsibility to evaluate when your code should request a wall grab and, 
-if the component will start performing accordingly.
+user input. So, instead of relying on handlers it will be your responsibility to evaluate when your code should request a wall grab and 
+the component will start performing accordingly.
 
 Direct approach
 ***************
@@ -86,6 +77,7 @@ Direct approach
 
     PlatformerWallGrab wallGrab;
     float verticalDirectionSign;
+    float horizontalDirectionSign;
 
     void Awake() 
     {
@@ -94,8 +86,8 @@ Direct approach
 
     void Update() 
     {
-        float verticalDirectionSign = MyWayOfDetectingVerticalDirection(); // -1 down, 1 up
-        float horizontalDirectionSign = MyWayOfDetectingHorizontalDirection(); // -1 left, 1 right
+        verticalDirectionSign = MyWayOfDetectingVerticalDirection(); // -1 down, 1 up
+        horizontalDirectionSign = MyWayOfDetectingHorizontalDirection(); // -1 left, 1 right
 
         if (ConditionToRequestWallGrab)
         {
@@ -118,6 +110,7 @@ Requesting wall grabs using :ref:`IPlatformerWallGrabPerformer <i-platformer-wal
 
     IPlatformerWallGrabPerformer wallGrabPerformer;
     float verticalDirectionSign;
+    float horizontalDirectionSign;
 
     void Awake()
     {
@@ -126,8 +119,8 @@ Requesting wall grabs using :ref:`IPlatformerWallGrabPerformer <i-platformer-wal
 
     void Update() 
     {
-        float verticalDirectionSign = MyWayOfDetectingVerticalDirection(); // -1 down, 1 up
-        float horizontalDirectionSign = MyWayOfDetectingHorizontalDirection(); // -1 left, 1 right
+        verticalDirectionSign = MyWayOfDetectingVerticalDirection(); // -1 down, 1 up
+        horizontalDirectionSign = MyWayOfDetectingHorizontalDirection(); // -1 left, 1 right
 
         if (ConditionToRequestWallGrab)
         {

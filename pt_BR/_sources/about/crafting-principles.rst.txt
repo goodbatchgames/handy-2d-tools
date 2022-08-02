@@ -155,14 +155,14 @@ When jump button is pressed: ``SendJumpRequest.Invoke()``. When jump button is r
 
   If you are not familiar with Unity Events you can `click here <https://docs.unity3d.com/ScriptReference/Events.UnityEvent.html>`_ and learn a bit more.
 
-So, if you want to build your own handler for our ``PlatformerJump`` component, just implement the ``IPlatformerJumpHandler`` interface and activate the "Seek For Handler"
-option in the ``PlatformerJump`` component inspector window. Make sure to attach both components to the same ``GameObject``.
+So, if you want to build your own handler for our ``PlatformerJump`` component, just implement the ``IPlatformerJumpHandler`` interface and mark 
+"Seek For Handler" option in the ``PlatformerJump`` component inspector window. Make sure to attach both components to the same ``GameObject``.
 
-.. code-block:: csharp
+.. .. code-block:: csharp
 
-  TODO: "Seeker" video
+..   TODO: "Seeker" video
 
-I use this strategy to all traits presented here. For another example you will find interfaces like ``IPlatformerGroundingProvider`` so you can listen for updates 
+We use this strategy to all traits presented here. For another example you will find interfaces like ``IPlatformerGroundingProvider`` so you can listen for updates 
 on the ``GameObject`` being or not considered grounded. Even another example is the  ``IDashPerformer`` wich will allow you to find components that perform 
 dynamic  dashes and listen for when the dash occur.
 

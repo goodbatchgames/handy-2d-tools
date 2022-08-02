@@ -223,12 +223,9 @@ When jump button is pressed: <code class="docutils literal notranslate"><span cl
 <p class="admonition-title">Note</p>
 <p>If you are not familiar with Unity Events you can <a class="reference external" href="https://docs.unity3d.com/ScriptReference/Events.UnityEvent.html">click here</a> and learn a bit more.</p>
 </div>
-<p>So, if you want to build your own handler for our <code class="docutils literal notranslate"><span class="pre">PlatformerJump</span></code> component, just implement the <code class="docutils literal notranslate"><span class="pre">IPlatformerJumpHandler</span></code> interface and activate the “Seek For Handler”
-option in the <code class="docutils literal notranslate"><span class="pre">PlatformerJump</span></code> component inspector window. Make sure to attach both components to the same <code class="docutils literal notranslate"><span class="pre">GameObject</span></code>.</p>
-<div class="highlight-csharp notranslate"><div class="highlight"><pre><span></span><span class="n">TODO</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Seeker&quot;</span><span class="w"> </span><span class="n">video</span><span class="w"></span>
-</pre></div>
-</div>
-<p>I use this strategy to all traits presented here. For another example you will find interfaces like <code class="docutils literal notranslate"><span class="pre">IPlatformerGroundingProvider</span></code> so you can listen for updates
+<p>So, if you want to build your own handler for our <code class="docutils literal notranslate"><span class="pre">PlatformerJump</span></code> component, just implement the <code class="docutils literal notranslate"><span class="pre">IPlatformerJumpHandler</span></code> interface and mark
+“Seek For Handler” option in the <code class="docutils literal notranslate"><span class="pre">PlatformerJump</span></code> component inspector window. Make sure to attach both components to the same <code class="docutils literal notranslate"><span class="pre">GameObject</span></code>.</p>
+<p>We use this strategy to all traits presented here. For another example you will find interfaces like <code class="docutils literal notranslate"><span class="pre">IPlatformerGroundingProvider</span></code> so you can listen for updates
 on the <code class="docutils literal notranslate"><span class="pre">GameObject</span></code> being or not considered grounded. Even another example is the  <code class="docutils literal notranslate"><span class="pre">IDashPerformer</span></code> wich will allow you to find components that perform
 dynamic  dashes and listen for when the dash occur.</p>
 <p>This is it for this first and most important principle. It is the “i interface my purpose” principle that glue all components together and allow you to

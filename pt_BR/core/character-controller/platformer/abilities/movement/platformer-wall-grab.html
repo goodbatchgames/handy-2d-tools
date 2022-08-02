@@ -74,7 +74,6 @@
 </ul>
 </li>
 <li class="toctree-l7"><a class="reference internal" href="#feeding-dependencies">Feeding Dependencies</a><ul>
-<li class="toctree-l8"><a class="reference internal" href="#grounding">Grounding</a></li>
 <li class="toctree-l8"><a class="reference internal" href="#movement-performer">Movement Performer</a></li>
 <li class="toctree-l8"><a class="reference internal" href="#wall-hit-data">Wall Hit Data</a></li>
 </ul>
@@ -179,13 +178,6 @@
 <h2>Feeding Dependencies<a class="headerlink" href="#feeding-dependencies" title="Link permanente para este cabeçalho"></a></h2>
 <p>Below you will find what you should feed this component with and how. You can always do it by directly accessing its methods
 or having components wich provide what they need and mark this component to seek for them through the inspector window.</p>
-<section id="grounding">
-<h3>Grounding<a class="headerlink" href="#grounding" title="Link permanente para este cabeçalho"></a></h3>
-<p>This component needs to know if its <code class="docutils literal notranslate"><span class="pre">GameObject</span></code> can be considered grounded to evaluate if it should start sliding.</p>
-<p>You can use the <code class="docutils literal notranslate"><span class="pre">UpdateGrounding(bool</span> <span class="pre">newGrounding)</span></code> method every update or mark the component to seek for an
-<a class="reference internal" href="../../checkers/interfaces/i-platformer-grounding-provider.html#i-platformer-grounding-provider-page"><span class="std std-ref">IPlatformerGroundingProvider</span></a> as long as it has some component wich implements
-it among its <code class="docutils literal notranslate"><span class="pre">GameObject</span></code> other components. Our <a class="reference internal" href="../../checkers/platformer-raycast-grounding-checker.html#platformer-raycast-grounding-checker-page"><span class="std std-ref">Platformer Raycast Grounding Checker</span></a> implements it.</p>
-</section>
 <section id="movement-performer">
 <h3>Movement Performer<a class="headerlink" href="#movement-performer" title="Link permanente para este cabeçalho"></a></h3>
 <p>In order to move on the Y while performing, this component will need a platformer movement performer.</p>
@@ -206,12 +198,13 @@ it among its <code class="docutils literal notranslate"><span class="pre">GameOb
 <section id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Link permanente para este cabeçalho"></a></h2>
 <p>Requesting a wall grab is different from requesting jumps, slides or other abilities that are requested through
-user input. So, instead of realling on handlers it will be your responsibility to evaluate when your code should request a wall grab and,
-if the component will start performing accordingly.</p>
+user input. So, instead of relying on handlers it will be your responsibility to evaluate when your code should request a wall grab and
+the component will start performing accordingly.</p>
 <section id="direct-approach">
 <h3>Direct approach<a class="headerlink" href="#direct-approach" title="Link permanente para este cabeçalho"></a></h3>
 <div class="highlight-csharp notranslate"><div class="highlight"><pre><span></span><span class="n">PlatformerWallGrab</span><span class="w"> </span><span class="n">wallGrab</span><span class="p">;</span><span class="w"></span>
 <span class="kt">float</span><span class="w"> </span><span class="n">verticalDirectionSign</span><span class="p">;</span><span class="w"></span>
+<span class="kt">float</span><span class="w"> </span><span class="n">horizontalDirectionSign</span><span class="p">;</span><span class="w"></span>
 
 <span class="k">void</span><span class="w"> </span><span class="nf">Awake</span><span class="p">()</span><span class="w"></span>
 <span class="p">{</span><span class="w"></span>
@@ -220,8 +213,8 @@ if the component will start performing accordingly.</p>
 
 <span class="k">void</span><span class="w"> </span><span class="nf">Update</span><span class="p">()</span><span class="w"></span>
 <span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">verticalDirectionSign</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">MyWayOfDetectingVerticalDirection</span><span class="p">();</span><span class="w"> </span><span class="c1">// -1 down, 1 up</span>
-<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">horizontalDirectionSign</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">MyWayOfDetectingHorizontalDirection</span><span class="p">();</span><span class="w"> </span><span class="c1">// -1 left, 1 right</span>
+<span class="w">    </span><span class="n">verticalDirectionSign</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">MyWayOfDetectingVerticalDirection</span><span class="p">();</span><span class="w"> </span><span class="c1">// -1 down, 1 up</span>
+<span class="w">    </span><span class="n">horizontalDirectionSign</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">MyWayOfDetectingHorizontalDirection</span><span class="p">();</span><span class="w"> </span><span class="c1">// -1 left, 1 right</span>
 
 <span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ConditionToRequestWallGrab</span><span class="p">)</span><span class="w"></span>
 <span class="w">    </span><span class="p">{</span><span class="w"></span>
@@ -243,6 +236,7 @@ if the component will start performing accordingly.</p>
 <h3>Requesting wall grabs using <a class="reference internal" href="interfaces/i-platformer-wall-grab-performer.html#i-platformer-wall-grab-performer-page"><span class="std std-ref">IPlatformerWallGrabPerformer</span></a> interface<a class="headerlink" href="#requesting-wall-grabs-using-iplatformerwallgrabperformer-interface" title="Link permanente para este cabeçalho"></a></h3>
 <div class="highlight-csharp notranslate"><div class="highlight"><pre><span></span><span class="n">IPlatformerWallGrabPerformer</span><span class="w"> </span><span class="n">wallGrabPerformer</span><span class="p">;</span><span class="w"></span>
 <span class="kt">float</span><span class="w"> </span><span class="n">verticalDirectionSign</span><span class="p">;</span><span class="w"></span>
+<span class="kt">float</span><span class="w"> </span><span class="n">horizontalDirectionSign</span><span class="p">;</span><span class="w"></span>
 
 <span class="k">void</span><span class="w"> </span><span class="nf">Awake</span><span class="p">()</span><span class="w"></span>
 <span class="p">{</span><span class="w"></span>
@@ -251,8 +245,8 @@ if the component will start performing accordingly.</p>
 
 <span class="k">void</span><span class="w"> </span><span class="nf">Update</span><span class="p">()</span><span class="w"></span>
 <span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">verticalDirectionSign</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">MyWayOfDetectingVerticalDirection</span><span class="p">();</span><span class="w"> </span><span class="c1">// -1 down, 1 up</span>
-<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">horizontalDirectionSign</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">MyWayOfDetectingHorizontalDirection</span><span class="p">();</span><span class="w"> </span><span class="c1">// -1 left, 1 right</span>
+<span class="w">    </span><span class="n">verticalDirectionSign</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">MyWayOfDetectingVerticalDirection</span><span class="p">();</span><span class="w"> </span><span class="c1">// -1 down, 1 up</span>
+<span class="w">    </span><span class="n">horizontalDirectionSign</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">MyWayOfDetectingHorizontalDirection</span><span class="p">();</span><span class="w"> </span><span class="c1">// -1 left, 1 right</span>
 
 <span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ConditionToRequestWallGrab</span><span class="p">)</span><span class="w"></span>
 <span class="w">    </span><span class="p">{</span><span class="w"></span>
