@@ -1,0 +1,31 @@
+.. _i-platformer-horizontal-flip-performer-page:
+
+IPlatformerHorizontalFlipPerformer
+==================================
+
+.. code-block:: csharp
+    
+    namespace Handy2DTools.CharacterController.Platformer
+    {
+        /// <summary>
+        /// Any GameObject that wants to flip characters
+        /// should implement this interface
+        /// </summary>
+        public interface IPlatformerHorizontalFlipPerformer
+        {
+            GameObject gameObject { get; }
+
+            /// <summary>
+            /// Flips character horizontally
+            /// </summary>
+            void FlipHorizontally();
+
+            /// <summary>
+            /// This method must evaluate if character should be flipped
+            /// and perform accordingly.
+            /// </summary>
+            void EvaluateAndFlipHorizontally(float directionSign);
+
+            void Lock(bool shouldLock);
+        }
+    }

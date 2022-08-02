@@ -58,7 +58,7 @@ i find that you should be able to do it and still benefit from our components wi
 
 Because of that, ``PlayableCharacterActions`` wouldn't have a reference to the ``DynamicJump`` component. Instead it would declare itself as a "dynamic jump  handler" 
 and then allow the ``DynamicJump`` component to find it and listen to events that state what it should do. So... for the sake of a use case example, I 
-present to you the ``IJumpHandler`` interface.
+present to you the ``IPlatformerJumpHandler`` interface.
 
 Take a look: 
 
@@ -70,7 +70,7 @@ Take a look:
       /// Any component that implements this interface will be able to handle dynamic  jumps
       /// by invoking its methods..
       /// </summary>
-      public interface IJumpHandler
+      public interface IPlatformerJumpHandler
       {
           UnityEvent SendJumpRequest { get; }
           UnityEvent SendJumpStop { get; }
@@ -83,13 +83,13 @@ So as a Handler whenever you want a jump to be performed use the ``SendJumpReque
 
 .. code-block:: csharp
 
-  public class PlayableCharacterActions : MonoBehaviour, IJumpHandler
+  public class PlayableCharacterActions : MonoBehaviour, IPlatformerJumpHandler
   {
 
     public UnityEvent sendJumpRequestEvent; // declare it as field so you can benefit from it on inspector
     public UnityEvent sendJumpStopEvent;
 
-    public UnityEvent SendJumpRequest => sendJumpRequestEvent; // Dispose as getter to respect IJumpHandler interface
+    public UnityEvent SendJumpRequest => sendJumpRequestEvent; // Dispose as getter to respect IPlatformerJumpHandler interface
     public UnityEvent SendJumpStop => sendJumpStopEvent; 
 
     void Update() {
@@ -109,7 +109,7 @@ So as a Handler whenever you want a jump to be performed use the ``SendJumpReque
   }
 
 
-That allows us to, while crafting a "dynamic jump  performer" component, find any ``IJumpHandler`` among its ``GameObject`` components and listen to its 
+That allows us to, while crafting a "dynamic jump  performer" component, find any ``IPlatformerJumpHandler`` among its ``GameObject`` components and listen to its 
 events. Then, every time a ``SendJumpRequest`` is invoked by its handler, the component will receive it on its callback and handle if it should jump or not.
 
 .. code-block:: csharp
@@ -117,11 +117,11 @@ events. Then, every time a ``SendJumpRequest`` is invoked by its handler, the co
   public class MyJumpPerformer : MonoBehaviour
   {
 
-    IJumpHandler jumpHandler;
+    IPlatformerJumpHandler jumpHandler;
 
     void Start()
     {
-      jumpHandler = GetComponent<IJumpHandler>();
+      jumpHandler = GetComponent<IPlatformerJumpHandler>();
       jumpHandler?.SendJumpRequest.AddListener(Request); // Listen to Jump Requests
       jumpHandler?.SendJumpStop.AddListener(Stop); // Listen to Stop demands  
     }
@@ -155,14 +155,14 @@ When jump button is pressed: ``SendJumpRequest.Invoke()``. When jump button is r
 
   If you are not familiar with Unity Events you can `click here <https://docs.unity3d.com/ScriptReference/Events.UnityEvent.html>`_ and learn a bit more.
 
-So, if you want to build your own handler for our ``DynamicJump`` component, just implement the ``IJumpHandler`` interface and activate the "Seek For Handler"
+So, if you want to build your own handler for our ``DynamicJump`` component, just implement the ``IPlatformerJumpHandler`` interface and activate the "Seek For Handler"
 option in the ``DynamicJump`` component inspector window. Make sure to attach both components to the same ``GameObject``.
 
 .. code-block:: csharp
 
   TODO: "Seeker" video
 
-I use this strategy to all traits presented here. For another example you will find interfaces like ``IGroundingProvider`` so you can listen for updates 
+I use this strategy to all traits presented here. For another example you will find interfaces like ``IPlatformerGroundingProvider`` so you can listen for updates 
 on the ``GameObject`` being or not considered grounded. Even another example is the  ``IDashPerformer`` wich will allow you to find components that perform 
 dynamic  dashes and listen for when the dash occur.
 
@@ -182,9 +182,9 @@ inspector window.
   Todo: Seeker section image
 
 For example, the ``DynamicDash`` needs to know about the grounding status of the ``GameObject`` it is attached to. In order to receive updates about grounding 
-it can seek for a "grounding provider" wich will be a component that implements the ``IGroundingProvider`` interface. This way you can use our ``GoundingChecker`` 
+it can seek for a "grounding provider" wich will be a component that implements the ``IPlatformerGroundingProvider`` interface. This way you can use our ``GoundingChecker`` 
 component or implement your own component that provides information about its ``GameObject`` grounding status. All you will need to do is to make sure it implements
-the ``IGroundingProvider`` interface and the ``DynamicDash`` will be able to find it and listen to the event that provides grounding information.
+the ``IPlatformerGroundingProvider`` interface and the ``DynamicDash`` will be able to find it and listen to the event that provides grounding information.
 
 The "you can directly ask me" principle
 ---------------------------------------

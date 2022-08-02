@@ -1,0 +1,257 @@
+.. _platformer-dynamic-wall-grab-page:
+
+Platformer Dynamic Wall Grab
+============================
+
+This component is used to perform dynamic slides, meaning it manipulates a ``RigidBody2D`` set as dynamic
+to achieve its goal.
+
+By slide we mean slighlity faster movement than it's normal movement repecting being on the ground. This 
+if different from a dash because it can't be performed on air and can only be executed horizontally. No 
+diagonals allowed.
+
+What it requires
+----------------
+
+* There must be a ``RigidBody2D`` component among its ``GameObject`` other components.
+
+* It will need the "Sliding Collider" option to be set passing in a ``Collider2D``. It will be 
+  from this collider that the ability will check if it can stop sliding based on what is considered 
+  ceiling in order to prevent being stuck.
+
+* It needs the "What is Ceiling" option to be set as a ``LayerMask`` telling what is considered "ceiling".
+
+* It needs the "Ceiling Detection Length" to be set as it will be used cast a ray to detect if it is under 
+  anything considered "ceiling" before stoping the slide.
+
+What is optional
+----------------
+
+* You can use the "Colliders to Disable" option to pass in a list of ``Collider2D`` that should be disabled while performing 
+  the slide.
+
+What it Implements
+------------------
+
+.. table:: 
+   :width: 100% 
+   :widths: 100
+
+   +-----------------------------------------------------------------------------------------------------+
+   | **Interface**                                                                                       |
+   +-----------------------------------------------------------------------------------------------------+
+   | :ref:`ISlidePerformer <i-platformer-slide-performer-page>`                                          |
+   +-----------------------------------------------------------------------------------------------------+
+
+Seeks For
+---------
+
+Below you will find what you should feed this component with and how. You can always do it by directly accessing its methods 
+or having components wich provide what they need and mark this component to seek for them through the inspector window.
+
+Grounding
+*********
+
+This component needs to know if its ``GameObject`` can be considered grounded to evaluate if it should start sliding.
+
+You can use the ``UpdateGrounding(bool newGrounding)`` method every update or mark the component to seek for an 
+:ref:`IPlatformerGroundingProvider <i-platformer-grounding-provider-page>` as long as it has some component wich implements 
+it among its ``GameObject`` other components. Our :ref:`Platformer Raycast Grounding Checker <platformer-raycast-grounding-checker-page>` implements it.
+
+
+Horizontal Facing Direction
+***************************
+
+This component needs to know what direction its ``GameObject`` is facing in order to setup the slide correctly
+and move the correct direction.
+
+You can use the ``UpdateDirectionSign(float newDirectionSign)`` method every update or mark the component to seek for an 
+:ref:`IPlatformerHorizontalDirectionProvider <i-platformer-facing-direction-provider-page>` as long as it has some component wich implements 
+it among its ``GameObject`` other components. Our :ref:`PlatformerFlip <platformer-flip-page>` implements it.
+
+Slide Handler
+*************
+
+This component needs to told when to perform its slides. So you will need a component to do that.
+
+You can use the ``Request()``, ``Stop()``, methods as seen below on the "How to use" section.
+You also can mark it to seek for an :ref:`IPlatformerSlideHandler <i-platformer-slide-handler-page>` as long as it has some 
+component wich implements it among its ``GameObject`` other components. If you opt to do so, the IPlatformerSlideHandler component will 
+take care of calling the ``Request()`` and ``Stop()`` methods when needed.
+
+Usage
+-----
+
+Here is how you can use this component:
+
+Direct approach
+***************
+
+.. code-block:: csharp
+
+    DynamicSlide slide;
+
+    void Awake() 
+    {
+        slide = GetComponent<DynamicSlide>();
+    }
+
+    void Update() 
+    {
+        if (Input.GetButtonDown("Slide")) // This assumes you've mapped a sliding button
+        {
+            slide.Request();
+        }
+
+        if (Input.GetButtonUp("Slide"))
+        {
+            slide.Stop();
+        }
+    }
+
+    void FixedUpdate()
+    {
+        if (slide.sliding)
+        {
+            slide.Perform();
+        }
+    }
+
+Listening to ISlidePerformer events
+***********************************
+
+.. code-block:: csharp
+
+    // This is an example on how to listen to the DynamicJump events using other components 
+    // you might craft
+
+    ISlidePerformer slidePerformer;
+
+    void Awake()
+    {
+        slidePerformer = GetComponent<ISlidePerformer>();      
+    }
+
+    void Start()
+    {
+        slidePerformer?.SlidePerformed.AddListener(OnSlidePerfomed);
+    }
+
+    void OnDisable()
+    {
+        slidePerformer?.SlidePerformed.RemoveListener(OnSlidePerfomed);
+    }
+    
+    void OnSlidePerfomed(GameObject go)
+    {
+        // Your logic
+    }
+
+.. note::
+
+    You can also use the direct approach to listen to the events.
+
+Setup
+*****
+
+.. code-block:: csharp
+
+    namespace Handy2DTools.CharacterController.Platformer
+    {
+
+        [CreateAssetMenu(fileName = "New DynamicSlideSetup", menuName = "Handy 2D Tools/CharacterController/Setups/DynamicSlide")]
+        public class DynamicSlideSetup : AbilitySetup
+        {
+
+            [Header("Slide Setup")]
+            [Tooltip("The speed wich will be applyed to X axis during slide.")]
+            [SerializeField]
+            [Space]
+            protected float xSpeed = 20f;
+
+            [Tooltip("Time in seconds of the slide duration.")]
+            [SerializeField]
+            protected float duration = 1f;
+
+            [Tooltip("Minimun time in seconds between slidees.")]
+            [SerializeField]
+            protected float delay = 1f;
+
+            [Tooltip("If gravity should be modified while sliding")]
+            [SerializeField]
+            protected bool modifyGravity = false;
+
+            [Tooltip("The gravity scale to be apllyed to RigidBody2D during slide.")]
+            [SerializeField]
+            [ShowIf("modifyGravity")]
+            protected float gravityScale = 0f;
+
+            [Tooltip("In case character is no longer grounded while performing slide, the slide is stoped.")]
+            [SerializeField]
+            protected bool stopWhenNotGrounded = true;
+
+            [Foldout("Slide Events")]
+            [Label("Slide Performed")]
+            [SerializeField]
+            [Space]
+            protected UnityEvent<GameObject> slidePerformed;
+
+            // Getters
+
+            public float XSpeed => xSpeed;
+            public float Duration => duration;
+            public float Delay => delay;
+            public bool ModifyGravity => modifyGravity;
+            public float GravityScale => gravityScale;
+            public bool StopWhenNotGrounded => stopWhenNotGrounded;
+            public UnityEvent<GameObject> SlidePerformed => slidePerformed;
+        }
+
+    }
+
+The perform approach
+--------------------
+
+On this ability's inspector you can mark ``Auto Perform`` checkbox and the component will perform automatically upon 
+self resolving slide requests and stops.
+
+In case you are working with an FSM (we have one, checkout  our :ref:`FSM solution <welcome-core-fsm-page>`) you might want
+your state to call the ``Perform()`` method.
+
+Locking Slides
+--------------
+
+Use the method ``LockSlide(bool shouldLock)`` to prevent or allow slides to be performed. Great to be used with FSMs 
+when entering and leaving states on wich slides should not be started.
+
+Available Methods
+-----------------
+
+.. code-block:: csharp
+
+    // Call this on physics update to tell the ability to perform its current
+    // on going slide.    
+    public void Perform()
+
+    // Call this on physics update to tell the ability to perform its current
+    // on going slide considering being or not on a slope. 
+    public void Perform(SlopeData slopeData)
+
+    // Call this in order to request a slide. The component will 
+    // self evaluate if it can slide or not
+    public virtual void Request()
+    
+    // Call this in order to stop the current on going slide 
+    public void Stop()
+
+    // Call this to update grounding
+    public void UpdateGrounding(bool newGrounding)
+
+    // Call this to update Slope Data
+    public void UpdateSlopeData(SlopeData newSlopeData)
+
+    // Call this to update the direction sign
+    public void UpdateDirectionSign(float newDirectionSign)
+
+    // Call this to lock or release the ability to slide
+    public void LockSlide(bool shouldLock)

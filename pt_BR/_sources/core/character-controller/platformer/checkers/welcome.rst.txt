@@ -1,0 +1,27 @@
+.. _welcome-core-checkers-page:
+
+Checkers
+========
+
+These Providers components are destined to evaluate a particular aspect of a character and 
+provide information to other components about it.
+
+Available Checkers
+------------------
+
+.. toctree::
+   :maxdepth: 1
+   
+   platformer-raycast-grounding-checker
+   platformer-wall-hit-checker
+   platformer-slope-checker
+
+Interfaces
+----------
+
+.. toctree::
+   :maxdepth: 1
+   
+   interfaces/i-platformer-grounding-provider
+   interfaces/i-platformer-wall-hit-data-provider
+   interfaces/i-platformer-slope-data-provider

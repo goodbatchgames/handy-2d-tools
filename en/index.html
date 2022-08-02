@@ -19,6 +19,7 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
         <script src="_static/clipboard.min.js"></script>
         <script src="_static/copybutton.js"></script>
@@ -55,9 +56,13 @@
 <li class="toctree-l1"><a class="reference internal" href="about/crafting-principles.html">Crafting Principles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="about/third-party.html">Third Party</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Available Packages</span></p>
+<p class="caption" role="heading"><span class="caption-text">Core Package</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="core/welcome.html">Core Package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core/actions/welcome.html">Actions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core/character-controller/welcome.html">Character Controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core/character-controller/welcome.html#abilities">Abilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core/environmental/welcome.html">Environmental</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core/animating/welcome.html">Animations</a></li>
 </ul>
 
         </div>
@@ -89,10 +94,10 @@
       <img class="logo-picture" src="../_images/logo.png" alt="logo" />
    </div>
 </div><div style="clear: both;" ></div><section id="handy-2d-tools-by-good-batch-games">
-<h1>Handy 2D Tools by Good Batch Games!<a class="headerlink" href="#handy-2d-tools-by-good-batch-games" title="Permalink to this headline"></a></h1>
+<h1>Handy 2D Tools by Good Batch Games!<a class="headerlink" href="#handy-2d-tools-by-good-batch-games" title="Permalink to this heading"></a></h1>
 <p>Welcome to our Handy 2D Tools documentation! Hurray! \o/</p>
 <section id="about-this-project">
-<h2>About this project<a class="headerlink" href="#about-this-project" title="Permalink to this headline"></a></h2>
+<h2>About this project<a class="headerlink" href="#about-this-project" title="Permalink to this heading"></a></h2>
 <p>This is a <strong>completely free</strong>  collection of handy tools for 2D driven Unity Game developers.</p>
 <p>Our goal is to make easy to use and iterative components so you can either use them as they are
 or have a starting point to create something awesome for your game.</p>
@@ -100,7 +105,7 @@ or have a starting point to create something awesome for your game.</p>
 as game designers / developers we also want to share what we learn and build.</p>
 </section>
 <section id="current-version">
-<h2>Current Version<a class="headerlink" href="#current-version" title="Permalink to this headline"></a></h2>
+<h2>Current Version<a class="headerlink" href="#current-version" title="Permalink to this heading"></a></h2>
 <blockquote>
 <div><ul class="simple">
 <li><p>1.0.0-alpha</p></li>
@@ -113,7 +118,7 @@ test both our “philosophy” behind how we compose our tools and the tools we 
 the feedback we get from you guys.</p>
 </section>
 <section id="itch-store">
-<h2>Itch Store<a class="headerlink" href="#itch-store" title="Permalink to this headline"></a></h2>
+<h2>Itch Store<a class="headerlink" href="#itch-store" title="Permalink to this heading"></a></h2>
 <p>Although this tools are free, we use them to build games and (both free and payed) game assets.</p>
 <p>They are released on itch.io and are a way for us to give something worth of your support in order to
 to keep creating stuff. Feel free to browse my <a class="reference external" href="https://goodbatchgames.itch.io">itch page</a> and find something usefull to you there.</p>
@@ -121,57 +126,22 @@ to keep creating stuff. Feel free to browse my <a class="reference external" hre
 access to them.</p>
 </section>
 <section id="contribute">
-<h2>Contribute<a class="headerlink" href="#contribute" title="Permalink to this headline"></a></h2>
+<h2>Contribute<a class="headerlink" href="#contribute" title="Permalink to this heading"></a></h2>
 <p>If you want to contribute to this project, get in touch by any of our socials listed below.</p>
 <a class="reference internal image-reference" href="https://patreon.com/goodbatchgames" target="_blank"><img alt="Patreon Image" class="align-left" src="_static/images/patreon.png" style="width: 80px;"></a><p id="patreon-explanation">Do not forget to at least consider joining our <a class="reference external" href="https://patreon.com/goodbatchgames">patreon</a> to own assets we distribute on itch.io.
-We intend to release new assets every month and subscribers have a 15 days window to claim and own them from the realease date.</p>
-<div style="clear: both;" ></div><p>Nevertheless, if somehow you just want to donate cause you find my work useful, click the button below:</p>
-<div id="donate-button-container">
-<div id="donate-button"></div>
-<script src="https://www.paypalobjects.com/donate/sdk/donate-sdk.js" charset="UTF-8"></script>
-<script>
-   PayPal.Donation.Button({
-      env:'production',
-      hosted_button_id:'CPCRZ3KV5RNQ6',
-      image: {
-      src:'https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif',
-      alt:'Donate with PayPal button',
-      title:'PayPal - The safer, easier way to pay online!',
-      }
-   }).render('#donate-button');
-</script>
-</div><div class="line-block">
+We intend to release new assets every month and subscribers automatically own them from the realease date.</p>
+<div style="clear: both;" ></div><div class="line-block">
 <div class="line"><br /></div>
 </div>
 <div class="toctree-wrapper compound">
-<p class="caption" role="heading"><span class="caption-text">First Steps</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="first-steps/how-to-use.html">How To use</a></li>
-<li class="toctree-l1"><a class="reference internal" href="first-steps/download.html">Download 1.0.0-alpha</a></li>
-</ul>
 </div>
 <div class="toctree-wrapper compound">
-<p class="caption" role="heading"><span class="caption-text">About</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="about/crafting-principles.html">Crafting Principles</a></li>
-<li class="toctree-l1"><a class="reference internal" href="about/third-party.html">Third Party</a></li>
-</ul>
 </div>
 <div class="toctree-wrapper compound">
-<p class="caption" role="heading"><span class="caption-text">Available Packages</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="core/welcome.html">Core Package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="core/actions/welcome.html">Actions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="core/character-controller/welcome.html">Character Controller</a></li>
-<li class="toctree-l2"><a class="reference internal" href="core/environmental/welcome.html">Environmental</a></li>
-<li class="toctree-l2"><a class="reference internal" href="core/animating/welcome.html">Animations</a></li>
-</ul>
-</li>
-</ul>
 </div>
 </section>
 <section id="where-to-find-us">
-<h2>Where to find us<a class="headerlink" href="#where-to-find-us" title="Permalink to this headline"></a></h2>
+<h2>Where to find us<a class="headerlink" href="#where-to-find-us" title="Permalink to this heading"></a></h2>
 <a class="reference internal image-reference" href="https://github.com/goodbatchgames" target="_blank"><img alt="Github Image" class="align-left" src="_static/images/github.png" style="width: 40px;"></a><p>Checkout this and other projects on my <a class="reference external" href="https://github.com/goodbatchgames/">Github page</a> .</p>
 <div style="clear: both;" ></div><a class="reference internal image-reference" href="https://www.youtube.com/channel/UCI6EqSYCSnY5n1ZX7V1y2NA" target="_blank"><img alt="Youtube Image" class="align-left" src="_static/images/youtube.png" style="width: 40px;"></a><p>We use our <a class="reference external" href="https://www.youtube.com/channel/UCI6EqSYCSnY5n1ZX7V1y2NA">Youtube channel</a> to post tutorials and news.</p>
 <div style="clear: both;" ></div><div style="clear: both;" ></div><a class="reference internal image-reference" href="https://instagram.com/goodbatchgames" target="_blank"><img alt="Instagram Image" class="align-left" src="_static/images/instagram.png" style="width: 40px;"></a><p>Follow our <a class="reference external" href="https://instagram.com/goodbatchgames">&#64;goodbatchgames</a> on Instagram.</p>

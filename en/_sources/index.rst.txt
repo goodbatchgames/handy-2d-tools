@@ -67,37 +67,18 @@ If you want to contribute to this project, get in touch by any of our socials li
 .. _patreon-explanation:
 
 Do not forget to at least consider joining our `patreon <https://patreon.com/goodbatchgames>`_ to own assets we distribute on itch.io.
-We intend to release new assets every month and subscribers have a 15 days window to claim and own them from the realease date.
+We intend to release new assets every month and subscribers automatically own them from the realease date.
 
 .. raw:: html
 
      <div style="clear: both;" ></div>
-
-Nevertheless, if somehow you just want to donate cause you find my work useful, click the button below:
-
-.. raw:: html
-
-   <div id="donate-button-container">
-   <div id="donate-button"></div>
-   <script src="https://www.paypalobjects.com/donate/sdk/donate-sdk.js" charset="UTF-8"></script>
-   <script>
-      PayPal.Donation.Button({
-         env:'production',
-         hosted_button_id:'CPCRZ3KV5RNQ6',
-         image: {
-         src:'https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif',
-         alt:'Donate with PayPal button',
-         title:'PayPal - The safer, easier way to pay online!',
-         }
-      }).render('#donate-button');
-   </script>
-   </div>
 
 |
 
 .. toctree::
    :maxdepth: 1
    :caption: First Steps
+   :hidden:
 
    first-steps/how-to-use
    first-steps/download
@@ -105,15 +86,20 @@ Nevertheless, if somehow you just want to donate cause you find my work useful, 
 .. toctree::
    :maxdepth: 1
    :caption: About
+   :hidden:
 
    about/crafting-principles
    about/third-party
 
 .. toctree::
-   :maxdepth: 2   
-   :caption: Available Packages
+   :caption: Core Package
+   :maxdepth: 2
+   :hidden:
 
-   core/welcome
+   core/actions/welcome
+   core/character-controller/welcome
+   core/environmental/welcome
+   core/animating/welcome
 
 Where to find us
 ----------------

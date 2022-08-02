@@ -1,0 +1,12 @@
+.. _cc-platformer-page:
+
+Platformer
+==========
+
+Here you will find docs about about our features for controlling characters for a 2D side-scroller platformer game.
+
+.. toctree::
+   :maxdepth: 2
+   
+   abilities/welcome
+   checkers/welcome

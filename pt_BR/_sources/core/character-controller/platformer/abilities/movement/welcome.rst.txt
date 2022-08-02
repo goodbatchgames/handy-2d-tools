@@ -1,0 +1,40 @@
+.. _cc-platformer-movement-abilities-page:
+
+Movement Abilities
+==================
+
+Available Abilities
+-------------------
+
+.. toctree::
+   :maxdepth: 1
+   
+   platformer-flip
+   platformer-dynamic-movement
+   platformer-jump
+   platformer-slide
+   platformer-wall-grab
+
+Interfaces
+----------
+
+.. toctree::
+   :maxdepth: 1
+   
+   interfaces/i-platformer-movement-performer
+   interfaces/i-platformer-horizontal-flip-performer
+   interfaces/i-platformer-facing-direction-provider
+   interfaces/i-platformer-vertical-flip-performer
+   interfaces/i-platformer-vertical-direction-provider
+   interfaces/i-platformer-movement-direction-provider
+   interfaces/i-platformer-jump-performer
+   interfaces/i-platformer-jump-handler
+   interfaces/i-platformer-slide-handler
+   interfaces/i-platformer-slide-performer
+   interfaces/i-platformer-wall-grab-performer
+
+.. HTML Substiuions
+
+.. |br| raw:: html
+
+     <br />

@@ -1,0 +1,311 @@
+.. _platformer-jump-page:
+
+Platformer Jump
+===============
+
+This component is used to perform platformer jumps. 
+
+Category
+--------
+
+.. table:: 
+   :width: 100% 
+   :widths: 100
+
+   +-----------------------------------------------------------------------------------------------------+
+   | Learnable                                                                                           |
+   +-----------------------------------------------------------------------------------------------------+
+
+
+What it Implements
+------------------
+
+.. table:: 
+   :width: 100% 
+   :widths: 100
+
+   +-----------------------------------------------------------------------------------------------------+
+   | **Interface**                                                                                       |
+   +-----------------------------------------------------------------------------------------------------+
+   | :ref:`IPlatformerJumpPerformer <i-platformer-jump-perfomer-page>`                                   |
+   +-----------------------------------------------------------------------------------------------------+
+
+Setup
+-----
+
+.. toctree::
+   :maxdepth: 1
+   
+   setups/platformer-jump-setup
+
+Dependencies
+------------
+
+Below you will find what you should feed this component with and how. You can always do it by directly accessing its methods 
+or having components wich provide what they need and mark this component to seek for them through the inspector window.
+
+Jump Handler
+************
+
+This component needs to told when to perform its jumps and extra jumps. So you will need a component to do that.
+
+You can use the ``Request()``, ``Stop()``, methods as seen below on the "How to use" section.
+You also can mark it to seek for an :ref:`IPlatformerJumpHandler <i-platformer-jump-handler-page>` as long as it has some 
+component wich implements it among its ``GameObject`` other components. If you opt to do so, the IPlatformerJumpHandler component will 
+take care of calling the ``Request()`` and ``Stop()`` methods when needed.
+
+Movement Performer
+******************
+
+In order to apply jump ascension, this component will need a platformer movement performer.
+
+You can directly set one: ``jump.MovementPerformer = movementPerformer`` as long as movementPerformer implements the 
+:ref:`IPlatformerMovementPerformer <i-platformer-movement-performer-page>` interface. 
+it among its ``GameObject`` other components.
+
+Or you can mark the component to seek for an 
+:ref:`IPlatformerMovementPerformer <i-platformer-movement-performer-page>` as long as it has some component wich implements 
+it among its ``GameObject`` other components. 
+
+Our :ref:`Platformer Dynamic Movement <platformer-dynamic-movement-page>` implements it.
+
+Grounding
+*********
+
+This component needs to know if its ``GameObject`` can be considered grounded to start jumps and to reset extra jump count.
+
+You can use the ``UpdateGrounding(bool newGrounding)`` method every update or mark the component to seek for an 
+:ref:`IPlatformerGroundingProvider <i-platformer-grounding-provider-page>` as long as it has some component wich implements 
+it among its ``GameObject`` other components. Our :ref:`Platformer Raycast Grounding Checker <platformer-raycast-grounding-checker-page>` implements it.
+
+Wall Hit Data
+*************
+
+This component needs to know if its ``GameObject`` can be considered hitting walls to reset extra jump count.
+
+You can use the ``UpdateWallHitData(WallHitData newWallHitData)`` method every update or mark the component to seek for an 
+:ref:`IPlatformerWallHitDataProvider <i-platformer-wall-hit-data-provider-page>` as long as it has some component wich implements 
+it among its ``GameObject`` other components. Our :ref:`Platformer Wall Hit Checker <platformer-wall-hit-checker-page>` implements it.
+
+Wall Grab
+*********
+
+In order to start jumps from walls this component needs to know if its ``GameObject`` can be considered grabbing a wall. Therefore
+if you need to perform jumps from walls you will need to feed the information.
+
+You can use the ``UpdateWallGrab(bool newWallGrab)`` method every update or mark the component to seek for an 
+:ref:`IPlatformerWallGrabPerformer <i-platformer-wall-grab-performer-page>` as long as it has some component wich implements 
+it among its ``GameObject`` other components.
+
+Usage
+-----
+
+Here is how you can use this component:
+
+Direct approach
+***************
+
+.. code-block:: csharp
+
+    PlatformerJump jump;
+
+    void Awake() 
+    {
+        jump = GetComponent<PlatformerJump>();
+    }
+
+    void Update() 
+    {
+        if (Input.GetButtonDown("Jump")) // Example on how to get input. We can't really know how is your input setup
+        {
+            jump.Request();
+        }
+
+        if (Input.GetButtonUp("Jump")) // Example on how to get input. We can't really know how is your input setup
+        {
+            jump.Stop();
+        }
+    }
+
+    void FixedUpdate()
+    {
+        if (jump.Performing) // In case it is not set to auto perform
+        {
+            jump.Perform();
+        }
+    }
+
+Requesting jumps using :ref:`IPlatformerJumpPerformer <i-platformer-jump-perfomer-page>` interface
+**************************************************************************************************
+
+.. code-block:: csharp
+
+    IPlatformerJumpPerformer jumpPerformer;
+
+    void Awake()
+    {
+        jumpPerformer = GetComponent<IPlatformerJumpPerformer>();    
+    }
+
+    void Update() 
+    {
+        if (Input.GetButtonDown("Jump")) // Example on how to get input. We can't really know how is your input setup
+        {
+            jumpPerformer.Request();
+        }
+
+        if (Input.GetButtonUp("Jump")) // Example on how to get input. We can't really know how is your input setup
+        {
+            jumpPerformer.Stop();
+        }
+    }
+
+    void FixedUpdate()
+    {
+        if (jumpPerformer.Performing) // In case it is not set to auto perform
+        {
+            jumpPerformer.Perform();
+        }
+        
+        if (jumpPerformer.PerformingExtra) // In case it is not set to auto perform
+        {
+            jumpPerformer.PerformExtrajump();
+        }
+    }
+
+
+Listening to :ref:`IPlatformerJumpPerformer <i-platformer-jump-perfomer-page>` interface events
+***********************************************************************************************
+
+.. code-block:: csharp
+
+    // This is an example on how to listen to the PlatformerJump events using other components 
+    // you might craft
+
+    IPlatformerJumpPerformer jumpPerformer;
+
+    void Awake()
+    {
+        jumpPerformer = GetComponent<IPlatformerJumpPerformer>();    
+    }
+
+    void OnEnable()
+    {
+        jumpPerformer?.JumpUpdate.AddListener(OnJumpUpdate);
+        jumpPerformer?.ExtraJumpUpdate.AddListener(OnExtraJumpUpdate);
+    }
+
+    void OnDisable()
+    {
+        jumpPerformer?.JumpUpdate.RemoveListener(OnJumpUpdate);
+        jumpExtraPerformer?.ExtraJumpUpdate.RemoveListener(OnExtraJumpUpdate);
+    }
+    
+    void OnJumpUpdate(bool isJumping)
+    {
+        // Your logic
+    }
+    
+    void OnExtraJumpUpdate(bool isExtraJumping)
+    {
+        // Your logic
+    }
+
+.. note::
+
+    You can also use the direct approach to listen to the events.
+
+The perform approach
+--------------------
+
+On this ability's inspector you can mark ``Auto Perform`` checkbox and the component will perform automatically upon 
+self resolving jump requests and stops.
+
+In case you are working with an FSM (we have one, checkout  our :ref:`FSM solution <welcome-core-fsm-page>`) you might want
+your state to call the ``Perform()`` and ``PerformExtraJump()`` methods.
+
+Locking Jumps
+-------------
+
+Use the method ``Lock(bool shouldLock)`` to prevent or allow jumps to be performed. Great to be used with FSMs 
+when entering and leaving states on wich jump should not be started.
+
+Coyote Time 
+-----------
+
+On this ability's setup you can define a Coyote Time wich will be used to allow character to still start a jump 
+after no long being grounded.
+
+Jump Buffer 
+-----------
+
+Set this into the ability's setup to define how long before actually hitting ground player can press the jump 
+button (meaning a request will be sent to this component). 
+
+Available Properties
+--------------------
+
+.. code-block:: csharp
+
+    public bool Performing { get; }
+    public bool PerformingExtra { get; }
+    public bool Locked { get; }
+
+    public IPlatformerJumpHandler JumpHandler { get; set;}
+    public IPlatformerMovementPerformer MovementPerformer { get; set;}
+    public IPlaftormerGroundingProvider GroundingProvider { get; set;}
+    public IPlatformerMovementDirectionsProvider MovementDirectionProvider { get; set;}
+    public IPlatformerWallGrabPerformer WallGrabPerformer { get; set;}
+
+
+Available Methods
+-----------------
+
+.. code-block:: csharp
+
+    /// <summary>
+    /// Should be called on Fixed (Physics) Update.
+    /// </summary>
+    public void Perform()
+    
+    /// <summary>
+    /// Should be called on Fixed (Physics) Update.
+    /// </summary>
+    public void PerformExtrajump()
+
+    /// <summary>
+    /// Call this to request a Jump. 
+    /// Character will ascend until duration is reached or StopJump() is called.
+    /// </summary>
+    public virtual void Request()
+
+    /// <summary>
+    /// Stops jump in progress if any.
+    /// </summary>
+    public void Stop()
+    
+    /// <summary>
+    /// Call this to update grounding.
+    /// </summary>
+    /// <param name="newGrounding"></param>
+    public void UpdateGrounding(bool newGrounding)
+
+    /// <summary>
+    /// Call this to update if grabbing wall.
+    /// </summary>
+    /// <param name="newWallGrab"></param>
+    public void UpdateWallGrab(bool newWallGrab)
+
+    /// <summary>
+    /// Call this to update grounding.
+    /// </summary>
+    /// <param name="newMovementDirection"></param>
+    public void UpdateMovementDirection(Vector2 newMovementDirection)
+
+    /// <summary>
+    /// Call this in order to Lock jump and
+    /// prevent new jumps to occur based on
+    /// shouldLock boolean.
+    /// </summary>
+    /// <param name="shouldLock"></param>
+    public void Lock(bool shouldLock)

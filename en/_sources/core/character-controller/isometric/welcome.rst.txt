@@ -1,0 +1,11 @@
+.. _cc-isometric-page:
+
+Isometric
+=========
+
+This page is destined to document our solutions for handling 2D isometric character controllers games.
+
+To be crafted
+-------------
+
+We are currently working on a steady version of the platformer character controller before developing this.

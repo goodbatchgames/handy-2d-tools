@@ -1,0 +1,25 @@
+.. _i-platformer-wall-grab-performer-page:
+
+IPlatformerWallGrabPerformer
+============================
+
+.. code-block:: csharp
+    
+    namespace Handy2DTools.CharacterController.Platformer
+    {
+        /// <summary>
+        /// Any component that wants to perform wall slides 
+        /// must implement this Interface.
+        /// </summary>
+        public interface IPlatformerWallGrabPerformer
+        {
+            GameObject gameObject { get; }
+            bool Performing { get; }
+
+            void EvaluateAndStart(float movementDirectionSign);
+            void Perform(float verticalDirectionSign);
+            void Stop();
+
+            UnityEvent<bool> WallGrabUpdate { get; }
+        }
+    }

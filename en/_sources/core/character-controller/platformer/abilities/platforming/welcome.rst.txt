@@ -1,0 +1,24 @@
+.. _cc-platformer-platforming-abilities-page:
+
+Platforming Abilities
+=====================
+
+Available Abilities
+-------------------
+
+.. toctree::
+   :maxdepth: 1
+   
+   
+
+Interfaces
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+.. HTML Substiuions
+
+.. |br| raw:: html
+
+     <br />

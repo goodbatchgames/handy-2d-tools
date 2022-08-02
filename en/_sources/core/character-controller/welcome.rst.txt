@@ -1,4 +1,4 @@
-.. _welcome-core-character-controller-page:
+.. _cc-welcome-page:
 
 Character Controller
 ====================
@@ -10,8 +10,109 @@ from our actions components but won't need to be controlled on the screen.
 With that in mind here we have the bundle of components that are destined to... err... 
 control characters.
 
+We separate our character controller stuff in 3 sections:
+
 .. toctree::
    :maxdepth: 2
    
-   abilities/welcome
-   checkers/welcome
+   platformer/welcome
+   top-down/welcome
+   isometric/welcome
+
+These are the 3 categories we will aim to deliver solutions about character controlling. But have in mind that our current goal is 
+having a steady platformer character before moving on to explore the other 2 categories possibilities. But we will get there! =D
+
+Abilities
+=========
+
+Here we have components that represent character Abilities. They can be related to movement, attacks or other 
+stuff.
+
+Basic Abilities
+---------------
+
+These would be abilities considered to be the most basic and therefore you will need nothing but the 
+abilitiy's component itself to make it work. Just add into your character, tweak as you want and 
+it will be ready to go.
+
+The ability to :ref:`flip <platformer-flip-page>` or to perform :ref:`basic movements <platformer-dynamic-movement-page>` are examples of basic abilities.
+
+Learnable abilities
+-------------------
+
+Through out a game Some abilities can be learned, unlearned, activated and deactivated depending on your 
+game's logic.
+
+So, for the sake of organizing and allowing us to have multiple setups for abilities configurations, 
+we use `ScriptableObjects <https://docs.unity3d.com/Manual/class-ScriptableObject.html>`_ as setup for
+this kind of abilities. This way you can create multiple setups and use them in different situations 
+along your game. 
+
+So, when configuring some learnable ability component, associate the correct setup with it 
+this will grant the component to work properly.
+
+Learnable Ability Setup
+-----------------------
+
+Every learnable ability setup have 2 main boolean properties wich will allow you to operate them as you wish. They are:
+
+.. table:: 
+   :width: 100% 
+   :widths: 35 65
+
+   +---------------------------------------------+---------------------------------------------------------------------------------------------------------+
+   | ``public bool Learned { get; }``            | This means your character has already learned that ability therefore can use it if it is active         |
+   +---------------------------------------------+---------------------------------------------------------------------------------------------------------+
+   | ``public bool Active { get; }``             | This means the ability is active and can be used. This consider if ability is learned or not            |
+   +---------------------------------------------+---------------------------------------------------------------------------------------------------------+
+
+We also have one ``UnityEvent<bool>`` for each of the above properties value changes updates:
+
+.. table:: 
+   :width: 100% 
+   :widths: 40 60
+
+   +-------------------------------------------------------+-----------------------------------------------------------------------------------------------+
+   | ``public UnityEvent<bool> LearnedStatusUpdate``       | Invoked every time the ``learned`` property value changes                                     |
+   +-------------------------------------------------------+-----------------------------------------------------------------------------------------------+
+   | ``public UnityEvent<bool> ActivationStatusUpdate``    | Invoked every time the ``active`` property value changes                                      |
+   +-------------------------------------------------------+-----------------------------------------------------------------------------------------------+
+
+And these available methods:
+
+.. table:: 
+   :width: 100% 
+   :widths: 35 65
+
+   +---------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | ``public virtual bool Activate()``          | If Ability is learned, activates it and invokes |br| active status update event. Returns false if activation fails                                                 |
+   +---------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | ``public virtual void Deactivate()``        | Deactivates the ability and invokes active status update event.                                                                                                    |
+   +---------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | ``public virtual void Learn()``             | Sets ability learned status as true and invokes learned status update event.                                                                                       |
+   +---------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | ``public virtual void Unlearn()``           | Sets ability learned status as false and invokes learned status update event. |br| This also calls Deactivate() to ensure the ability is not active.               |
+   +---------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | ``public virtual void LearnAndActivate()``  | Learn and activate the ability. Perfect for when managing abilities |br| like purchasing o collecting things that grants that ability.                             |
+   +---------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+These properties and events can be really handy for the case of building an ability manager. Say you want to handle when a
+specifc ability is considered learned (maybe buy purchasing it on store or picking up a collectable item). Just access the 
+ability setup ``ScriptableObject`` through your script and call its ``Learn()`` or ``LearnAndActivate()`` methods. 
+
+Also, considering you may want to disable some ability temporally based on your game's logic, but still want to display that particular ability
+as learned, use the ``Activate()`` and ``Deactivate()`` methods to handle this. 
+
+Have in mind that an ability crafted by us will only perform in case both ``learned`` and ``active`` are set as true. All abilities
+listed below will have their setups properly documented.
+
+.. note::
+   
+   Abilities setups are crafted to represent an specific character setup of abilities. So, if you have different characters with the same ability, 
+   this means you would probably want to create different ``ScriptableObject`` setups for each of them.
+
+.. HTML Substiuions
+
+.. |br| raw:: html
+
+     <br />

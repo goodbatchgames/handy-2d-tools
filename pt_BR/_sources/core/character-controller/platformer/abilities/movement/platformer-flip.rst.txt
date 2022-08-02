@@ -1,0 +1,204 @@
+.. _platformer-flip-page:
+
+Platformer Flip
+===============
+
+This component is used to perform a ``GameObject`` fliping. It can either scale the object negativilly or rotate it 
+180º on the related axis.
+
+Category
+---------
+
+.. table:: 
+   :width: 100% 
+   :widths: 100
+
+   +-----------------------------------------------------------------------------------------------------+
+   | Basic                                                                                               |
+   +-----------------------------------------------------------------------------------------------------+
+
+What it Implements
+------------------
+
+.. table:: 
+   :width: 100% 
+   :widths: 100
+
+   +-----------------------------------------------------------------------------------------------------+
+   | **Interface**                                                                                       |
+   +-----------------------------------------------------------------------------------------------------+
+   | :ref:`IPlatformerHorizontalFlipPerformer <i-platformer-horizontal-flip-performer-page>`             |
+   +-----------------------------------------------------------------------------------------------------+
+   | :ref:`IPlatformerHorizontalDirectionProvider <i-platformer-facing-direction-provider-page>`         |
+   +-----------------------------------------------------------------------------------------------------+
+   | :ref:`IPlatformerVerticalFlipPerformer <i-platformer-vertical-flip-performer-page>`                 |
+   +-----------------------------------------------------------------------------------------------------+
+   | :ref:`IPlatformerVerticalDirectionProvider <i-platformer-vertical-direction-provider-page>`         |
+   +-----------------------------------------------------------------------------------------------------+
+
+Inspector
+---------
+
+Things to tweak on the inspector of this component:
+
+Horizontal
+**********
+
+* Horizontal Flip Strategy: Either scaling or rotating
+* Horizontal Starting Direction: Wich direction the object should start flipped to.
+
+Vertical
+********
+
+* Vertical Flip Strategy: Either scaling or rotating
+* Vertical Starting Direction: Wich direction the object should start flipped to.
+
+Unity Events
+************
+
+.. code-block:: csharp
+
+   public UnityEvent<HorizontalDirections> HorizontalDirectionUpdate;                                         
+   public UnityEvent<float> HorizontalDirectionSignUpdate;                                                    
+   public UnityEvent<VerticalDirections> VerticalDirectionUpdate;                                             
+   public UnityEvent<float> VerticalDirectionSignUpdate;                                                      
+
+
+Usage
+-----
+
+Here is how you can use this component:
+
+Direct approach:
+****************
+
+.. code-block:: csharp
+
+    PlatformerFlip flip;
+
+    void Awake() 
+    {
+        flip = GetComponent<PlatformerFlip>();
+    }
+
+    void FixedUpdate()
+    {
+        float horizontalDirection = MyWayOfDetectingMovementDirection();
+
+        // This will evaluate if character should be flipped 
+        // based on given direction (-1 left, 1 right). 
+        flip.EvaluateAndFlipHorizontally(horizontalDirection); 
+        
+        float verticalDirection = MyWayOfDetectingMovementDirection();
+
+        // This will evaluate if character should be flipped 
+        // based on given direction (-1 Down, 1 Up). 
+        flip.EvaluateAndFlipHorizontally(verticalDirection); 
+        
+        // This will forcefully flip the object horizontally.
+        flip.FlipHorizontally();
+
+        // This will forcefully flip the object horizontally.
+        flip.FlipVertically();
+        
+    }
+
+Listening to IHorizontalDirectionProvider events:
+*************************************************
+
+.. code-block:: csharp    
+
+    // This is an example on how to listen to the Flip component events using other components 
+    // you might craft
+
+    IPlatformerFacingDirectionProvider facingDirectionProvider;
+
+    void Awake()
+    {
+        facingDirectionProvider = GetComponent<IPlatformerFacingDirectionProvider>();    
+    }
+
+    void Start()
+    {
+        facingDirectionProvider?.FacingDirectionUpdate.AddListener(FacingDirectionUpdate);
+        facingDirectionProvider?.FacingDirectionSignUpdate.AddListener(FacingDirectionSignUpdate);
+    }
+
+    void OnDisable()
+    {
+        facingDirectionProvider?.FacingDirectionUpdate.RemoveListener(FacingDirectionUpdate);
+        facingDirectionProvider?.FacingDirectionSignUpdate.RemoveListener(FacingDirectionSignUpdate);
+    }
+
+    void FacingDirectionUpdate(HorizontalDirections horizontalDirections)
+    {
+        // Your logic
+    }
+    
+    void FacingDirectionSignUpdate(float directionSign)
+    {
+        // Your logic
+        // -1 = left, 1 = right.
+    }
+
+Listening to IVerticalDirectionProvider events:
+***********************************************
+
+.. code-block:: csharp    
+
+    // This is an example on how to listen to the Flip events using other components 
+    // you might craft
+
+    IPlatformerVerticalDirectionProvider verticalDirectionProvider;
+
+    void Awake()
+    {
+        verticalDirectionProvider = GetComponent<IPlatformerVerticalDirectionProvider>();    
+    }
+
+    void Start()
+    {
+        verticalDirectionProvider?.VerticalDirectionUpdate.AddListener(verticalDirectionUpdate);
+        verticalDirectionProvider?.VerticalDirectionSignUpdate.AddListener(verticalDirectionSignUpdate);
+    }
+
+    void OnDisable()
+    {
+        verticalDirectionProvider?.VerticalDirectionUpdate.RemoveListener(verticalDirectionUpdate);
+        verticalDirectionProvider?.VerticalDirectionSignUpdate.RemoveListener(verticalDirectionSignUpdate);
+    }
+
+    void VerticalDirectionUpdate(VerticalDirections VerticalDirections)
+    {
+        // Your logic
+    }
+    
+    void VerticalDirectionSignUpdate(float directionSign)
+    {
+        // Your logic
+        // -1 = down, 1 = up.
+    }
+
+.. note::
+
+    You can also use the direct approach to listen to the events.
+    
+
+Available Methods
+-----------------
+
+.. code-block:: csharp
+
+    // Evaluates if the game object can be flipped based on subjectDirection and if so, performs it.
+    public virtual void EvaluateAndFlipHorizontally(float subjectDirection)
+
+    // Evaluates if the game object can be flipped based on subjectDirection and if so, performs it.
+    public virtual void EvaluateAndFlipVertically(float subjectDirection)
+    
+    // Flips character horizontally based on current horizontal flip strategy
+    // and current horizontal direction.
+    public virtual void FlipHorizontally()
+
+    // Flips character vertically based on current vertical flip strategy
+    // and current vertical direction.
+    public virtual void FlipVertically()

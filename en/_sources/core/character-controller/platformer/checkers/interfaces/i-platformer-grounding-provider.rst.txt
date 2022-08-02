@@ -1,0 +1,20 @@
+.. _i-platformer-grounding-provider-page:
+
+IPlatformerGroundingProvider
+============================
+
+.. code-block:: csharp    
+    
+    namespace Handy2DTools.CharacterController.Checkers
+    {
+        /// <summary>
+        /// Any GameObject that wants to give information about being or not grounded
+        /// through an event must implement this Interface.
+        /// </summary>
+        public interface IPlatformerGroundingProvider
+        {
+            UnityEvent<bool> GroundingUpdate { get; }
+        }
+    }
+
+

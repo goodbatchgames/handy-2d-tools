@@ -1,0 +1,162 @@
+.. _platformer-dynamic-movement-page:
+
+Platformer Dynamic Movement
+===========================
+
+This component is used to perform movement on a ``GameObject`` through its ``RigidBody2D`` component.
+
+The ``RigidBody2D`` shall be set as Dynamic.
+
+Category
+---------
+
+.. table:: 
+   :width: 100% 
+   :widths: 100
+
+   +-----------------------------------------------------------------------------------------------------+
+   | Basic                                                                                               |
+   +-----------------------------------------------------------------------------------------------------+
+
+What it Requires
+----------------
+
+There must be a ``RigidBody2D`` component among its ``GameObject`` other components.
+
+Dependencies
+------------
+
+Below you will find what you should feed this component with and how. You can always do it by directly accessing its methods 
+or having components wich provide what they need and mark this component to seek for them through the inspector window.
+
+Grounding
+*********
+
+This component needs to know if its ``GameObject`` can be considered grounded to evaluate wich accelaration to aplly.
+
+You can use the ``UpdateGrounding(bool newGrounding)`` method every update or mark the component to seek for an 
+:ref:`IPlatformerGroundingProvider <i-platformer-grounding-provider-page>` as long as it has some component wich implements 
+it among its ``GameObject`` other components. Our :ref:`Platformer Raycast Grounding Checker <platformer-raycast-grounding-checker-page>` implements it.
+
+Inspector
+---------
+
+Things to tweak on the inspector of this component:
+
+* ``xSpeed``: The target speed on the horizontal axis.
+
+Grounded Acceleration
+*********************
+
+* ``hasGroundedAceleration``: Mark this if your character should accelerate to the target ``xSpeed``.
+* ``groundedAccelerationRatio``: Higher this value is, sooner the character will reach ``xSpeed`` coming from ``0`` velocity.
+* ``groundedDecelerationRatio``: Higher this value is, sooner the character will reach ``0`` speed coming from ``xSpeed`` velocity.
+* ``groundedDecelerateChangingDirection``: Mark this if the character should decelarate into ``0`` speed **BEFORE** moving to opposite direction.
+
+On Air Acceleration
+*******************
+
+* ``hasOnAirAceleration``: Mark this if your character should accelerate to the target ``xSpeed``.
+* ``onAirAccelerationRatio``: Higher this value is, sooner the character will reach ``xSpeed`` coming from ``0`` velocity.
+* ``onAirDecelerationRatio``: Higher this value is, sooner the character will reach ``0`` speed coming from ``xSpeed`` velocity.
+* ``onAirDecelerateChangingDirection``: Mark this if the character should decelarate into ``0`` speed **BEFORE** moving to opposite direction.
+
+
+Usage
+-----
+
+Here is how you can use this component:
+
+Direct approach:
+****************
+
+.. code-block:: csharp
+
+    PlatformerDynamicMovement movement;
+
+    void Awake() 
+    {
+        movement = GetComponent<PlatformerDynamicMovement>();
+    }
+
+    void FixedUpdate()
+    {
+        float directionSign = MyWayOfDetectingDirectionSign();
+        movement.MoveHorizontally(directionSign); // directionSign < 0 left, directionSign > 0 right
+    }
+
+Through :ref:`IPlatformerMovementPerformer <i-platformer-movement-performer-page>` interface:
+************************************************************************************************************
+
+.. code-block:: csharp
+
+    IPlatformerMovementPerformer movementPerformer;
+
+    void Awake() 
+    {
+        movementPerformer = GetComponent<IPlatformerMovementPerformer>();
+    }
+
+    void FixedUpdate()
+    {
+        float directionSign = MyWayOfDetectingDirectionSign();
+        movementPerformer.MoveHorizontally(directionSign); // directionSign < 0 left, directionSign > 0 right
+    }
+
+Available Methods
+-----------------
+
+.. code-block:: csharp
+
+    /// <summary>
+    /// Moves character along X axis based on xSpeed
+    /// This will use the natural xSpeed set on inspector    
+    /// </summary>
+    /// <param name="directionSign"></param>
+    public virtual void MoveHorizontally(float directionSign)
+
+    /// <summary>
+    /// Moves character along X axis based on xSpeed    
+    /// </summary>
+    /// <param name="speed"></param>
+    /// <param name="directionSign"></param>
+    public virtual void MoveHorizontally(float speed, float directionSign)
+
+    /// <summary>
+    /// Pushs the character along X axis towards given direction sign using the amount of force given
+    /// </summary>
+    /// <param name="force"></param>
+    /// <param name="directionSign"></param>
+    public virtual void PushHorizontally(float force, float directionSign)
+
+    /// <summary>
+    /// Applies vertical speed to the character
+    /// </summary>
+    /// <param name="speed"></param>
+    /// <param name="directionSign"></param>
+    public virtual void MoveVertically(float speed, float directionSign)
+
+    /// <summary>
+    /// Pushs the character along Y axis towards given direction sign using the amount of force given
+    /// </summary>
+    /// <param name="force"></param>
+    /// <param name="directionSign"></param>
+    public virtual void PushVertically(float force, float directionSign)
+
+    /// <summary>
+    /// Applies 0 to both velocity axis of the character
+    /// Have in mind that the RigidBody2D will still move on Y axis if gravity is being applied
+    /// </summary>
+    public virtual void StopMovement()
+
+    /// <summary>
+    /// Changes the gravity scale of the character's RigidBody2D
+    /// </summary>
+    /// <param name="newGravityScale"></param>
+    public virtual void ChangeGravityScale(float newGravityScale)
+
+    /// <summary>
+    /// Updates the grounded status
+    /// </summary>
+    /// <param name="newGrounding"></param>
+    public void UpdateGrounding(bool newGrounding)
