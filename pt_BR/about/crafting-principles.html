@@ -9,8 +9,6 @@
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
       <link rel="stylesheet" href="../_static/styles/handy-2d-tools.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/dark_mode_css/general.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/dark_mode_css/dark.css" type="text/css" />
     <link rel="shortcut icon" href="../_static/favicon.png"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -24,8 +22,6 @@
         <script src="../_static/clipboard.min.js"></script>
         <script src="../_static/copybutton.js"></script>
         <script src="../_static/translations.js"></script>
-        <script src="../_static/dark_mode_js/default_dark.js"></script>
-        <script src="../_static/dark_mode_js/theme_switcher.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Índice" href="../genindex.html" />
     <link rel="search" title="Buscar" href="../search.html" />
@@ -67,7 +63,6 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../core/actions/welcome.html">Actions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../core/character-controller/welcome.html">Character Controller</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../core/character-controller/welcome.html#abilities">Abilities</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../core/environmental/welcome.html">Environmental</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../core/animating/welcome.html">Animations</a></li>
 </ul>
@@ -116,37 +111,37 @@
 <h2>The “I interface my purpose” principle<a class="headerlink" href="#the-i-interface-my-purpose-principle" title="Link permanente para este cabeçalho"></a></h2>
 <p>We ensure components communication by setting  <a class="reference external" href="https://docs.microsoft.com/pt-br/dotnet/csharp/language-reference/keywords/interface">interfaces</a>
 wich expose the traits.</p>
-<p>For example, take our <code class="docutils literal notranslate"><span class="pre">DynamicJump</span></code> component. You can attach it to some object, configure it and you will be able to benefit from it. If at any
-time you’d need a reference to our <code class="docutils literal notranslate"><span class="pre">DynamicJump</span></code> component, you would do something like the following:</p>
-<div class="highlight-csharp notranslate"><div class="highlight"><pre><span></span><span class="n">DynamicJump</span><span class="w"> </span><span class="n">jump</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">DynamicJump</span><span class="p">&gt;();</span><span class="w"></span>
+<p>For example, take our <code class="docutils literal notranslate"><span class="pre">PlatformerJump</span></code> component. You can attach it to some object, configure it and you will be able to benefit from it. If at any
+time you’d need a reference to our <code class="docutils literal notranslate"><span class="pre">PlatformerJump</span></code> component, you would do something like the following:</p>
+<div class="highlight-csharp notranslate"><div class="highlight"><pre><span></span><span class="n">PlatformerJump</span><span class="w"> </span><span class="n">jump</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">PlatformerJump</span><span class="p">&gt;();</span><span class="w"></span>
 </pre></div>
 </div>
-<p>Ok. Now, the <code class="docutils literal notranslate"><span class="pre">DynamicJump</span></code> component must have a handler among the other components of its <code class="docutils literal notranslate"><span class="pre">GameObject</span></code>. Imagine you have a component wich is
+<p>Ok. Now, the <code class="docutils literal notranslate"><span class="pre">PlatformerJump</span></code> component must have a handler among the other components of its <code class="docutils literal notranslate"><span class="pre">GameObject</span></code>. Imagine you have a component wich is
 responsible for handling the actions of the <code class="docutils literal notranslate"><span class="pre">GameObject</span></code> it is attached to. And since a jump can be
-considered an action, this particular component would handle the <code class="docutils literal notranslate"><span class="pre">DynamicJump</span></code> component and tell it when to perform and stop jumps.</p>
-<p>So, for example, let’s say we have a <code class="docutils literal notranslate"><span class="pre">PlayableCharacterActions</span></code> component and there we get the reference to the <code class="docutils literal notranslate"><span class="pre">DynamicJump</span></code> component:</p>
+considered an action, this particular component would handle the <code class="docutils literal notranslate"><span class="pre">PlatformerJump</span></code> component and tell it when to perform and stop jumps.</p>
+<p>So, for example, let’s say we have a <code class="docutils literal notranslate"><span class="pre">PlayableCharacterActions</span></code> component and there we get the reference to the <code class="docutils literal notranslate"><span class="pre">PlatformerJump</span></code> component:</p>
 <div class="highlight-csharp notranslate"><div class="highlight"><pre><span></span><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">PlayableCharacterActions</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MonoBehaviour</span><span class="w"></span>
 <span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="n">DynamicJump</span><span class="w"> </span><span class="n">jump</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="n">PlatformerJump</span><span class="w"> </span><span class="n">jump</span><span class="p">;</span><span class="w"></span>
 
 <span class="w">  </span><span class="k">void</span><span class="w"> </span><span class="nf">Start</span><span class="p">()</span><span class="w"></span>
 <span class="w">  </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="n">jump</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">DynamicJump</span><span class="p">&gt;();</span><span class="w"></span>
+<span class="w">    </span><span class="n">jump</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">PlatformerJump</span><span class="p">&gt;();</span><span class="w"></span>
 <span class="w">  </span><span class="p">}</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
-<p>Awesome! From there on we would be able to perform jump stuff by calling the <code class="docutils literal notranslate"><span class="pre">DynamicJump</span></code> correct methods. But I consider <strong>you should be free to write
-your own component to handle / perform dynamic  jumps</strong> <a class="footnote-reference brackets" href="#f1" id="id1">1</a>. Actually, any component you want to write in order to perform anything while interacting with my components,
+<p>Awesome! From there on we would be able to perform jump stuff by calling the <code class="docutils literal notranslate"><span class="pre">PlatformerJump</span></code> correct methods. But I consider <strong>you should be free to write
+your own component to handle / perform jumps</strong> . Actually, any component you want to write in order to perform anything while interacting with our components,
 i find that you should be able to do it and still benefit from our components wich you see fit as a solution for your game.</p>
-<p>Because of that, <code class="docutils literal notranslate"><span class="pre">PlayableCharacterActions</span></code> wouldn’t have a reference to the <code class="docutils literal notranslate"><span class="pre">DynamicJump</span></code> component. Instead it would declare itself as a “dynamic jump  handler”
-and then allow the <code class="docutils literal notranslate"><span class="pre">DynamicJump</span></code> component to find it and listen to events that state what it should do. So… for the sake of a use case example, I
+<p>Because of that, <code class="docutils literal notranslate"><span class="pre">PlayableCharacterActions</span></code> wouldn’t have a reference to the <code class="docutils literal notranslate"><span class="pre">PlatformerJump</span></code> component. Instead it would declare itself as a “dynamic jump  handler”
+and then allow the <code class="docutils literal notranslate"><span class="pre">PlatformerJump</span></code> component to find it and listen to events that state what it should do. So… for the sake of a use case example, I
 present to you the <code class="docutils literal notranslate"><span class="pre">IPlatformerJumpHandler</span></code> interface.</p>
 <p>Take a look:</p>
 <div class="highlight-csharp notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span><span class="w"> </span><span class="nn">HandyTools.CharacterController.Abilities</span><span class="w"></span>
 <span class="p">{</span><span class="w"></span>
 <span class="w">    </span><span class="c1">/// &lt;summary&gt;</span>
-<span class="w">    </span><span class="c1">/// Any component that implements this interface will be able to handle dynamic  jumps</span>
+<span class="w">    </span><span class="c1">/// Any component that implements this interface will be able to handle platformer jumps</span>
 <span class="w">    </span><span class="c1">/// by invoking its methods..</span>
 <span class="w">    </span><span class="c1">/// &lt;/summary&gt;</span>
 <span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">interface</span><span class="w"> </span><span class="n">IPlatformerJumpHandler</span><span class="w"></span>
@@ -229,8 +224,8 @@ When jump button is pressed: <code class="docutils literal notranslate"><span cl
 <p class="admonition-title">Nota</p>
 <p>If you are not familiar with Unity Events you can <a class="reference external" href="https://docs.unity3d.com/ScriptReference/Events.UnityEvent.html">click here</a> and learn a bit more.</p>
 </div>
-<p>So, if you want to build your own handler for our <code class="docutils literal notranslate"><span class="pre">DynamicJump</span></code> component, just implement the <code class="docutils literal notranslate"><span class="pre">IPlatformerJumpHandler</span></code> interface and activate the “Seek For Handler”
-option in the <code class="docutils literal notranslate"><span class="pre">DynamicJump</span></code> component inspector window. Make sure to attach both components to the same <code class="docutils literal notranslate"><span class="pre">GameObject</span></code>.</p>
+<p>So, if you want to build your own handler for our <code class="docutils literal notranslate"><span class="pre">PlatformerJump</span></code> component, just implement the <code class="docutils literal notranslate"><span class="pre">IPlatformerJumpHandler</span></code> interface and activate the “Seek For Handler”
+option in the <code class="docutils literal notranslate"><span class="pre">PlatformerJump</span></code> component inspector window. Make sure to attach both components to the same <code class="docutils literal notranslate"><span class="pre">GameObject</span></code>.</p>
 <div class="highlight-csharp notranslate"><div class="highlight"><pre><span></span><span class="n">TODO</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Seeker&quot;</span><span class="w"> </span><span class="n">video</span><span class="w"></span>
 </pre></div>
 </div>
@@ -242,7 +237,7 @@ grow your components from our work.</p>
 </section>
 <section id="the-i-can-seek-for-information-principle">
 <h2>The “I can seek for information” principle<a class="headerlink" href="#the-i-can-seek-for-information-principle" title="Link permanente para este cabeçalho"></a></h2>
-<p>As seen in the previous principle, the <code class="docutils literal notranslate"><span class="pre">DynamicJump</span></code> can seek for its handler if you mark the inspector’s option. Well… it is not the only one.</p>
+<p>As seen in the previous principle, the <code class="docutils literal notranslate"><span class="pre">PlatformerJump</span></code> can seek for its handler if you mark the inspector’s option. Well… it is not the only one.</p>
 <p>All components that need some kind of information will have the option to seek for a component to feed that piece of intel under the “Seekers” section of its
 inspector window.</p>
 <div class="highlight-csharp notranslate"><div class="highlight"><pre><span></span><span class="n">Todo</span><span class="p">:</span><span class="w"> </span><span class="n">Seeker</span><span class="w"> </span><span class="n">section</span><span class="w"> </span><span class="n">image</span><span class="w"></span>
@@ -258,7 +253,7 @@ the <code class="docutils literal notranslate"><span class="pre">IPlatformerGrou
 <p>Lastly, althoug I find it better to components be crafted “event drivenly” I like to leave open doors for a direct approach. And that is the reason for
 the “Seekers” section of our components on the inspector window to be completly optional. They <strong>CAN</strong> seek for information but if you prefer you can
 directly feed the information they need and it will be documented on that component’s page what method you can use to achieve that.</p>
-<p>For example, the <code class="docutils literal notranslate"><span class="pre">DynamicJump</span></code> component have an <code class="docutils literal notranslate"><span class="pre">UpdateGrounding(bool</span> <span class="pre">newGrounding)</span></code> method wich is exactly the method used as callback when the
+<p>For example, the <code class="docutils literal notranslate"><span class="pre">PlatformerJump</span></code> component have an <code class="docutils literal notranslate"><span class="pre">UpdateGrounding(bool</span> <span class="pre">newGrounding)</span></code> method wich is exactly the method used as callback when the
 “seek for grounding provider” option is enabled. So, when creating you own provider, if the “interfancing and eventing” approach is not for you,
 just call the feeding method and pass in the argument your logic came up with.</p>
 <div class="highlight-csharp notranslate"><div class="highlight"><pre><span></span><span class="kt">bool</span><span class="w"> </span><span class="n">grounded</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">MyWayToDetectGrounding</span><span class="p">();</span><span class="w"></span>
@@ -266,12 +261,7 @@ just call the feeding method and pass in the argument your logic came up with.</
 </pre></div>
 </div>
 <p>And with that we end the principles. Now you can start looking at specific components documentation pages and understand how to interact and use them.</p>
-<div style="clear: both;"></div><dl class="footnote brackets">
-<dt class="label" id="f1"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
-<dd><p>Dynamic  components are the ones wich handle a RigidBody set to dynamic.</p>
-</dd>
-</dl>
-</section>
+<div style="clear: both;"></div></section>
 </section>
 
 

@@ -38,8 +38,8 @@ Setup
    
    setups/platformer-jump-setup
 
-Dependencies
-------------
+Feeding Dependencies
+--------------------
 
 Below you will find what you should feed this component with and how. You can always do it by directly accessing its methods 
 or having components wich provide what they need and mark this component to seek for them through the inspector window.
@@ -59,9 +59,8 @@ Movement Performer
 
 In order to apply jump ascension, this component will need a platformer movement performer.
 
-You can directly set one: ``jump.MovementPerformer = movementPerformer`` as long as movementPerformer implements the 
+You can directly set one: ``jump.MovementPerformer = movementPerformer``. As long as movementPerformer implements the 
 :ref:`IPlatformerMovementPerformer <i-platformer-movement-performer-page>` interface. 
-it among its ``GameObject`` other components.
 
 Or you can mark the component to seek for an 
 :ref:`IPlatformerMovementPerformer <i-platformer-movement-performer-page>` as long as it has some component wich implements 
@@ -96,6 +95,15 @@ if you need to perform jumps from walls you will need to feed the information.
 You can use the ``UpdateWallGrab(bool newWallGrab)`` method every update or mark the component to seek for an 
 :ref:`IPlatformerWallGrabPerformer <i-platformer-wall-grab-performer-page>` as long as it has some component wich implements 
 it among its ``GameObject`` other components.
+
+Inspector
+---------
+
+* Debug On - For visual feedback 
+
+* Perform Approach - You can mark ``Auto Perform`` checkbox and the component will perform automatically upon 
+  self resolving jump requests and stops. In case you are working with an FSM (we have one, checkout  our :ref:`FSM solution <welcome-core-fsm-page>`) 
+  you might want your state to call the ``Perform()`` and ``PerformExtraJump()`` methods.
 
 Usage
 -----
@@ -215,15 +223,6 @@ Listening to :ref:`IPlatformerJumpPerformer <i-platformer-jump-perfomer-page>` i
 
     You can also use the direct approach to listen to the events.
 
-The perform approach
---------------------
-
-On this ability's inspector you can mark ``Auto Perform`` checkbox and the component will perform automatically upon 
-self resolving jump requests and stops.
-
-In case you are working with an FSM (we have one, checkout  our :ref:`FSM solution <welcome-core-fsm-page>`) you might want
-your state to call the ``Perform()`` and ``PerformExtraJump()`` methods.
-
 Locking Jumps
 -------------
 
@@ -233,13 +232,13 @@ when entering and leaving states on wich jump should not be started.
 Coyote Time 
 -----------
 
-On this ability's setup you can define a Coyote Time wich will be used to allow character to still start a jump 
+On this ability's :ref:`setup <platformer-jump-setup-page>` you can define a Coyote Time wich will be used to allow character to still start a jump 
 after no long being grounded.
 
 Jump Buffer 
 -----------
 
-Set this into the ability's setup to define how long before actually hitting ground player can press the jump 
+Set this into the ability's :ref:`setup <platformer-jump-setup-page>` to define how long before actually hitting ground player can press the jump 
 button (meaning a request will be sent to this component). 
 
 Available Properties
@@ -251,11 +250,11 @@ Available Properties
     public bool PerformingExtra { get; }
     public bool Locked { get; }
 
-    public IPlatformerJumpHandler JumpHandler { get; set;}
-    public IPlatformerMovementPerformer MovementPerformer { get; set;}
-    public IPlaftormerGroundingProvider GroundingProvider { get; set;}
-    public IPlatformerMovementDirectionsProvider MovementDirectionProvider { get; set;}
-    public IPlatformerWallGrabPerformer WallGrabPerformer { get; set;}
+    public IPlatformerJumpHandler JumpHandler { get; set; }
+    public IPlatformerMovementPerformer MovementPerformer { get; set; }
+    public IPlaftormerGroundingProvider GroundingProvider { get; set; }
+    public IPlatformerMovementDirectionsProvider MovementDirectionProvider { get; set; }
+    public IPlatformerWallGrabPerformer WallGrabPerformer { get; set; }
 
 
 Available Methods

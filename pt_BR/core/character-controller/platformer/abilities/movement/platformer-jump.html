@@ -9,8 +9,6 @@
       <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../../../_static/copybutton.css" type="text/css" />
       <link rel="stylesheet" href="../../../../../_static/styles/handy-2d-tools.css" type="text/css" />
-      <link rel="stylesheet" href="../../../../../_static/dark_mode_css/general.css" type="text/css" />
-      <link rel="stylesheet" href="../../../../../_static/dark_mode_css/dark.css" type="text/css" />
     <link rel="shortcut icon" href="../../../../../_static/favicon.png"/>
   <!--[if lt IE 9]>
     <script src="../../../../../_static/js/html5shiv.min.js"></script>
@@ -24,8 +22,6 @@
         <script src="../../../../../_static/clipboard.min.js"></script>
         <script src="../../../../../_static/copybutton.js"></script>
         <script src="../../../../../_static/translations.js"></script>
-        <script src="../../../../../_static/dark_mode_js/default_dark.js"></script>
-        <script src="../../../../../_static/dark_mode_js/theme_switcher.js"></script>
     <script src="../../../../../_static/js/theme.js"></script>
     <link rel="index" title="Índice" href="../../../../../genindex.html" />
     <link rel="search" title="Buscar" href="../../../../../search.html" />
@@ -63,7 +59,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../../actions/welcome.html">Actions</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../../../welcome.html">Character Controller</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="../../welcome.html">Platformer</a><ul class="current">
-<li class="toctree-l3 current"><a class="reference internal" href="../welcome.html">Ability Categories</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../welcome.html">Platformer Abilities</a><ul class="current">
 <li class="toctree-l4 current"><a class="reference internal" href="welcome.html">Movement Abilities</a><ul class="current">
 <li class="toctree-l5 current"><a class="reference internal" href="welcome.html#available-abilities">Available Abilities</a><ul class="current">
 <li class="toctree-l6"><a class="reference internal" href="platformer-flip.html">Platformer Flip</a></li>
@@ -75,7 +71,7 @@
 <li class="toctree-l8"><a class="reference internal" href="setups/platformer-jump-setup.html">Platformer Jump Setup</a></li>
 </ul>
 </li>
-<li class="toctree-l7"><a class="reference internal" href="#dependencies">Dependencies</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="#feeding-dependencies">Feeding Dependencies</a><ul>
 <li class="toctree-l8"><a class="reference internal" href="#jump-handler">Jump Handler</a></li>
 <li class="toctree-l8"><a class="reference internal" href="#movement-performer">Movement Performer</a></li>
 <li class="toctree-l8"><a class="reference internal" href="#grounding">Grounding</a></li>
@@ -83,13 +79,13 @@
 <li class="toctree-l8"><a class="reference internal" href="#wall-grab">Wall Grab</a></li>
 </ul>
 </li>
+<li class="toctree-l7"><a class="reference internal" href="#inspector">Inspector</a></li>
 <li class="toctree-l7"><a class="reference internal" href="#usage">Usage</a><ul>
 <li class="toctree-l8"><a class="reference internal" href="#direct-approach">Direct approach</a></li>
 <li class="toctree-l8"><a class="reference internal" href="#requesting-jumps-using-iplatformerjumpperformer-interface">Requesting jumps using <span class="xref std std-ref">IPlatformerJumpPerformer</span> interface</a></li>
 <li class="toctree-l8"><a class="reference internal" href="#listening-to-iplatformerjumpperformer-interface-events">Listening to <span class="xref std std-ref">IPlatformerJumpPerformer</span> interface events</a></li>
 </ul>
 </li>
-<li class="toctree-l7"><a class="reference internal" href="#the-perform-approach">The perform approach</a></li>
 <li class="toctree-l7"><a class="reference internal" href="#locking-jumps">Locking Jumps</a></li>
 <li class="toctree-l7"><a class="reference internal" href="#coyote-time">Coyote Time</a></li>
 <li class="toctree-l7"><a class="reference internal" href="#jump-buffer">Jump Buffer</a></li>
@@ -97,8 +93,8 @@
 <li class="toctree-l7"><a class="reference internal" href="#available-methods">Available Methods</a></li>
 </ul>
 </li>
-<li class="toctree-l6"><a class="reference internal" href="platformer-slide.html">Dynamic Slide</a></li>
-<li class="toctree-l6"><a class="reference internal" href="platformer-wall-grab.html">Platformer Dynamic Wall Grab</a></li>
+<li class="toctree-l6"><a class="reference internal" href="platformer-slide.html">Platformer Slide</a></li>
+<li class="toctree-l6"><a class="reference internal" href="platformer-wall-grab.html">Platformer Wall Grab</a></li>
 </ul>
 </li>
 <li class="toctree-l5"><a class="reference internal" href="welcome.html#interfaces">Interfaces</a></li>
@@ -112,9 +108,9 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../top-down/welcome.html">Top Down</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../isometric/welcome.html">Isometric</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../abilities/welcome.html">Abilities</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../../welcome.html#abilities">Abilities</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../environmental/welcome.html">Environmental</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../animating/welcome.html">Animations</a></li>
 </ul>
@@ -135,7 +131,7 @@
       <li><a href="../../../../../index.html" class="icon icon-home"></a> &raquo;</li>
           <li><a href="../../../welcome.html">Character Controller</a> &raquo;</li>
           <li><a href="../../welcome.html">Platformer</a> &raquo;</li>
-          <li><a href="../welcome.html">Ability Categories</a> &raquo;</li>
+          <li><a href="../welcome.html">Platformer Abilities</a> &raquo;</li>
           <li><a href="welcome.html">Movement Abilities</a> &raquo;</li>
       <li>Platformer Jump</li>
       <li class="wy-breadcrumbs-aside">
@@ -184,8 +180,8 @@
 </ul>
 </div>
 </section>
-<section id="dependencies">
-<h2>Dependencies<a class="headerlink" href="#dependencies" title="Link permanente para este cabeçalho"></a></h2>
+<section id="feeding-dependencies">
+<h2>Feeding Dependencies<a class="headerlink" href="#feeding-dependencies" title="Link permanente para este cabeçalho"></a></h2>
 <p>Below you will find what you should feed this component with and how. You can always do it by directly accessing its methods
 or having components wich provide what they need and mark this component to seek for them through the inspector window.</p>
 <section id="jump-handler">
@@ -199,9 +195,8 @@ take care of calling the <code class="docutils literal notranslate"><span class=
 <section id="movement-performer">
 <h3>Movement Performer<a class="headerlink" href="#movement-performer" title="Link permanente para este cabeçalho"></a></h3>
 <p>In order to apply jump ascension, this component will need a platformer movement performer.</p>
-<p>You can directly set one: <code class="docutils literal notranslate"><span class="pre">jump.MovementPerformer</span> <span class="pre">=</span> <span class="pre">movementPerformer</span></code> as long as movementPerformer implements the
-<a class="reference internal" href="interfaces/i-platformer-movement-performer.html#i-platformer-movement-performer-page"><span class="std std-ref">IPlatformerMovementPerformer</span></a> interface.
-it among its <code class="docutils literal notranslate"><span class="pre">GameObject</span></code> other components.</p>
+<p>You can directly set one: <code class="docutils literal notranslate"><span class="pre">jump.MovementPerformer</span> <span class="pre">=</span> <span class="pre">movementPerformer</span></code>. As long as movementPerformer implements the
+<a class="reference internal" href="interfaces/i-platformer-movement-performer.html#i-platformer-movement-performer-page"><span class="std std-ref">IPlatformerMovementPerformer</span></a> interface.</p>
 <p>Or you can mark the component to seek for an
 <a class="reference internal" href="interfaces/i-platformer-movement-performer.html#i-platformer-movement-performer-page"><span class="std std-ref">IPlatformerMovementPerformer</span></a> as long as it has some component wich implements
 it among its <code class="docutils literal notranslate"><span class="pre">GameObject</span></code> other components.</p>
@@ -229,6 +224,15 @@ if you need to perform jumps from walls you will need to feed the information.</
 <a class="reference internal" href="interfaces/i-platformer-wall-grab-performer.html#i-platformer-wall-grab-performer-page"><span class="std std-ref">IPlatformerWallGrabPerformer</span></a> as long as it has some component wich implements
 it among its <code class="docutils literal notranslate"><span class="pre">GameObject</span></code> other components.</p>
 </section>
+</section>
+<section id="inspector">
+<h2>Inspector<a class="headerlink" href="#inspector" title="Link permanente para este cabeçalho"></a></h2>
+<ul class="simple">
+<li><p>Debug On - For visual feedback</p></li>
+<li><p>Perform Approach - You can mark <code class="docutils literal notranslate"><span class="pre">Auto</span> <span class="pre">Perform</span></code> checkbox and the component will perform automatically upon
+self resolving jump requests and stops. In case you are working with an FSM (we have one, checkout  our <a class="reference internal" href="../../../../actions/fsm/welcome.html#welcome-core-fsm-page"><span class="std std-ref">FSM solution</span></a>)
+you might want your state to call the <code class="docutils literal notranslate"><span class="pre">Perform()</span></code> and <code class="docutils literal notranslate"><span class="pre">PerformExtraJump()</span></code> methods.</p></li>
+</ul>
 </section>
 <section id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Link permanente para este cabeçalho"></a></h2>
@@ -343,13 +347,6 @@ it among its <code class="docutils literal notranslate"><span class="pre">GameOb
 </div>
 </section>
 </section>
-<section id="the-perform-approach">
-<h2>The perform approach<a class="headerlink" href="#the-perform-approach" title="Link permanente para este cabeçalho"></a></h2>
-<p>On this ability’s inspector you can mark <code class="docutils literal notranslate"><span class="pre">Auto</span> <span class="pre">Perform</span></code> checkbox and the component will perform automatically upon
-self resolving jump requests and stops.</p>
-<p>In case you are working with an FSM (we have one, checkout  our <a class="reference internal" href="../../../../actions/fsm/welcome.html#welcome-core-fsm-page"><span class="std std-ref">FSM solution</span></a>) you might want
-your state to call the <code class="docutils literal notranslate"><span class="pre">Perform()</span></code> and <code class="docutils literal notranslate"><span class="pre">PerformExtraJump()</span></code> methods.</p>
-</section>
 <section id="locking-jumps">
 <h2>Locking Jumps<a class="headerlink" href="#locking-jumps" title="Link permanente para este cabeçalho"></a></h2>
 <p>Use the method <code class="docutils literal notranslate"><span class="pre">Lock(bool</span> <span class="pre">shouldLock)</span></code> to prevent or allow jumps to be performed. Great to be used with FSMs
@@ -357,12 +354,12 @@ when entering and leaving states on wich jump should not be started.</p>
 </section>
 <section id="coyote-time">
 <h2>Coyote Time<a class="headerlink" href="#coyote-time" title="Link permanente para este cabeçalho"></a></h2>
-<p>On this ability’s setup you can define a Coyote Time wich will be used to allow character to still start a jump
+<p>On this ability’s <a class="reference internal" href="setups/platformer-jump-setup.html#platformer-jump-setup-page"><span class="std std-ref">setup</span></a> you can define a Coyote Time wich will be used to allow character to still start a jump
 after no long being grounded.</p>
 </section>
 <section id="jump-buffer">
 <h2>Jump Buffer<a class="headerlink" href="#jump-buffer" title="Link permanente para este cabeçalho"></a></h2>
-<p>Set this into the ability’s setup to define how long before actually hitting ground player can press the jump
+<p>Set this into the ability’s <a class="reference internal" href="setups/platformer-jump-setup.html#platformer-jump-setup-page"><span class="std std-ref">setup</span></a> to define how long before actually hitting ground player can press the jump
 button (meaning a request will be sent to this component).</p>
 </section>
 <section id="available-properties">
@@ -371,11 +368,11 @@ button (meaning a request will be sent to this component).</p>
 <span class="k">public</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">PerformingExtra</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
 <span class="k">public</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">Locked</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
 
-<span class="k">public</span><span class="w"> </span><span class="n">IPlatformerJumpHandler</span><span class="w"> </span><span class="n">JumpHandler</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="p">;}</span><span class="w"></span>
-<span class="k">public</span><span class="w"> </span><span class="n">IPlatformerMovementPerformer</span><span class="w"> </span><span class="n">MovementPerformer</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="p">;}</span><span class="w"></span>
-<span class="k">public</span><span class="w"> </span><span class="n">IPlaftormerGroundingProvider</span><span class="w"> </span><span class="n">GroundingProvider</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="p">;}</span><span class="w"></span>
-<span class="k">public</span><span class="w"> </span><span class="n">IPlatformerMovementDirectionsProvider</span><span class="w"> </span><span class="n">MovementDirectionProvider</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="p">;}</span><span class="w"></span>
-<span class="k">public</span><span class="w"> </span><span class="n">IPlatformerWallGrabPerformer</span><span class="w"> </span><span class="n">WallGrabPerformer</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="p">;}</span><span class="w"></span>
+<span class="k">public</span><span class="w"> </span><span class="n">IPlatformerJumpHandler</span><span class="w"> </span><span class="n">JumpHandler</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="k">public</span><span class="w"> </span><span class="n">IPlatformerMovementPerformer</span><span class="w"> </span><span class="n">MovementPerformer</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="k">public</span><span class="w"> </span><span class="n">IPlaftormerGroundingProvider</span><span class="w"> </span><span class="n">GroundingProvider</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="k">public</span><span class="w"> </span><span class="n">IPlatformerMovementDirectionsProvider</span><span class="w"> </span><span class="n">MovementDirectionProvider</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="k">public</span><span class="w"> </span><span class="n">IPlatformerWallGrabPerformer</span><span class="w"> </span><span class="n">WallGrabPerformer</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 </section>

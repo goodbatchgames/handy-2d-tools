@@ -141,6 +141,12 @@ a {
   align-items: center;
 }
 
+.link.disabled {
+  cursor: default;
+  background-color: #895353;
+  color: #918b8a;  
+}
+
 .link img {
   width: 6vh;
 }
@@ -164,6 +170,10 @@ a {
 
 .link:hover .link-title {
   color: var(--dark-color);
+}
+
+.link.link.disabled:hover .link-title {
+  color: #918b8a;  
 }
 
 ::selection {

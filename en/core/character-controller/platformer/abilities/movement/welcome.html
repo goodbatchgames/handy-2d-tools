@@ -9,8 +9,6 @@
       <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../../../_static/copybutton.css" type="text/css" />
       <link rel="stylesheet" href="../../../../../_static/styles/handy-2d-tools.css" type="text/css" />
-      <link rel="stylesheet" href="../../../../../_static/dark_mode_css/general.css" type="text/css" />
-      <link rel="stylesheet" href="../../../../../_static/dark_mode_css/dark.css" type="text/css" />
     <link rel="shortcut icon" href="../../../../../_static/favicon.png"/>
   <!--[if lt IE 9]>
     <script src="../../../../../_static/js/html5shiv.min.js"></script>
@@ -23,13 +21,11 @@
         <script src="../../../../../_static/doctools.js"></script>
         <script src="../../../../../_static/clipboard.min.js"></script>
         <script src="../../../../../_static/copybutton.js"></script>
-        <script src="../../../../../_static/dark_mode_js/default_dark.js"></script>
-        <script src="../../../../../_static/dark_mode_js/theme_switcher.js"></script>
     <script src="../../../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../../search.html" />
     <link rel="next" title="Platformer Flip" href="platformer-flip.html" />
-    <link rel="prev" title="Ability Categories" href="../welcome.html" /> 
+    <link rel="prev" title="Platformer Abilities" href="../welcome.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -62,14 +58,14 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../../actions/welcome.html">Actions</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../../../welcome.html">Character Controller</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="../../welcome.html">Platformer</a><ul class="current">
-<li class="toctree-l3 current"><a class="reference internal" href="../welcome.html">Ability Categories</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../welcome.html">Platformer Abilities</a><ul class="current">
 <li class="toctree-l4 current"><a class="current reference internal" href="#">Movement Abilities</a><ul>
 <li class="toctree-l5"><a class="reference internal" href="#available-abilities">Available Abilities</a><ul>
 <li class="toctree-l6"><a class="reference internal" href="platformer-flip.html">Platformer Flip</a></li>
 <li class="toctree-l6"><a class="reference internal" href="platformer-dynamic-movement.html">Platformer Dynamic Movement</a></li>
 <li class="toctree-l6"><a class="reference internal" href="platformer-jump.html">Platformer Jump</a></li>
-<li class="toctree-l6"><a class="reference internal" href="platformer-slide.html">Dynamic Slide</a></li>
-<li class="toctree-l6"><a class="reference internal" href="platformer-wall-grab.html">Platformer Dynamic Wall Grab</a></li>
+<li class="toctree-l6"><a class="reference internal" href="platformer-slide.html">Platformer Slide</a></li>
+<li class="toctree-l6"><a class="reference internal" href="platformer-wall-grab.html">Platformer Wall Grab</a></li>
 </ul>
 </li>
 <li class="toctree-l5"><a class="reference internal" href="#interfaces">Interfaces</a><ul>
@@ -96,9 +92,9 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../top-down/welcome.html">Top Down</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../isometric/welcome.html">Isometric</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../abilities/welcome.html">Abilities</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../../welcome.html#abilities">Abilities</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../environmental/welcome.html">Environmental</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../animating/welcome.html">Animations</a></li>
 </ul>
@@ -119,7 +115,7 @@
       <li><a href="../../../../../index.html" class="icon icon-home"></a> &raquo;</li>
           <li><a href="../../../welcome.html">Character Controller</a> &raquo;</li>
           <li><a href="../../welcome.html">Platformer</a> &raquo;</li>
-          <li><a href="../welcome.html">Ability Categories</a> &raquo;</li>
+          <li><a href="../welcome.html">Platformer Abilities</a> &raquo;</li>
       <li>Movement Abilities</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../../../../../_sources/core/character-controller/platformer/abilities/movement/welcome.rst.txt" rel="nofollow"> View page source</a>
@@ -139,8 +135,8 @@
 <li class="toctree-l1"><a class="reference internal" href="platformer-flip.html">Platformer Flip</a></li>
 <li class="toctree-l1"><a class="reference internal" href="platformer-dynamic-movement.html">Platformer Dynamic Movement</a></li>
 <li class="toctree-l1"><a class="reference internal" href="platformer-jump.html">Platformer Jump</a></li>
-<li class="toctree-l1"><a class="reference internal" href="platformer-slide.html">Dynamic Slide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="platformer-wall-grab.html">Platformer Dynamic Wall Grab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="platformer-slide.html">Platformer Slide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="platformer-wall-grab.html">Platformer Wall Grab</a></li>
 </ul>
 </div>
 </section>
@@ -168,7 +164,7 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../welcome.html" class="btn btn-neutral float-left" title="Ability Categories" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../welcome.html" class="btn btn-neutral float-left" title="Platformer Abilities" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="platformer-flip.html" class="btn btn-neutral float-right" title="Platformer Flip" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

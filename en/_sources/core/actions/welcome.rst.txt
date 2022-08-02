@@ -9,5 +9,4 @@ can benefit from them.
 .. toctree::
    :maxdepth: 1
 
-   actions-controll/welcome
    fsm/welcome

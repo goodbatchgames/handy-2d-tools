@@ -1,34 +1,20 @@
-.. _platformer-dynamic-wall-grab-page:
+.. _platformer-wall-grab-page:
 
-Platformer Dynamic Wall Grab
-============================
+Platformer Wall Grab
+====================
 
-This component is used to perform dynamic slides, meaning it manipulates a ``RigidBody2D`` set as dynamic
-to achieve its goal.
+This component is used to perform platfomer wall grabs.
 
-By slide we mean slighlity faster movement than it's normal movement repecting being on the ground. This 
-if different from a dash because it can't be performed on air and can only be executed horizontally. No 
-diagonals allowed.
+Category
+--------
 
-What it requires
-----------------
+.. table:: 
+   :width: 100% 
+   :widths: 100
 
-* There must be a ``RigidBody2D`` component among its ``GameObject`` other components.
-
-* It will need the "Sliding Collider" option to be set passing in a ``Collider2D``. It will be 
-  from this collider that the ability will check if it can stop sliding based on what is considered 
-  ceiling in order to prevent being stuck.
-
-* It needs the "What is Ceiling" option to be set as a ``LayerMask`` telling what is considered "ceiling".
-
-* It needs the "Ceiling Detection Length" to be set as it will be used cast a ray to detect if it is under 
-  anything considered "ceiling" before stoping the slide.
-
-What is optional
-----------------
-
-* You can use the "Colliders to Disable" option to pass in a list of ``Collider2D`` that should be disabled while performing 
-  the slide.
+   +-----------------------------------------------------------------------------------------------------+
+   | Learnable                                                                                           |
+   +-----------------------------------------------------------------------------------------------------+
 
 What it Implements
 ------------------
@@ -40,11 +26,19 @@ What it Implements
    +-----------------------------------------------------------------------------------------------------+
    | **Interface**                                                                                       |
    +-----------------------------------------------------------------------------------------------------+
-   | :ref:`ISlidePerformer <i-platformer-slide-performer-page>`                                          |
+   | :ref:`IPlatformerWallGrabPerformer <i-platformer-wall-grab-performer-page>`                         |
    +-----------------------------------------------------------------------------------------------------+
 
-Seeks For
----------
+Setup
+-----
+
+.. toctree::
+   :maxdepth: 1
+   
+   setups/platformer-wall-grab-setup 
+
+Feeding Dependencies
+--------------------
 
 Below you will find what you should feed this component with and how. You can always do it by directly accessing its methods 
 or having components wich provide what they need and mark this component to seek for them through the inspector window.
@@ -58,91 +52,120 @@ You can use the ``UpdateGrounding(bool newGrounding)`` method every update or ma
 :ref:`IPlatformerGroundingProvider <i-platformer-grounding-provider-page>` as long as it has some component wich implements 
 it among its ``GameObject`` other components. Our :ref:`Platformer Raycast Grounding Checker <platformer-raycast-grounding-checker-page>` implements it.
 
+Movement Performer
+******************
 
-Horizontal Facing Direction
-***************************
+In order to move on the Y while performing, this component will need a platformer movement performer.
 
-This component needs to know what direction its ``GameObject`` is facing in order to setup the slide correctly
-and move the correct direction.
+You can directly set one: ``slide.MovementPerformer = movementPerformer``. As long as movementPerformer implements the 
+:ref:`IPlatformerMovementPerformer <i-platformer-movement-performer-page>` interface. 
+Or you can mark the component to seek for an 
+:ref:`IPlatformerMovementPerformer <i-platformer-movement-performer-page>` as long as it has some component wich implements 
+it among its ``GameObject`` other components. 
 
-You can use the ``UpdateDirectionSign(float newDirectionSign)`` method every update or mark the component to seek for an 
-:ref:`IPlatformerHorizontalDirectionProvider <i-platformer-facing-direction-provider-page>` as long as it has some component wich implements 
-it among its ``GameObject`` other components. Our :ref:`PlatformerFlip <platformer-flip-page>` implements it.
-
-Slide Handler
+Wall Hit Data
 *************
 
-This component needs to told when to perform its slides. So you will need a component to do that.
+This component needs to know if its ``GameObject`` can be considered hitting walls to evaluate if it can grab or not on a wall.
 
-You can use the ``Request()``, ``Stop()``, methods as seen below on the "How to use" section.
-You also can mark it to seek for an :ref:`IPlatformerSlideHandler <i-platformer-slide-handler-page>` as long as it has some 
-component wich implements it among its ``GameObject`` other components. If you opt to do so, the IPlatformerSlideHandler component will 
-take care of calling the ``Request()`` and ``Stop()`` methods when needed.
+You can use the ``UpdateWallHitData(WallHitData newWallHitData)`` method every update or mark the component to seek for an 
+:ref:`IPlatformerWallHitDataProvider <i-platformer-wall-hit-data-provider-page>` as long as it has some component wich implements 
+it among its ``GameObject`` other components. Our :ref:`Platformer Wall Hit Checker <platformer-wall-hit-checker-page>` implements it.
 
 Usage
 -----
 
-Here is how you can use this component:
+Requesting a wall grab is different from requesting jumps, slides or other abilities that are requested through
+user input. So, instead of realling on handlers it will be your responsibility to evaluate when your code should request a wall grab and, 
+if the component will start performing accordingly.
 
 Direct approach
 ***************
 
 .. code-block:: csharp
 
-    DynamicSlide slide;
+    PlatformerWallGrab wallGrab;
+    float verticalDirectionSign;
 
     void Awake() 
     {
-        slide = GetComponent<DynamicSlide>();
+        wallGrab = GetComponent<PlatformerWallGrab>();
     }
 
     void Update() 
     {
-        if (Input.GetButtonDown("Slide")) // This assumes you've mapped a sliding button
-        {
-            slide.Request();
-        }
+        float verticalDirectionSign = MyWayOfDetectingVerticalDirection(); // -1 down, 1 up
+        float horizontalDirectionSign = MyWayOfDetectingHorizontalDirection(); // -1 left, 1 right
 
-        if (Input.GetButtonUp("Slide"))
+        if (ConditionToRequestWallGrab)
         {
-            slide.Stop();
+            wallGrab.Request(horizontalDirectionSign);
         }
     }
 
     void FixedUpdate()
     {
-        if (slide.sliding)
+        if (wallGrab.Performing)
         {
-            slide.Perform();
+            wallGrab.Perform(verticalDirectionSign); // or leave arguments blank for no movement.
         }
     }
 
-Listening to ISlidePerformer events
-***********************************
+Requesting wall grabs using :ref:`IPlatformerWallGrabPerformer <i-platformer-wall-grab-performer-page>` interface
+*****************************************************************************************************************
 
 .. code-block:: csharp
 
-    // This is an example on how to listen to the DynamicJump events using other components 
-    // you might craft
-
-    ISlidePerformer slidePerformer;
+    IPlatformerWallGrabPerformer wallGrabPerformer;
+    float verticalDirectionSign;
 
     void Awake()
     {
-        slidePerformer = GetComponent<ISlidePerformer>();      
+        wallGrabPerformer = GetComponent<IPlatformerWallGrabPerformer>();      
+    }
+
+    void Update() 
+    {
+        float verticalDirectionSign = MyWayOfDetectingVerticalDirection(); // -1 down, 1 up
+        float horizontalDirectionSign = MyWayOfDetectingHorizontalDirection(); // -1 left, 1 right
+
+        if (ConditionToRequestWallGrab)
+        {
+            wallGrabPerformer.Request(horizontalDirectionSign);
+        }
+    }
+
+    void FixedUpdate()
+    {
+        if (wallGrabPerformer.Performing)
+        {
+            wallGrabPerformer.Perform(verticalDirectionSign); // or leave arguments blank for no movement.
+        }
+    }
+
+Listening to :ref:`IPlatformerWallGrabPerformer <i-platformer-wall-grab-performer-page>` interface events
+*********************************************************************************************************
+
+.. code-block:: csharp
+
+    IPlatformerSlidePerformer wallGrabPerformer;
+
+    void Awake()
+    {
+        wallGrabPerformer = GetComponent<IPlatformerSlidePerformer>();      
     }
 
     void Start()
     {
-        slidePerformer?.SlidePerformed.AddListener(OnSlidePerfomed);
+        wallGrabPerformer?.WallGrabUpdate.AddListener(OnWallGrabUpdate);
     }
 
     void OnDisable()
     {
-        slidePerformer?.SlidePerformed.RemoveListener(OnSlidePerfomed);
+        wallGrabPerformer?.WallGrabUpdate.RemoveListener(OnWallGrabUpdate);
     }
     
-    void OnSlidePerfomed(GameObject go)
+    void OnWallGrabUpdate(bool isSliding)
     {
         // Your logic
     }
@@ -151,107 +174,45 @@ Listening to ISlidePerformer events
 
     You can also use the direct approach to listen to the events.
 
-Setup
-*****
-
-.. code-block:: csharp
-
-    namespace Handy2DTools.CharacterController.Platformer
-    {
-
-        [CreateAssetMenu(fileName = "New DynamicSlideSetup", menuName = "Handy 2D Tools/CharacterController/Setups/DynamicSlide")]
-        public class DynamicSlideSetup : AbilitySetup
-        {
-
-            [Header("Slide Setup")]
-            [Tooltip("The speed wich will be applyed to X axis during slide.")]
-            [SerializeField]
-            [Space]
-            protected float xSpeed = 20f;
-
-            [Tooltip("Time in seconds of the slide duration.")]
-            [SerializeField]
-            protected float duration = 1f;
-
-            [Tooltip("Minimun time in seconds between slidees.")]
-            [SerializeField]
-            protected float delay = 1f;
-
-            [Tooltip("If gravity should be modified while sliding")]
-            [SerializeField]
-            protected bool modifyGravity = false;
-
-            [Tooltip("The gravity scale to be apllyed to RigidBody2D during slide.")]
-            [SerializeField]
-            [ShowIf("modifyGravity")]
-            protected float gravityScale = 0f;
-
-            [Tooltip("In case character is no longer grounded while performing slide, the slide is stoped.")]
-            [SerializeField]
-            protected bool stopWhenNotGrounded = true;
-
-            [Foldout("Slide Events")]
-            [Label("Slide Performed")]
-            [SerializeField]
-            [Space]
-            protected UnityEvent<GameObject> slidePerformed;
-
-            // Getters
-
-            public float XSpeed => xSpeed;
-            public float Duration => duration;
-            public float Delay => delay;
-            public bool ModifyGravity => modifyGravity;
-            public float GravityScale => gravityScale;
-            public bool StopWhenNotGrounded => stopWhenNotGrounded;
-            public UnityEvent<GameObject> SlidePerformed => slidePerformed;
-        }
-
-    }
-
 The perform approach
 --------------------
 
-On this ability's inspector you can mark ``Auto Perform`` checkbox and the component will perform automatically upon 
-self resolving slide requests and stops.
+This component cannot autoperform.
 
-In case you are working with an FSM (we have one, checkout  our :ref:`FSM solution <welcome-core-fsm-page>`) you might want
-your state to call the ``Perform()`` method.
+Available Properties
+--------------------
 
-Locking Slides
---------------
+.. code-block:: csharp
 
-Use the method ``LockSlide(bool shouldLock)`` to prevent or allow slides to be performed. Great to be used with FSMs 
-when entering and leaving states on wich slides should not be started.
+    public bool Performing { get; }
+
+    public IPlatformerMovementPerformer MovementPerformer { get; set; }
+    public IPlatformerWallHitDataProvider WallHitDataProvider { get; set; }
 
 Available Methods
 -----------------
 
 .. code-block:: csharp
 
-    // Call this on physics update to tell the ability to perform its current
-    // on going slide.    
-    public void Perform()
+    /// <summary>
+    /// Evaluates if can start the wall grab process. If so Perform() should be called each physics update.
+    /// </summary>
+    public void Request(float movementDirectionSign)
 
-    // Call this on physics update to tell the ability to perform its current
-    // on going slide considering being or not on a slope. 
-    public void Perform(SlopeData slopeData)
+    /// <summary>
+    /// Should be called on Fixed (Physics) Update. If direction passed as 0 means no movement.
+    /// Note that gravity can still affect the RigidBody2D
+    /// </summary>
+    /// <param name="directionSign">The direction sign to move. -1 down, 1 up</param>
+    public void Perform(float directionSign = 0)
 
-    // Call this in order to request a slide. The component will 
-    // self evaluate if it can slide or not
-    public virtual void Request()
-    
-    // Call this in order to stop the current on going slide 
+    /// <summary>
+    /// Stops Wall slide progress.
+    /// </summary>
     public void Stop()
-
-    // Call this to update grounding
-    public void UpdateGrounding(bool newGrounding)
-
-    // Call this to update Slope Data
-    public void UpdateSlopeData(SlopeData newSlopeData)
-
-    // Call this to update the direction sign
-    public void UpdateDirectionSign(float newDirectionSign)
-
-    // Call this to lock or release the ability to slide
-    public void LockSlide(bool shouldLock)
+    
+    /// <summary>
+    /// Call this to update wall hit data.
+    /// </summary>
+    /// <param name="newWallGrab"></param>
+    public void UpdateWallHitData(WallHitData newWallHitData)

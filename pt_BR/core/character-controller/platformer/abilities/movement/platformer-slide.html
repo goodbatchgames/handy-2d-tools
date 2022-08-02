@@ -4,13 +4,11 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dynamic Slide &mdash; documentação Handy 2D Tools 1.0.0-alpha</title>
+  <title>Platformer Slide &mdash; documentação Handy 2D Tools 1.0.0-alpha</title>
       <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../../../_static/copybutton.css" type="text/css" />
       <link rel="stylesheet" href="../../../../../_static/styles/handy-2d-tools.css" type="text/css" />
-      <link rel="stylesheet" href="../../../../../_static/dark_mode_css/general.css" type="text/css" />
-      <link rel="stylesheet" href="../../../../../_static/dark_mode_css/dark.css" type="text/css" />
     <link rel="shortcut icon" href="../../../../../_static/favicon.png"/>
   <!--[if lt IE 9]>
     <script src="../../../../../_static/js/html5shiv.min.js"></script>
@@ -24,12 +22,10 @@
         <script src="../../../../../_static/clipboard.min.js"></script>
         <script src="../../../../../_static/copybutton.js"></script>
         <script src="../../../../../_static/translations.js"></script>
-        <script src="../../../../../_static/dark_mode_js/default_dark.js"></script>
-        <script src="../../../../../_static/dark_mode_js/theme_switcher.js"></script>
     <script src="../../../../../_static/js/theme.js"></script>
     <link rel="index" title="Índice" href="../../../../../genindex.html" />
     <link rel="search" title="Buscar" href="../../../../../search.html" />
-    <link rel="next" title="Platformer Dynamic Wall Grab" href="platformer-wall-grab.html" />
+    <link rel="next" title="Platformer Slide Setup" href="setups/platformer-slide-setup.html" />
     <link rel="prev" title="Platformer Jump Setup" href="setups/platformer-jump-setup.html" /> 
 </head>
 
@@ -63,34 +59,39 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../../actions/welcome.html">Actions</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../../../welcome.html">Character Controller</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="../../welcome.html">Platformer</a><ul class="current">
-<li class="toctree-l3 current"><a class="reference internal" href="../welcome.html">Ability Categories</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../welcome.html">Platformer Abilities</a><ul class="current">
 <li class="toctree-l4 current"><a class="reference internal" href="welcome.html">Movement Abilities</a><ul class="current">
 <li class="toctree-l5 current"><a class="reference internal" href="welcome.html#available-abilities">Available Abilities</a><ul class="current">
 <li class="toctree-l6"><a class="reference internal" href="platformer-flip.html">Platformer Flip</a></li>
 <li class="toctree-l6"><a class="reference internal" href="platformer-dynamic-movement.html">Platformer Dynamic Movement</a></li>
 <li class="toctree-l6"><a class="reference internal" href="platformer-jump.html">Platformer Jump</a></li>
-<li class="toctree-l6 current"><a class="current reference internal" href="#">Dynamic Slide</a><ul>
-<li class="toctree-l7"><a class="reference internal" href="#what-it-requires">What it requires</a></li>
-<li class="toctree-l7"><a class="reference internal" href="#what-is-optional">What is optional</a></li>
+<li class="toctree-l6 current"><a class="current reference internal" href="#">Platformer Slide</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="#category">Category</a></li>
 <li class="toctree-l7"><a class="reference internal" href="#what-it-implements">What it Implements</a></li>
-<li class="toctree-l7"><a class="reference internal" href="#seeks-for">Seeks For</a><ul>
-<li class="toctree-l8"><a class="reference internal" href="#grounding">Grounding</a></li>
-<li class="toctree-l8"><a class="reference internal" href="#horizontal-facing-direction">Horizontal Facing Direction</a></li>
+<li class="toctree-l7"><a class="reference internal" href="#setup">Setup</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="setups/platformer-slide-setup.html">Platformer Slide Setup</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#inspector">Inspector</a></li>
+<li class="toctree-l7"><a class="reference internal" href="#feeding-dependencies">Feeding Dependencies</a><ul>
 <li class="toctree-l8"><a class="reference internal" href="#slide-handler">Slide Handler</a></li>
+<li class="toctree-l8"><a class="reference internal" href="#movement-performer">Movement Performer</a></li>
+<li class="toctree-l8"><a class="reference internal" href="#grounding">Grounding</a></li>
+<li class="toctree-l8"><a class="reference internal" href="#facing-direction">Facing Direction</a></li>
 </ul>
 </li>
 <li class="toctree-l7"><a class="reference internal" href="#usage">Usage</a><ul>
 <li class="toctree-l8"><a class="reference internal" href="#direct-approach">Direct approach</a></li>
-<li class="toctree-l8"><a class="reference internal" href="#listening-to-islideperformer-events">Listening to ISlidePerformer events</a></li>
-<li class="toctree-l8"><a class="reference internal" href="#setup">Setup</a></li>
+<li class="toctree-l8"><a class="reference internal" href="#requesting-slides-using-iplatformerslideperformer-interface">Requesting slides using <span class="xref std std-ref">IPlatformerSlidePerformer</span> interface</a></li>
+<li class="toctree-l8"><a class="reference internal" href="#listening-to-iplatformerslideperformer-interface-events">Listening to <span class="xref std std-ref">IPlatformerSlidePerformer</span> interface events</a></li>
 </ul>
 </li>
-<li class="toctree-l7"><a class="reference internal" href="#the-perform-approach">The perform approach</a></li>
 <li class="toctree-l7"><a class="reference internal" href="#locking-slides">Locking Slides</a></li>
+<li class="toctree-l7"><a class="reference internal" href="#available-properties">Available Properties</a></li>
 <li class="toctree-l7"><a class="reference internal" href="#available-methods">Available Methods</a></li>
 </ul>
 </li>
-<li class="toctree-l6"><a class="reference internal" href="platformer-wall-grab.html">Platformer Dynamic Wall Grab</a></li>
+<li class="toctree-l6"><a class="reference internal" href="platformer-wall-grab.html">Platformer Wall Grab</a></li>
 </ul>
 </li>
 <li class="toctree-l5"><a class="reference internal" href="welcome.html#interfaces">Interfaces</a></li>
@@ -104,9 +105,9 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../top-down/welcome.html">Top Down</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../isometric/welcome.html">Isometric</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../abilities/welcome.html">Abilities</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../../welcome.html#abilities">Abilities</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../environmental/welcome.html">Environmental</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../animating/welcome.html">Animations</a></li>
 </ul>
@@ -127,9 +128,9 @@
       <li><a href="../../../../../index.html" class="icon icon-home"></a> &raquo;</li>
           <li><a href="../../../welcome.html">Character Controller</a> &raquo;</li>
           <li><a href="../../welcome.html">Platformer</a> &raquo;</li>
-          <li><a href="../welcome.html">Ability Categories</a> &raquo;</li>
+          <li><a href="../welcome.html">Platformer Abilities</a> &raquo;</li>
           <li><a href="welcome.html">Movement Abilities</a> &raquo;</li>
-      <li>Dynamic Slide</li>
+      <li>Platformer Slide</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../../../../../_sources/core/character-controller/platformer/abilities/movement/platformer-slide.rst.txt" rel="nofollow"> Ver código-fonte da página</a>
       </li>
@@ -139,31 +140,23 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="dynamic-slide">
-<span id="dynamic-slide-page"></span><h1>Dynamic Slide<a class="headerlink" href="#dynamic-slide" title="Link permanente para este cabeçalho"></a></h1>
-<p>This component is used to perform dynamic slides, meaning it manipulates a <code class="docutils literal notranslate"><span class="pre">RigidBody2D</span></code> set as dynamic
-to achieve its goal.</p>
-<p>By slide we mean slighlity faster movement than it’s normal movement repecting being on the ground. This
-if different from a dash because it can’t be performed on air and can only be executed horizontally. No
-diagonals allowed.</p>
-<section id="what-it-requires">
-<h2>What it requires<a class="headerlink" href="#what-it-requires" title="Link permanente para este cabeçalho"></a></h2>
-<ul class="simple">
-<li><p>There must be a <code class="docutils literal notranslate"><span class="pre">RigidBody2D</span></code> component among its <code class="docutils literal notranslate"><span class="pre">GameObject</span></code> other components.</p></li>
-<li><p>It will need the “Sliding Collider” option to be set passing in a <code class="docutils literal notranslate"><span class="pre">Collider2D</span></code>. It will be
-from this collider that the ability will check if it can stop sliding based on what is considered
-ceiling in order to prevent being stuck.</p></li>
-<li><p>It needs the “What is Ceiling” option to be set as a <code class="docutils literal notranslate"><span class="pre">LayerMask</span></code> telling what is considered “ceiling”.</p></li>
-<li><p>It needs the “Ceiling Detection Length” to be set as it will be used cast a ray to detect if it is under
-anything considered “ceiling” before stoping the slide.</p></li>
-</ul>
-</section>
-<section id="what-is-optional">
-<h2>What is optional<a class="headerlink" href="#what-is-optional" title="Link permanente para este cabeçalho"></a></h2>
-<ul class="simple">
-<li><p>You can use the “Colliders to Disable” option to pass in a list of <code class="docutils literal notranslate"><span class="pre">Collider2D</span></code> that should be disabled while performing
-the slide.</p></li>
-</ul>
+  <section id="platformer-slide">
+<span id="platformer-slide-page"></span><h1>Platformer Slide<a class="headerlink" href="#platformer-slide" title="Link permanente para este cabeçalho"></a></h1>
+<p>This component is used to perform platformer slides.</p>
+<p>By slide we mean slighlity faster movement than it’s normal movement respecting being on the ground. This
+if different from a dash because it can’t be performed on air and can only be executed horizontally. No vertical
+or diagonal movement allowed.</p>
+<section id="category">
+<h2>Category<a class="headerlink" href="#category" title="Link permanente para este cabeçalho"></a></h2>
+<table class="colwidths-given docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Learnable</p></td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="what-it-implements">
 <h2>What it Implements<a class="headerlink" href="#what-it-implements" title="Link permanente para este cabeçalho"></a></h2>
@@ -174,30 +167,40 @@ the slide.</p></li>
 <tbody>
 <tr class="row-odd"><td><p><strong>Interface</strong></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="interfaces/i-platformer-slide-performer.html#i-platformer-slide-performer-page"><span class="std std-ref">ISlidePerformer</span></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="interfaces/i-platformer-slide-performer.html#i-platformer-slide-performer-page"><span class="std std-ref">IPlatformerSlidePerformer</span></a></p></td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="seeks-for">
-<h2>Seeks For<a class="headerlink" href="#seeks-for" title="Link permanente para este cabeçalho"></a></h2>
+<section id="setup">
+<h2>Setup<a class="headerlink" href="#setup" title="Link permanente para este cabeçalho"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="setups/platformer-slide-setup.html">Platformer Slide Setup</a></li>
+</ul>
+</div>
+</section>
+<section id="inspector">
+<h2>Inspector<a class="headerlink" href="#inspector" title="Link permanente para este cabeçalho"></a></h2>
+<ul class="simple">
+<li><p>Debug On - For visual feedback while detecting ceilings</p></li>
+<li><p>Sliding Collider - It will be
+from this collider that the ability will check if it can stop sliding based on what is considered
+ceiling in order to prevent being stuck. You can also feed this via script</p></li>
+<li><p>What is Ceiling - A <a class="reference external" href="https://docs.unity3d.com/ScriptReference/LayerMask.html">LayerMask</a> telling what is considered “ceiling”.</p></li>
+<li><p>Colliders to Disable - An optional list of <code class="docutils literal notranslate"><span class="pre">Collider2D</span></code> that should be disabled while performing. Usefull when dealing with multiple colliders
+for your character.</p></li>
+<li><p>Ceiling Detection Length - A float representing the lengh of the casted ray to detect if it is under
+anything considered “ceiling” before stoping the slide.</p></li>
+<li><p>Perform Approach - You can mark <code class="docutils literal notranslate"><span class="pre">Auto</span> <span class="pre">Perform</span></code> checkbox and the component will perform automatically upon
+self resolving jump requests and stops. In case you are working with an FSM (we have one, checkout  our <a class="reference internal" href="../../../../actions/fsm/welcome.html#welcome-core-fsm-page"><span class="std std-ref">FSM solution</span></a>)
+you might want your state to call the <code class="docutils literal notranslate"><span class="pre">Perform()</span></code> and <code class="docutils literal notranslate"><span class="pre">PerformExtraJump()</span></code> methods.</p></li>
+</ul>
+</section>
+<section id="feeding-dependencies">
+<h2>Feeding Dependencies<a class="headerlink" href="#feeding-dependencies" title="Link permanente para este cabeçalho"></a></h2>
 <p>Below you will find what you should feed this component with and how. You can always do it by directly accessing its methods
 or having components wich provide what they need and mark this component to seek for them through the inspector window.</p>
-<section id="grounding">
-<h3>Grounding<a class="headerlink" href="#grounding" title="Link permanente para este cabeçalho"></a></h3>
-<p>This component needs to know if its <code class="docutils literal notranslate"><span class="pre">GameObject</span></code> can be considered grounded to evaluate if it should start sliding.</p>
-<p>You can use the <code class="docutils literal notranslate"><span class="pre">UpdateGrounding(bool</span> <span class="pre">newGrounding)</span></code> method every update or mark the component to seek for an
-<a class="reference internal" href="../../checkers/interfaces/i-platformer-grounding-provider.html#i-platformer-grounding-provider-page"><span class="std std-ref">IPlatformerGroundingProvider</span></a> as long as it has some component wich implements
-it among its <code class="docutils literal notranslate"><span class="pre">GameObject</span></code> other components. Our <a class="reference internal" href="../../checkers/platformer-raycast-grounding-checker.html#platformer-raycast-grounding-checker-page"><span class="std std-ref">Platformer Raycast Grounding Checker</span></a> implements it.</p>
-</section>
-<section id="horizontal-facing-direction">
-<h3>Horizontal Facing Direction<a class="headerlink" href="#horizontal-facing-direction" title="Link permanente para este cabeçalho"></a></h3>
-<p>This component needs to know what direction its <code class="docutils literal notranslate"><span class="pre">GameObject</span></code> is facing in order to setup the slide correctly
-and move the correct direction.</p>
-<p>You can use the <code class="docutils literal notranslate"><span class="pre">UpdateDirectionSign(float</span> <span class="pre">newDirectionSign)</span></code> method every update or mark the component to seek for an
-<a class="reference internal" href="interfaces/i-platformer-facing-direction-provider.html#i-platformer-facing-direction-provider-page"><span class="std std-ref">IPlatformerHorizontalDirectionProvider</span></a> as long as it has some component wich implements
-it among its <code class="docutils literal notranslate"><span class="pre">GameObject</span></code> other components. Our <a class="reference internal" href="platformer-flip.html#platformer-flip-page"><span class="std std-ref">PlatformerFlip</span></a> implements it.</p>
-</section>
 <section id="slide-handler">
 <h3>Slide Handler<a class="headerlink" href="#slide-handler" title="Link permanente para este cabeçalho"></a></h3>
 <p>This component needs to told when to perform its slides. So you will need a component to do that.</p>
@@ -206,17 +209,42 @@ You also can mark it to seek for an <a class="reference internal" href="interfac
 component wich implements it among its <code class="docutils literal notranslate"><span class="pre">GameObject</span></code> other components. If you opt to do so, the IPlatformerSlideHandler component will
 take care of calling the <code class="docutils literal notranslate"><span class="pre">Request()</span></code> and <code class="docutils literal notranslate"><span class="pre">Stop()</span></code> methods when needed.</p>
 </section>
+<section id="movement-performer">
+<h3>Movement Performer<a class="headerlink" href="#movement-performer" title="Link permanente para este cabeçalho"></a></h3>
+<p>In order to move on the x while performing, this component will need a platformer movement performer.</p>
+<p>You can directly set one: <code class="docutils literal notranslate"><span class="pre">slide.MovementPerformer</span> <span class="pre">=</span> <span class="pre">movementPerformer</span></code>. As long as movementPerformer implements the
+<a class="reference internal" href="interfaces/i-platformer-movement-performer.html#i-platformer-movement-performer-page"><span class="std std-ref">IPlatformerMovementPerformer</span></a> interface.
+Or you can mark the component to seek for an
+<a class="reference internal" href="interfaces/i-platformer-movement-performer.html#i-platformer-movement-performer-page"><span class="std std-ref">IPlatformerMovementPerformer</span></a> as long as it has some component wich implements
+it among its <code class="docutils literal notranslate"><span class="pre">GameObject</span></code> other components.</p>
+<p>Our <a class="reference internal" href="platformer-dynamic-movement.html#platformer-dynamic-movement-page"><span class="std std-ref">Platformer Dynamic Movement</span></a> implements it.</p>
+</section>
+<section id="grounding">
+<h3>Grounding<a class="headerlink" href="#grounding" title="Link permanente para este cabeçalho"></a></h3>
+<p>This component needs to know if its <code class="docutils literal notranslate"><span class="pre">GameObject</span></code> can be considered grounded to start and interrupt sliding.</p>
+<p>You can use the <code class="docutils literal notranslate"><span class="pre">UpdateGrounding(bool</span> <span class="pre">newGrounding)</span></code> method every update or mark the component to seek for an
+<a class="reference internal" href="../../checkers/interfaces/i-platformer-grounding-provider.html#i-platformer-grounding-provider-page"><span class="std std-ref">IPlatformerGroundingProvider</span></a> as long as it has some component wich implements
+it among its <code class="docutils literal notranslate"><span class="pre">GameObject</span></code> other components. Our <a class="reference internal" href="../../checkers/platformer-raycast-grounding-checker.html#platformer-raycast-grounding-checker-page"><span class="std std-ref">Platformer Raycast Grounding Checker</span></a> implements it.</p>
+</section>
+<section id="facing-direction">
+<h3>Facing Direction<a class="headerlink" href="#facing-direction" title="Link permanente para este cabeçalho"></a></h3>
+<p>This component needs to know what direction its <code class="docutils literal notranslate"><span class="pre">GameObject</span></code> is facing in order to setup the slide correctly
+and move into the correct direction.</p>
+<p>You can use the <code class="docutils literal notranslate"><span class="pre">UpdateFacingDirectionSign(float</span> <span class="pre">newFacingDirectionSign)</span></code> method every update or mark the component to seek for an
+<a class="reference internal" href="interfaces/i-platformer-facing-direction-provider.html#i-platformer-facing-direction-provider-page"><span class="std std-ref">IPlatformerFacingDirectionProvider</span></a> as long as it has some component wich implements
+it among its <code class="docutils literal notranslate"><span class="pre">GameObject</span></code> other components. Our <a class="reference internal" href="platformer-flip.html#platformer-flip-page"><span class="std std-ref">PlatformerFlip</span></a> implements it.</p>
+</section>
 </section>
 <section id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Link permanente para este cabeçalho"></a></h2>
 <p>Here is how you can use this component:</p>
 <section id="direct-approach">
 <h3>Direct approach<a class="headerlink" href="#direct-approach" title="Link permanente para este cabeçalho"></a></h3>
-<div class="highlight-csharp notranslate"><div class="highlight"><pre><span></span><span class="n">DynamicSlide</span><span class="w"> </span><span class="n">slide</span><span class="p">;</span><span class="w"></span>
+<div class="highlight-csharp notranslate"><div class="highlight"><pre><span></span><span class="n">PlatformerSlide</span><span class="w"> </span><span class="n">slide</span><span class="p">;</span><span class="w"></span>
 
 <span class="k">void</span><span class="w"> </span><span class="nf">Awake</span><span class="p">()</span><span class="w"></span>
 <span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="n">slide</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">DynamicSlide</span><span class="p">&gt;();</span><span class="w"></span>
+<span class="w">    </span><span class="n">slide</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">PlatformerSlide</span><span class="p">&gt;();</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
 
 <span class="k">void</span><span class="w"> </span><span class="nf">Update</span><span class="p">()</span><span class="w"></span>
@@ -226,7 +254,7 @@ take care of calling the <code class="docutils literal notranslate"><span class=
 <span class="w">        </span><span class="n">slide</span><span class="p">.</span><span class="n">Request</span><span class="p">();</span><span class="w"></span>
 <span class="w">    </span><span class="p">}</span><span class="w"></span>
 
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">Input</span><span class="p">.</span><span class="n">GetButtonUp</span><span class="p">(</span><span class="s">&quot;Slide&quot;</span><span class="p">))</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">Input</span><span class="p">.</span><span class="n">GetButtonUp</span><span class="p">(</span><span class="s">&quot;Slide&quot;</span><span class="p">))</span><span class="w"> </span><span class="c1">// This assumes you&#39;ve mapped a sliding button</span>
 <span class="w">    </span><span class="p">{</span><span class="w"></span>
 <span class="w">        </span><span class="n">slide</span><span class="p">.</span><span class="n">Stop</span><span class="p">();</span><span class="w"></span>
 <span class="w">    </span><span class="p">}</span><span class="w"></span>
@@ -234,7 +262,7 @@ take care of calling the <code class="docutils literal notranslate"><span class=
 
 <span class="k">void</span><span class="w"> </span><span class="nf">FixedUpdate</span><span class="p">()</span><span class="w"></span>
 <span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">slide</span><span class="p">.</span><span class="n">sliding</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">slide</span><span class="p">.</span><span class="n">sliding</span><span class="p">)</span><span class="w">  </span><span class="c1">// In case it is not set to auto perform</span>
 <span class="w">    </span><span class="p">{</span><span class="w"></span>
 <span class="w">        </span><span class="n">slide</span><span class="p">.</span><span class="n">Perform</span><span class="p">();</span><span class="w"></span>
 <span class="w">    </span><span class="p">}</span><span class="w"></span>
@@ -242,29 +270,53 @@ take care of calling the <code class="docutils literal notranslate"><span class=
 </pre></div>
 </div>
 </section>
-<section id="listening-to-islideperformer-events">
-<h3>Listening to ISlidePerformer events<a class="headerlink" href="#listening-to-islideperformer-events" title="Link permanente para este cabeçalho"></a></h3>
-<div class="highlight-csharp notranslate"><div class="highlight"><pre><span></span><span class="c1">// This is an example on how to listen to the DynamicJump events using other components</span>
-<span class="c1">// you might craft</span>
-
-<span class="n">ISlidePerformer</span><span class="w"> </span><span class="n">slidePerformer</span><span class="p">;</span><span class="w"></span>
+<section id="requesting-slides-using-iplatformerslideperformer-interface">
+<h3>Requesting slides using <a class="reference internal" href="interfaces/i-platformer-slide-performer.html#i-platformer-slide-performer-page"><span class="std std-ref">IPlatformerSlidePerformer</span></a> interface<a class="headerlink" href="#requesting-slides-using-iplatformerslideperformer-interface" title="Link permanente para este cabeçalho"></a></h3>
+<div class="highlight-csharp notranslate"><div class="highlight"><pre><span></span><span class="n">IPlatformerSlidePerformer</span><span class="w"> </span><span class="n">slidePerformer</span><span class="p">;</span><span class="w"></span>
 
 <span class="k">void</span><span class="w"> </span><span class="nf">Awake</span><span class="p">()</span><span class="w"></span>
 <span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="n">slidePerformer</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">ISlidePerformer</span><span class="p">&gt;();</span><span class="w"></span>
+<span class="w">    </span><span class="n">slidePerformer</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">IPlatformerJumpPerformer</span><span class="p">&gt;();</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="k">void</span><span class="w"> </span><span class="nf">Update</span><span class="p">()</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">Input</span><span class="p">.</span><span class="n">GetButtonDown</span><span class="p">(</span><span class="s">&quot;Slide&quot;</span><span class="p">))</span><span class="w"> </span><span class="c1">// Example on how to get input. We can&#39;t really know how is your input setup</span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">slidePerformer</span><span class="p">.</span><span class="n">Request</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="k">void</span><span class="w"> </span><span class="nf">FixedUpdate</span><span class="p">()</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">slidePerformer</span><span class="p">.</span><span class="n">Performing</span><span class="p">)</span><span class="w"> </span><span class="c1">// In case it is not set to auto perform</span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">slidePerformer</span><span class="p">.</span><span class="n">Perform</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="listening-to-iplatformerslideperformer-interface-events">
+<h3>Listening to <a class="reference internal" href="interfaces/i-platformer-slide-performer.html#i-platformer-slide-performer-page"><span class="std std-ref">IPlatformerSlidePerformer</span></a> interface events<a class="headerlink" href="#listening-to-iplatformerslideperformer-interface-events" title="Link permanente para este cabeçalho"></a></h3>
+<div class="highlight-csharp notranslate"><div class="highlight"><pre><span></span><span class="n">IPlatformerSlidePerformer</span><span class="w"> </span><span class="n">slidePerformer</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">void</span><span class="w"> </span><span class="nf">Awake</span><span class="p">()</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">slidePerformer</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">IPlatformerSlidePerformer</span><span class="p">&gt;();</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
 
 <span class="k">void</span><span class="w"> </span><span class="nf">Start</span><span class="p">()</span><span class="w"></span>
 <span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="n">slidePerformer</span><span class="p">?.</span><span class="n">SlidePerformed</span><span class="p">.</span><span class="n">AddListener</span><span class="p">(</span><span class="n">OnSlidePerfomed</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">slidePerformer</span><span class="p">?.</span><span class="n">SlideUpdate</span><span class="p">.</span><span class="n">AddListener</span><span class="p">(</span><span class="n">OnSlideUpdate</span><span class="p">);</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
 
 <span class="k">void</span><span class="w"> </span><span class="nf">OnDisable</span><span class="p">()</span><span class="w"></span>
 <span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="n">slidePerformer</span><span class="p">?.</span><span class="n">SlidePerformed</span><span class="p">.</span><span class="n">RemoveListener</span><span class="p">(</span><span class="n">OnSlidePerfomed</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">slidePerformer</span><span class="p">?.</span><span class="n">SlideUpdate</span><span class="p">.</span><span class="n">RemoveListener</span><span class="p">(</span><span class="n">OnSlideUpdate</span><span class="p">);</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
 
-<span class="k">void</span><span class="w"> </span><span class="nf">OnSlidePerfomed</span><span class="p">(</span><span class="n">GameObject</span><span class="w"> </span><span class="n">go</span><span class="p">)</span><span class="w"></span>
+<span class="k">void</span><span class="w"> </span><span class="nf">OnSlideUpdate</span><span class="p">(</span><span class="kt">bool</span><span class="w"> </span><span class="n">isSliding</span><span class="p">)</span><span class="w"></span>
 <span class="p">{</span><span class="w"></span>
 <span class="w">    </span><span class="c1">// Your logic</span>
 <span class="p">}</span><span class="w"></span>
@@ -275,104 +327,63 @@ take care of calling the <code class="docutils literal notranslate"><span class=
 <p>You can also use the direct approach to listen to the events.</p>
 </div>
 </section>
-<section id="setup">
-<h3>Setup<a class="headerlink" href="#setup" title="Link permanente para este cabeçalho"></a></h3>
-<div class="highlight-csharp notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span><span class="w"> </span><span class="nn">Handy2DTools.CharacterController.Platformer</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-
-<span class="w">    </span><span class="na">[CreateAssetMenu(fileName = &quot;New DynamicSlideSetup&quot;, menuName = &quot;Handy 2D Tools/CharacterController/Setups/DynamicSlide&quot;)]</span><span class="w"></span>
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">DynamicSlideSetup</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">AbilitySetup</span><span class="w"></span>
-<span class="w">    </span><span class="p">{</span><span class="w"></span>
-
-<span class="w">        </span><span class="na">[Header(&quot;Slide Setup&quot;)]</span><span class="w"></span>
-<span class="w">        </span><span class="na">[Tooltip(&quot;The speed wich will be applyed to X axis during slide.&quot;)]</span><span class="w"></span>
-<span class="w">        </span><span class="na">[SerializeField]</span><span class="w"></span>
-<span class="w">        </span><span class="na">[Space]</span><span class="w"></span>
-<span class="w">        </span><span class="k">protected</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">xSpeed</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="m">20f</span><span class="p">;</span><span class="w"></span>
-
-<span class="w">        </span><span class="na">[Tooltip(&quot;Time in seconds of the slide duration.&quot;)]</span><span class="w"></span>
-<span class="w">        </span><span class="na">[SerializeField]</span><span class="w"></span>
-<span class="w">        </span><span class="k">protected</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">duration</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="m">1f</span><span class="p">;</span><span class="w"></span>
-
-<span class="w">        </span><span class="na">[Tooltip(&quot;Minimun time in seconds between slidees.&quot;)]</span><span class="w"></span>
-<span class="w">        </span><span class="na">[SerializeField]</span><span class="w"></span>
-<span class="w">        </span><span class="k">protected</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">delay</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="m">1f</span><span class="p">;</span><span class="w"></span>
-
-<span class="w">        </span><span class="na">[Tooltip(&quot;If gravity should be modified while sliding&quot;)]</span><span class="w"></span>
-<span class="w">        </span><span class="na">[SerializeField]</span><span class="w"></span>
-<span class="w">        </span><span class="k">protected</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">modifyGravity</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">false</span><span class="p">;</span><span class="w"></span>
-
-<span class="w">        </span><span class="na">[Tooltip(&quot;The gravity scale to be apllyed to RigidBody2D during slide.&quot;)]</span><span class="w"></span>
-<span class="w">        </span><span class="na">[SerializeField]</span><span class="w"></span>
-<span class="w">        </span><span class="na">[ShowIf(&quot;modifyGravity&quot;)]</span><span class="w"></span>
-<span class="w">        </span><span class="k">protected</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">gravityScale</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="m">0f</span><span class="p">;</span><span class="w"></span>
-
-<span class="w">        </span><span class="na">[Tooltip(&quot;In case character is no longer grounded while performing slide, the slide is stoped.&quot;)]</span><span class="w"></span>
-<span class="w">        </span><span class="na">[SerializeField]</span><span class="w"></span>
-<span class="w">        </span><span class="k">protected</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">stopWhenNotGrounded</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span><span class="w"></span>
-
-<span class="w">        </span><span class="na">[Foldout(&quot;Slide Events&quot;)]</span><span class="w"></span>
-<span class="w">        </span><span class="na">[Label(&quot;Slide Performed&quot;)]</span><span class="w"></span>
-<span class="w">        </span><span class="na">[SerializeField]</span><span class="w"></span>
-<span class="w">        </span><span class="na">[Space]</span><span class="w"></span>
-<span class="w">        </span><span class="k">protected</span><span class="w"> </span><span class="n">UnityEvent</span><span class="p">&lt;</span><span class="n">GameObject</span><span class="p">&gt;</span><span class="w"> </span><span class="n">slidePerformed</span><span class="p">;</span><span class="w"></span>
-
-<span class="w">        </span><span class="c1">// Getters</span>
-
-<span class="w">        </span><span class="k">public</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">XSpeed</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="n">xSpeed</span><span class="p">;</span><span class="w"></span>
-<span class="w">        </span><span class="k">public</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">Duration</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="n">duration</span><span class="p">;</span><span class="w"></span>
-<span class="w">        </span><span class="k">public</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">Delay</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="n">delay</span><span class="p">;</span><span class="w"></span>
-<span class="w">        </span><span class="k">public</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">ModifyGravity</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="n">modifyGravity</span><span class="p">;</span><span class="w"></span>
-<span class="w">        </span><span class="k">public</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">GravityScale</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="n">gravityScale</span><span class="p">;</span><span class="w"></span>
-<span class="w">        </span><span class="k">public</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">StopWhenNotGrounded</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="n">stopWhenNotGrounded</span><span class="p">;</span><span class="w"></span>
-<span class="w">        </span><span class="k">public</span><span class="w"> </span><span class="n">UnityEvent</span><span class="p">&lt;</span><span class="n">GameObject</span><span class="p">&gt;</span><span class="w"> </span><span class="n">SlidePerformed</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="n">slidePerformed</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-
-<span class="p">}</span><span class="w"></span>
-</pre></div>
-</div>
-</section>
-</section>
-<section id="the-perform-approach">
-<h2>The perform approach<a class="headerlink" href="#the-perform-approach" title="Link permanente para este cabeçalho"></a></h2>
-<p>On this ability’s inspector you can mark <code class="docutils literal notranslate"><span class="pre">Auto</span> <span class="pre">Perform</span></code> checkbox and the component will perform automatically upon
-self resolving slide requests and stops.</p>
-<p>In case you are working with an FSM (we have one, checkout  our <a class="reference internal" href="../../../../actions/fsm/welcome.html#welcome-core-fsm-page"><span class="std std-ref">FSM solution</span></a>) you might want
-your state to call the <code class="docutils literal notranslate"><span class="pre">Perform()</span></code> method.</p>
 </section>
 <section id="locking-slides">
 <h2>Locking Slides<a class="headerlink" href="#locking-slides" title="Link permanente para este cabeçalho"></a></h2>
-<p>Use the method <code class="docutils literal notranslate"><span class="pre">LockSlide(bool</span> <span class="pre">shouldLock)</span></code> to prevent or allow slides to be performed. Great to be used with FSMs
+<p>Use the method <code class="docutils literal notranslate"><span class="pre">Lock(bool</span> <span class="pre">shouldLock)</span></code> to prevent or allow slides to be performed. Great to be used with FSMs
 when entering and leaving states on wich slides should not be started.</p>
+</section>
+<section id="available-properties">
+<h2>Available Properties<a class="headerlink" href="#available-properties" title="Link permanente para este cabeçalho"></a></h2>
+<div class="highlight-csharp notranslate"><div class="highlight"><pre><span></span><span class="k">public</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">Performing</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="k">public</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">Locked</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+
+<span class="k">public</span><span class="w"> </span><span class="n">IPlatformerSlideHandler</span><span class="w"> </span><span class="n">SlideHandler</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="k">public</span><span class="w"> </span><span class="n">IPlatformerMovementPerformer</span><span class="w"> </span><span class="n">MovementPerformer</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="k">public</span><span class="w"> </span><span class="n">IPlaftormerGroundingProvider</span><span class="w"> </span><span class="n">GroundingProvider</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="k">public</span><span class="w"> </span><span class="n">IPlatformerFacingDirectionProvider</span><span class="w"> </span><span class="n">HorizontalDirectionProvider</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+
+<span class="k">public</span><span class="w"> </span><span class="n">LayerMask</span><span class="w"> </span><span class="n">WhatIsCeiling</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
 </section>
 <section id="available-methods">
 <h2>Available Methods<a class="headerlink" href="#available-methods" title="Link permanente para este cabeçalho"></a></h2>
-<div class="highlight-csharp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Call this on physics update to tell the ability to perform its current</span>
-<span class="c1">// on going slide.</span>
+<div class="highlight-csharp notranslate"><div class="highlight"><pre><span></span><span class="c1">/// &lt;summary&gt;</span>
+<span class="c1">/// Call this to request a Slide.</span>
+<span class="c1">/// &lt;/summary&gt;</span>
+<span class="c1">/// &lt;param name=&quot;directionSign&quot;&gt;&lt;/param&gt;</span>
+<span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Request</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">directionSign</span><span class="p">)</span><span class="w"></span>
+
+<span class="c1">/// &lt;summary&gt;</span>
+<span class="c1">/// Should be called on Fixed (Physics) Update.</span>
+<span class="c1">/// &lt;/summary&gt;</span>
 <span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Perform</span><span class="p">()</span><span class="w"></span>
 
-<span class="c1">// Call this on physics update to tell the ability to perform its current</span>
-<span class="c1">// on going slide considering being or not on a slope.</span>
-<span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Perform</span><span class="p">(</span><span class="n">SlopeData</span><span class="w"> </span><span class="n">slopeData</span><span class="p">)</span><span class="w"></span>
-
-<span class="c1">// Call this in order to request a slide. The component will</span>
-<span class="c1">// self evaluate if it can slide or not</span>
-<span class="k">public</span><span class="w"> </span><span class="k">virtual</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Request</span><span class="p">()</span><span class="w"></span>
-
-<span class="c1">// Call this in order to stop the current on going slide</span>
+<span class="c1">/// &lt;summary&gt;</span>
+<span class="c1">/// Stops slide in progress if any.</span>
+<span class="c1">/// &lt;/summary&gt;</span>
 <span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Stop</span><span class="p">()</span><span class="w"></span>
 
-<span class="c1">// Call this to update grounding</span>
-<span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">UpdateGrounding</span><span class="p">(</span><span class="kt">bool</span><span class="w"> </span><span class="n">newGrounding</span><span class="p">)</span><span class="w"></span>
+<span class="c1">/// &lt;summary&gt;</span>
+<span class="c1">/// Call this in order to Lock slide and</span>
+<span class="c1">/// prevent new slides to occur based on</span>
+<span class="c1">/// shouldLock boolean.</span>
+<span class="c1">/// &lt;/summary&gt;</span>
+<span class="c1">/// &lt;param name=&quot;shouldLock&quot;&gt;&lt;/param&gt;</span>
+<span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Lock</span><span class="p">(</span><span class="kt">bool</span><span class="w"> </span><span class="n">shouldLock</span><span class="p">)</span><span class="w"></span>
 
-<span class="c1">// Call this to update Slope Data</span>
-<span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">UpdateSlopeData</span><span class="p">(</span><span class="n">SlopeData</span><span class="w"> </span><span class="n">newSlopeData</span><span class="p">)</span><span class="w"></span>
+<span class="c1">/// &lt;summary&gt;</span>
+<span class="c1">/// Call this to update grouding</span>
+<span class="c1">/// &lt;/summary&gt;</span>
+<span class="c1">/// &lt;param name=&quot;newGrounding&quot;&gt;&lt;/param&gt;</span>
+<span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">UpdateGronding</span><span class="p">(</span><span class="kt">bool</span><span class="w"> </span><span class="n">newGrounding</span><span class="p">)</span><span class="w"></span>
 
-<span class="c1">// Call this to update the direction sign</span>
-<span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">UpdateDirectionSign</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">newDirectionSign</span><span class="p">)</span><span class="w"></span>
-
-<span class="c1">// Call this to lock or release the ability to slide</span>
-<span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">LockSlide</span><span class="p">(</span><span class="kt">bool</span><span class="w"> </span><span class="n">shouldLock</span><span class="p">)</span><span class="w"></span>
+<span class="c1">/// &lt;summary&gt;</span>
+<span class="c1">/// Call this to update facing direction sign. -1 for left, 1 for right.</span>
+<span class="c1">/// &lt;/summary&gt;</span>
+<span class="c1">/// &lt;param name=&quot;newFacingDirectionSign&quot;&gt;&lt;/param&gt;</span>
+<span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">UpdateFacingDirectionSign</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">newFacingDirectionSign</span><span class="p">)</span><span class="w"></span>
 </pre></div>
 </div>
 </section>
@@ -383,7 +394,7 @@ when entering and leaving states on wich slides should not be started.</p>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Rodapé">
         <a href="setups/platformer-jump-setup.html" class="btn btn-neutral float-left" title="Platformer Jump Setup" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
-        <a href="platformer-wall-grab.html" class="btn btn-neutral float-right" title="Platformer Dynamic Wall Grab" accesskey="n" rel="next">Próximo <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="setups/platformer-slide-setup.html" class="btn btn-neutral float-right" title="Platformer Slide Setup" accesskey="n" rel="next">Próximo <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

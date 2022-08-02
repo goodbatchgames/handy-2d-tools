@@ -2,17 +2,11 @@
 
 Here you will find documentation about our platformer character controller available abilities.
 
-Ability Categories
-------------------
+Platformer Abilities
+--------------------
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
    
    movement/welcome
    platforming/welcome
-
-.. HTML Substiuions
-
-.. |br| raw:: html
-
-     <br />

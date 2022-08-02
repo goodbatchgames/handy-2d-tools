@@ -14,7 +14,6 @@ Available Checkers
    
    platformer-raycast-grounding-checker
    platformer-wall-hit-checker
-   platformer-slope-checker
 
 Interfaces
 ----------
@@ -24,4 +23,3 @@ Interfaces
    
    interfaces/i-platformer-grounding-provider
    interfaces/i-platformer-wall-hit-data-provider
-   interfaces/i-platformer-slope-data-provider
