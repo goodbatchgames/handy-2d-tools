@@ -324,8 +324,7 @@ namespace Handy2DTools.Actions
 
         #region Handy Component
 
-        protected override string DocPath => "/en/core/actions/fsm/welcome.html";
-        protected override string DocPathPtBr => "/pt_BR/core/actions/fsm/welcome.html";
+        protected override string DocPath => "core/actions/fsm/welcome.html";
 
         #endregion
     }
